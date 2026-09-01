@@ -1,0 +1,278 @@
+[
+  {
+    "id": "read-001",
+    "month": 1,
+    "week": 1,
+    "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones",
+    "author": "James Clear",
+    "genre": "Personal Development & Psychology",
+    "url": "https://jamesclear.com/atomic-habits",
+    "summary": "Explores the compounding power of tiny 1% daily improvements, the habit loop (Cue, Craving, Response, Reward), and identity-based habit design.",
+    "key_concepts": [
+      "The 1% compounding rule",
+      "Environment design over willpower",
+      "Identity-based habits ('I am a disciplined student/craftswoman')",
+      "The 4 Laws of Behavior Change"
+    ],
+    "reflection_questions": [
+      "What 1% daily habits will support your transition into UNIBEN over the next 18 months?",
+      "How can you optimize your physical room and tailoring workstation to make studying frictionless?",
+      "Which bad habit currently costs you the most wasted time, and what friction can you add to eliminate it?"
+    ],
+    "practical_exercise": "Create a 2-habit stacking sequence: 'After I complete my evening dinner, I will immediately open my Biology notebook for 30 minutes.'",
+    "status": "Not read"
+  },
+  {
+    "id": "read-002",
+    "month": 2,
+    "week": 5,
+    "title": "A Mind for Numbers: How to Excel at Math and Science",
+    "author": "Dr. Barbara Oakley",
+    "genre": "Science of Learning & Cognition",
+    "url": "https://barbaraoakley.com/books/a-mind-for-numbers/",
+    "summary": "Deconstructs focused vs diffuse modes of thinking, chunking, overcoming the illusion of competence, and spaced repetition in science.",
+    "key_concepts": [
+      "Focused vs Diffuse thinking modes",
+      "Chunking concepts into long-term memory",
+      "The illusion of competence (reading is not studying; active recall is)",
+      "Combating procrastination with Pomodoro"
+    ],
+    "reflection_questions": [
+      "How did you previously study for WAEC, and where were you relying on the illusion of competence?",
+      "How will you incorporate diffuse mode thinking (walks, sleep, breaks) when solving difficult Physics/Chemistry problems?",
+      "Why is spaced retrieval superior to cramming for 5-year healthcare degrees?"
+    ],
+    "practical_exercise": "Apply the Feynman Technique to explain osmosis to a non-science family member in under 3 minutes without technical jargon.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-003",
+    "month": 3,
+    "week": 9,
+    "title": "Gifted Hands: The Ben Carson Story",
+    "author": "Ben Carson & Cecil Murphey",
+    "genre": "Biography & Medical Career",
+    "url": "https://www.harpercollins.com/products/gifted-hands-ben-carson",
+    "summary": "The inspiring journey of a young inner-city student who developed fierce reading discipline, overcame academic struggles, and became a pioneering neurosurgeon.",
+    "key_concepts": [
+      "The power of voracious reading and intellectual curiosity",
+      "Manual dexterity and hand-eye coordination (parallels with tailoring!)",
+      "Composure and prayer under extreme surgical pressure",
+      "Overcoming socioeconomic limitations through relentless discipline"
+    ],
+    "reflection_questions": [
+      "How does the precision and patience learned in tailoring directly translate into the dexterity required in healthcare and surgery?",
+      "What role did reading two books per week play in transforming Ben Carson's academic destiny?",
+      "How do you plan to handle high-pressure academic examinations or clinical challenges?"
+    ],
+    "practical_exercise": "Write a 500-word essay reflecting on how your current tailoring apprenticeship gives you unique manual dexterity advantages for clinical health sciences.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-004",
+    "month": 4,
+    "week": 13,
+    "title": "Things Fall Apart",
+    "author": "Chinua Achebe",
+    "genre": "African / Nigerian Literature & Culture",
+    "url": "https://en.wikipedia.org/wiki/Things_Fall_Apart",
+    "summary": "Achebe's masterpiece examining traditional Igbo society, cultural disruption, pride, fear of failure, and the complex tragedy of Okonkwo.",
+    "key_concepts": [
+      "Cultural identity and traditional African societal structures",
+      "The fatal flaw of toxic rigidity and inability to adapt to change",
+      "Empathy vs aggressive pride",
+      "Storytelling as a tool for cultural dignity and truth"
+    ],
+    "reflection_questions": [
+      "In what ways was Okonkwo's fear of weakness his greatest undoing?",
+      "How does cultural intelligence and adaptability protect a young woman entering a diverse university campus like UNIBEN?",
+      "What timeless wisdom can modern Nigerian youth draw from Achebe's portrayal of community and resilience?"
+    ],
+    "practical_exercise": "Write a character analysis comparing Okonkwo's rigidity with Obierika's thoughtful adaptability.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-005",
+    "month": 5,
+    "week": 17,
+    "title": "The Richest Man in Babylon",
+    "author": "George S. Clason",
+    "genre": "Financial Literacy & Wealth Principles",
+    "url": "https://en.wikipedia.org/wiki/The_Richest_Man_in_Babylon",
+    "summary": "Timeless financial parables set in ancient Babylon outlining the 7 cures for a lean purse, paying yourself first, and safeguarding wealth from reckless speculation.",
+    "key_concepts": [
+      "Pay yourself first (Save at least 10% of all earnings)",
+      "Control expenditures (Distinguish necessary living costs from discretionary desires)",
+      "Make gold multiply (Compound interest and productive capital)",
+      "Guard treasures from loss (Avoid get-rich-quick schemes and unverified ventures)"
+    ],
+    "reflection_questions": [
+      "How will you apply the '10% rule' to every Naira earned from your tailoring apprenticeship?",
+      "Why are young Nigerians frequently vulnerable to Ponzi schemes, and how do Babylon's rules protect you?",
+      "What does 'investing in your own ability to earn' mean for your pre-university year?"
+    ],
+    "practical_exercise": "Set up a personal ledger tracking 100% of income, earmarking 10% strictly for your university emergency fund.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-006",
+    "month": 6,
+    "week": 21,
+    "title": "The E-Myth Revisited: Why Most Small Businesses Don't Work and What to Do About It",
+    "author": "Michael E. Gerber",
+    "genre": "Entrepreneurship & Business Systems",
+    "url": "https://michaelegerbercompanies.com/the-e-myth-revisited/",
+    "summary": "Explains the crucial distinction between the Technician (sewing the garment), the Manager (organizing orders and finances), and the Entrepreneur (visioning the brand).",
+    "key_concepts": [
+      "The fatal assumption: Understanding technical work does not equal understanding business",
+      "Working ON the business vs working IN the business",
+      "Creating repeatable systems and standard operating procedures (SOPs)",
+      "Delivering consistent, predictable customer delight"
+    ],
+    "reflection_questions": [
+      "How can you transition from just 'sewing clothes' to building a professional tailoring brand with systems?",
+      "What Standard Operating Procedure (SOP) can you create for taking accurate client measurements and tracking orders?",
+      "How can entrepreneurial thinking help you even if you choose a career in hospital nursing?"
+    ],
+    "practical_exercise": "Draft a standard 5-step Client Intake & Fitting Checklist for your tailoring workspace.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-007",
+    "month": 7,
+    "week": 25,
+    "title": "The Immortal Life of Henrietta Lacks",
+    "author": "Rebecca Skloot",
+    "genre": "Medical Ethics, Science & History",
+    "url": "https://rebeccaskloot.com/the-immortal-life/",
+    "summary": "The true story of Henrietta Lacks, whose cervical cancer cells (HeLa) were taken without consent in 1951, becoming the foundation of modern medical science, polio vaccines, and gene mapping.",
+    "key_concepts": [
+      "Informed consent and patient autonomy in medical research",
+      "Bioethics, race, and socioeconomic vulnerability in healthcare",
+      "The scientific miracle and mechanism of immortal cell lines (HeLa)",
+      "The moral duty of healthcare practitioners to honor human dignity"
+    ],
+    "reflection_questions": [
+      "Why is informed consent the non-negotiable cornerstone of healthcare ethics?",
+      "How must healthcare workers balance scientific curiosity with deep respect for patients' rights?",
+      "What lessons does this book offer for healthcare delivery and research ethics in Nigeria?"
+    ],
+    "practical_exercise": "Write a 1,000-word case review summarizing the ethical breaches in the HeLa case and how modern institutional ethics committees prevent them.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-008",
+    "month": 8,
+    "week": 29,
+    "title": "Mountains Beyond Mountains: The Quest of Dr. Paul Farmer, a Man Who Would Cure the World",
+    "author": "Tracy Kidder",
+    "genre": "Global Health & Humanitarian Service",
+    "url": "https://www.penguinrandomhouse.com/books/92607/mountains-beyond-mountains-by-tracy-kidder/",
+    "summary": "Chronicles the life of Dr. Paul Farmer, co-founder of Partners In Health, who dedicated his life to treating multidrug-resistant tuberculosis and poverty in Haiti, Rwanda, and global health hotspots.",
+    "key_concepts": [
+      "Preferential option for the poor in medicine",
+      "Addressing structural violence and social determinants of health",
+      "Community-based healthcare delivery and accompaniment",
+      "Uncompromising standards of care regardless of patient poverty"
+    ],
+    "reflection_questions": [
+      "What does 'accompaniment' mean in patient care, and how can a nurse embody it?",
+      "How do clean water, nutrition, and housing dictate clinical outcomes more than pills alone?",
+      "How does Dr. Farmer's servant leadership inspire your community volunteering in Edo State?"
+    ],
+    "practical_exercise": "Identify a neglected health issue in your local community (e.g., open drainage or unwashed market food) and outline a community education response.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-009",
+    "month": 9,
+    "week": 33,
+    "title": "Grit: The Power of Passion and Perseverance",
+    "author": "Angela Duckworth",
+    "genre": "Psychology & Academic Success",
+    "url": "https://angeladuckworth.com/grit-book/",
+    "summary": "Reveals that talent and raw IQ are only a fraction of success; passion, long-term perseverance, deliberate practice, and hope are the true predictors of achievement.",
+    "key_concepts": [
+      "Talent × Effort = Skill; Skill × Effort = Achievement (Effort counts twice)",
+      "Deliberate practice with immediate feedback",
+      "Developing a higher purpose connected to the service of others",
+      "Growth mindset and resilience through academic difficulty"
+    ],
+    "reflection_questions": [
+      "Where in your life have you displayed grit, and where have you quit prematurely?",
+      "How will grit sustain you through demanding 5-year university healthcare exams and clinical postings at UBTH?",
+      "What is your overarching purpose in studying healthcare?"
+    ],
+    "practical_exercise": "Write down your 5-year academic 'North Star' goal and list 3 specific daily deliberate practices that will achieve it.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-010",
+    "month": 10,
+    "week": 37,
+    "title": "How to Win Friends and Influence People in the Digital Age",
+    "author": "Dale Carnegie",
+    "genre": "Communication & Interpersonal Skills",
+    "url": "https://www.dalecarnegie.com/en/resources/how-to-win-friends-and-influence-people-in-the-digital-age",
+    "summary": "The foundational classic on human relations: genuine interest in others, active listening, remembering names, making others feel valued, and resolving disagreements amicably.",
+    "key_concepts": [
+      "Become genuinely interested in other people",
+      "A person's name is to that person the sweetest sound in any language",
+      "Be a good listener; encourage others to talk about themselves",
+      "Talk in terms of the other person's interests and preserve their dignity"
+    ],
+    "reflection_questions": [
+      "How will mastering active listening transform your bedside manner as a nurse or doctor?",
+      "How can you apply Carnegie's principles when interacting with demanding tailoring clients or university lecturers?",
+      "Why is criticism almost always counterproductive in motivating human change?"
+    ],
+    "practical_exercise": "Practice the 'Active Listening Challenge' for 7 days: in every conversation, ask 2 follow-up questions before stating your own opinion.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-011",
+    "month": 11,
+    "week": 41,
+    "title": "Half of a Yellow Sun",
+    "author": "Chimamanda Ngozi Adichie",
+    "genre": "Nigerian History, Literature & Resilience",
+    "url": "https://en.wikipedia.org/wiki/Half_of_a_Yellow_Sun",
+    "summary": "A profound epic exploring the Nigerian Civil War (Biafra), human love, intellectual ideals tested by catastrophe, refugee survival, and the profound resilience of women.",
+    "key_concepts": [
+      "Nigerian historical memory and the devastating human cost of conflict",
+      "Class privilege vs harsh survival in humanitarian crises",
+      "The heroic courage of women, nurses, and frontline community caretakers during crises",
+      "Intellectual humility and empathy across social divides"
+    ],
+    "reflection_questions": [
+      "How did the characters adapt when their comfortable peacetime lives were shattered?",
+      "What role did emergency healthcare and humanitarian feeding centers play in sustaining human life during the conflict?",
+      "How does understanding Nigerian history deepen your civic consciousness as a future healthcare leader?"
+    ],
+    "practical_exercise": "Write a 750-word reflection on Olanna and Kainene's contrasting leadership styles during adversity.",
+    "status": "Not read"
+  },
+  {
+    "id": "read-012",
+    "month": 12,
+    "week": 45,
+    "title": "Deep Work: Rules for Focused Success in a Distracted World",
+    "author": "Cal Newport",
+    "genre": "Productivity & Academic Excellence",
+    "url": "https://calnewport.com/deep-work-rules-for-focused-success-in-a-distracted-world/",
+    "summary": "Demonstrates why the ability to perform deep, undistracted cognitive focus is becoming rare and valuable, providing 4 actionable rules to eliminate superficial shallow work.",
+    "key_concepts": [
+      "Deep Work vs Shallow Work",
+      "The Law of Productivity: High-Quality Work Produced = (Time Spent) × (Intensity of Focus)",
+      "Quitting social media addiction and attention fragmentation",
+      "Scheduling every minute of the workday and embracing productive boredom"
+    ],
+    "reflection_questions": [
+      "How much of your daily phone usage is fragmented shallow distraction, and how does it impact your learning depth?",
+      "How will you establish 90-minute daily Deep Work blocks in university while living in a bustling UNIBEN hostel or off-campus apartment?",
+      "What strict phone rules will you enforce during study hours?"
+    ],
+    "practical_exercise": "Execute a 3-day 'Digital Fast': Zero social media notifications during study and tailoring hours, logging deep work output in minutes.",
+    "status": "Not read"
+  }
+]

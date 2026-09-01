@@ -1,0 +1,163 @@
+{
+  "university_name": "University of Benin (UNIBEN)",
+  "motto": "Knowledge for Service",
+  "founded": 1970,
+  "main_campus": "Ugbowo Campus, Benin-Lagos Expressway, Ugbowo, Benin City, Edo State",
+  "second_campus": "Ekenwan Campus, Ekenwan Road, Benin City, Edo State",
+  "hospital_affiliate": "University of Benin Teaching Hospital (UBTH), Ugbowo, Benin City",
+  "faculties_and_schools": [
+    {
+      "name": "College of Medical Sciences",
+      "divisions": [
+        {
+          "name": "School of Basic Medical Sciences",
+          "departments": [
+            "Anatomy",
+            "Physiology",
+            "Medical Biochemistry",
+            "Medical Laboratory Science (B.MLS)",
+            "Nursing Science (B.N.Sc)",
+            "Physiotherapy (B.PT / DPT)",
+            "Radiography & Radiation Science (B.Rad)"
+          ]
+        },
+        {
+          "name": "School of Medicine",
+          "degree": "MBBS",
+          "departments": [
+            "Anaesthesiology",
+            "Chemical Pathology",
+            "Child Health (Paediatrics)",
+            "Community Health",
+            "Haematology & Blood Transfusion",
+            "Medical Microbiology",
+            "Medicine",
+            "Morbid Anatomy (Histopathology)",
+            "Obstetrics and Gynaecology",
+            "Ophthalmology",
+            "Orthopaedics & Traumatology",
+            "Pharmacology & Therapeutics",
+            "Psychiatry",
+            "Radiology",
+            "Surgery"
+          ]
+        },
+        {
+          "name": "School of Dentistry",
+          "degree": "BDS",
+          "departments": [
+            "Oral & Maxillofacial Surgery",
+            "Oral Pathology & Medicine",
+            "Periodontics",
+            "Preventive Dentistry",
+            "Restorative Dentistry"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Faculty of Pharmacy",
+      "degree": "Doctor of Pharmacy (Pharm.D)",
+      "departments": [
+        "Clinical Pharmacy & Pharmacy Practice",
+        "Pharmaceutical Chemistry",
+        "Pharmaceutical Microbiology",
+        "Pharmaceutics & Pharmaceutical Technology",
+        "Pharmacognosy",
+        "Pharmacology & Toxicology"
+      ]
+    },
+    {
+      "name": "Faculty of Life Sciences",
+      "departments": [
+        "Animal and Environmental Biology (AEB)",
+        "Biochemistry",
+        "Microbiology",
+        "Plant Biology and Biotechnology (PBB)",
+        "Environmental Management and Toxicology"
+      ]
+    },
+    {
+      "name": "Faculty of Physical Sciences",
+      "departments": [
+        "Chemistry",
+        "Computer Science",
+        "Geology",
+        "Mathematics",
+        "Physics"
+      ]
+    }
+  ],
+  "grading_system": {
+    "scale": "5.00 CGPA Cumulative Grade Point Average",
+    "grade_bands": [
+      { "score_range": "70 - 100", "letter_grade": "A", "grade_point": 5, "description": "Excellent" },
+      { "score_range": "60 - 69", "letter_grade": "B", "grade_point": 4, "description": "Very Good" },
+      { "score_range": "50 - 59", "letter_grade": "C", "grade_point": 3, "description": "Good" },
+      { "score_range": "45 - 49", "letter_grade": "D", "grade_point": 2, "description": "Fair / Average" },
+      { "score_range": "40 - 44", "letter_grade": "E", "grade_point": 1, "description": "Pass" },
+      { "score_range": "0 - 39", "letter_grade": "F", "grade_point": 0, "description": "Fail" }
+    ],
+    "degree_classifications": [
+      { "cgpa_range": "4.50 - 5.00", "class": "First Class Honours" },
+      { "cgpa_range": "3.50 - 4.49", "class": "Second Class Honours (Upper Division)" },
+      { "cgpa_range": "2.40 - 3.49", "class": "Second Class Honours (Lower Division)" },
+      { "cgpa_range": "1.50 - 2.39", "class": "Third Class Honours" },
+      { "cgpa_range": "1.00 - 1.49", "class": "Pass" },
+      { "cgpa_range": "Below 1.00", "class": "Academic Probation / Withdrawal" }
+    ]
+  },
+  "first_year_pre_med_curriculum": {
+    "first_semester": [
+      { "code": "BIO111", "title": "General Biology I (Cell Biology & Diversity of Organisms)", "units": 3 },
+      { "code": "BIO112", "title": "Practical Biology I", "units": 1 },
+      { "code": "CHM111", "title": "General Chemistry I (Inorganic & Physical Chemistry)", "units": 3 },
+      { "code": "CHM112", "title": "Practical Chemistry I", "units": 1 },
+      { "code": "PHY111", "title": "General Physics I (Mechanics, Thermal Physics & Properties of Matter)", "units": 3 },
+      { "code": "PHY112", "title": "Practical Physics I", "units": 1 },
+      { "code": "MTH111", "title": "Elementary Mathematics I (Algebra & Trigonometry)", "units": 3 },
+      { "code": "GST111", "title": "Communication in English / Use of Library", "units": 2 },
+      { "code": "GST112", "title": "Philosophy, Logic & Human Existence", "units": 2 }
+    ],
+    "second_semester": [
+      { "code": "BIO121", "title": "General Biology II (Plant & Animal Physiology, Genetics)", "units": 3 },
+      { "code": "BIO122", "title": "Practical Biology II", "units": 1 },
+      { "code": "CHM121", "title": "General Chemistry II (Organic Chemistry)", "units": 3 },
+      { "code": "CHM122", "title": "Practical Chemistry II", "units": 1 },
+      { "code": "PHY121", "title": "General Physics II (Electricity, Magnetism & Modern Physics)", "units": 3 },
+      { "code": "PHY122", "title": "Practical Physics II", "units": 1 },
+      { "code": "GST121", "title": "Peace & Conflict Resolution Studies", "units": 2 },
+      { "code": "GST122", "title": "Nigerian Peoples, Culture & Entrepreneurship", "units": 2 }
+    ]
+  },
+  "first_30_days_action_checklist": [
+    { "step": 1, "day_range": "Day 1 - 3", "action": "Accept Admission on JAMB CAPS & Pay UNIBEN Acceptance Fee via Kofa/WAeUP Portal", "critical": true },
+    { "step": 2, "day_range": "Day 4 - 7", "action": "Gather 15 Red-Background Passport Photos, Original WAEC Certificate/Statement of Result, Birth Certificate, LGA Identification Letter", "critical": true },
+    { "step": 3, "day_range": "Day 8 - 10", "action": "Complete Online Clearance & Verification on UNIBEN WAeUP Portal", "critical": true },
+    { "step": 4, "day_range": "Day 11 - 14", "action": "Pay University School Charges / Tuition via Remita and Print Receipt", "critical": true },
+    { "step": 5, "day_range": "Day 15 - 18", "action": "Physical Clearance at Main Auditorium / Faculty Clearance Desk with File Jacket", "critical": true },
+    { "step": 6, "day_range": "Day 19 - 21", "action": "Complete Course Registration for 100-Level First Semester and submit Course Forms to Course Adviser for signature", "critical": true },
+    { "step": 7, "day_range": "Day 22 - 24", "action": "Undergo Medical Screening & Chest X-Ray at UNIBEN Health Centre (Ugbowo Campus)", "critical": true },
+    { "step": 8, "day_range": "Day 25 - 26", "action": "Register for John Harris Library Card and Attend Library Orientation", "critical": false },
+    { "step": 9, "day_range": "Day 27 - 28", "action": "Finalize Accommodation (Hall of Residence clearance or verified off-campus BDPA/Ekosodin leasing with guardian)", "critical": true },
+    { "step": 10, "day_range": "Day 29 - 30", "action": "Attend Faculty & Departmental Matriculation Orientation and Connect with Departmental Course Representatives", "critical": false }
+  ],
+  "campus_zones_and_safety": {
+    "hostels": [
+      { "name": "Hall 1 & Hall 2", "gender": "Female Undergraduates", "location": "Near Campus Main Gate & Health Centre", "security_rating": "High (Secured gates and porters)" },
+      { "name": "Hall 3 & Hall 4", "gender": "Male Undergraduates", "location": "Central Campus", "security_rating": "High" },
+      { "name": "Keystone / NDDC Hostels", "gender": "Mixed Floors / Post-UTME Merit", "location": "Near Sports Complex", "security_rating": "High" }
+    ],
+    "off_campus_areas": [
+      { "name": "BDPA (Benin Development and Property Authority)", "safety_notes": "Calm residential estate, popular among serious students, well-lit main roads. Preferred over Ekosodin.", "recommendation": "Recommended" },
+      { "name": "Ekosodin", "safety_notes": "Directly behind university back gate. Cheaper rents, lively student population, but requires strict curfew discipline and staying on well-populated major avenues.", "recommendation": "Caution / Stick to vetted compounds" },
+      { "name": "Osasogie", "safety_notes": "Close to UBTH Medical Complex and Nursing hostel gate. Ideal for clinical students.", "recommendation": "Highly Recommended for Healthcare Students" }
+    ],
+    "emergency_safety_protocols": [
+      "UNIBEN Chief Security Officer (CSO) Hotline available on campus ID cards",
+      "Strict campus security gate closure for external vehicles by 10:00 PM",
+      "Avoid isolated pathways near Capitol or forest buffers after dark; always walk in groups or take campus shuttle buses",
+      "Always notify roommates or family before travelling outside Benin City"
+    ]
+  }
+}

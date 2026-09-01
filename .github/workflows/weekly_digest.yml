@@ -1,0 +1,35 @@
+name: Weekly Development Digest
+
+on:
+  schedule:
+    # Run every Monday at 06:00 UTC (07:00 West Africa Time / WAT)
+    - cron: '0 6 * * 1'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+jobs:
+  send-weekly-digest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Opportunity Scan & Seed Database
+        run: |
+          python3 -m preuni_system.cli seed
+          python3 -m preuni_system.cli scan
+
+      - name: Send Weekly Digest via Resend
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL || 'Pre-University System <onboarding@resend.dev>' }}
+          STUDENT_EMAIL: ${{ secrets.STUDENT_EMAIL || 'lara@example.com' }}
+          PARENT_EMAIL: ${{ secrets.PARENT_EMAIL || 'parent@example.com' }}
+          STUDENT_NAME: ${{ vars.STUDENT_NAME || 'Lara' }}
+        run: |
+          python3 -m preuni_system.cli digest --send

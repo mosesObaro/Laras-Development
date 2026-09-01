@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-University Development & Opportunity System | UNIBEN Healthcare Preparation</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Chart.js for Visual Progress & Soft Skills Radar -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOP PROFILE HEADER -->
+  <header class="bg-slate-900 text-white shadow-lg border-b border-slate-800 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md">
+            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+              Pre-University Development & Opportunity System
+              <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-500/20 text-brand-300 border border-brand-500/30">UNIBEN Year</span>
+            </h1>
+            <p class="text-xs text-slate-400">
+              Student: <strong class="text-slate-200" id="headerStudentName">Lara</strong> • Location: <span class="text-slate-200">Benin City, Edo State</span> • Target: <strong class="text-brand-400">UNIBEN (Healthcare)</strong> • Apprenticeship: <span class="text-emerald-400">Tailoring</span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Quick Status & Action Buttons -->
+        <div class="flex items-center gap-3">
+          <button id="btnExportData" class="text-xs font-semibold px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 flex items-center gap-1.5 transition">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i> Backup JSON
+          </button>
+          <button id="btnResetData" class="text-xs font-semibold px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-300 border border-slate-700 flex items-center gap-1.5 transition">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- NAVIGATION TABS -->
+      <nav class="flex space-x-1 overflow-x-auto py-2.5 mt-2 border-t border-slate-800 text-xs font-medium no-scrollbar">
+        <button class="tab-btn active px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="overview">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="curriculum">
+          <i data-lucide="map" class="w-4 h-4"></i> 18-Month Roadmap
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="courses">
+          <i data-lucide="book-open" class="w-4 h-4"></i> Courses Database (<span id="tabCourseCount">127</span>)
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="volunteering">
+          <i data-lucide="heart-handshake" class="w-4 h-4"></i> Volunteering & Service (Edo Focus)
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="careers">
+          <i data-lucide="stethoscope" class="w-4 h-4"></i> Healthcare Career Matrix
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="tailoring">
+          <i data-lucide="scissors" class="w-4 h-4"></i> Tailoring Studio & Costing
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="uniben">
+          <i data-lucide="building-2" class="w-4 h-4"></i> UNIBEN Readiness & CGPA
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="reading">
+          <i data-lucide="library" class="w-4 h-4"></i> 12-Month Reading List
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="rubric">
+          <i data-lucide="activity" class="w-4 h-4"></i> Soft-Skills Rubric
+        </button>
+        <button class="tab-btn px-3.5 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition flex items-center gap-1.5 whitespace-nowrap" data-tab="emails">
+          <i data-lucide="mail" class="w-4 h-4"></i> Email Digest Preview
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- 1. OVERVIEW TAB -->
+    <section id="tab-overview" class="tab-content block space-y-6">
+      <!-- Philosophy Banner -->
+      <div class="bg-gradient-to-r from-brand-700 via-brand-600 to-sky-700 rounded-2xl p-6 text-white shadow-md">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="inline-block bg-white/20 text-white font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider mb-2">Core Philosophy</span>
+            <h2 class="text-2xl font-black">SKILLS + EXPERIENCE + CHARACTER + KNOWLEDGE + EXPOSURE + SERVICE</h2>
+            <p class="text-sm text-brand-100 mt-1 max-w-3xl">
+              Development Mix: <strong>70% Practical Application</strong> (Tailoring, projects, volunteering) • <strong>20% Exposure</strong> (Mentors, webinars, books) • <strong>10% Formal Learning</strong> (Courses).
+            </p>
+          </div>
+          <div class="bg-white/10 backdrop-blur rounded-xl p-4 text-center border border-white/20 min-w-[160px]">
+            <div class="text-3xl font-black text-white" id="statOverallProgress">0%</div>
+            <div class="text-xs text-brand-100 font-semibold uppercase tracking-wider mt-1">Year Progress</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover-card">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-semibold uppercase">Courses</span>
+            <i data-lucide="book-open" class="w-4 h-4 text-brand-600"></i>
+          </div>
+          <div class="text-2xl font-bold text-slate-900" id="statCoursesCompleted">0 / 127</div>
+          <p class="text-xs text-slate-500 mt-1" id="statCoursesInProg">0 in progress</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover-card">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-semibold uppercase">Volunteer</span>
+            <i data-lucide="heart-handshake" class="w-4 h-4 text-rose-600"></i>
+          </div>
+          <div class="text-2xl font-bold text-slate-900" id="statVolunteerHours">0 hrs</div>
+          <p class="text-xs text-slate-500 mt-1">Goal: 20-50 hrs</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover-card">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-semibold uppercase">Tailoring</span>
+            <i data-lucide="scissors" class="w-4 h-4 text-emerald-600"></i>
+          </div>
+          <div class="text-2xl font-bold text-slate-900" id="statTailoringProjects">0</div>
+          <p class="text-xs text-emerald-600 font-semibold mt-1" id="statTailoringProfit">₦0.00 profit</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover-card">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-semibold uppercase">Careers</span>
+            <i data-lucide="stethoscope" class="w-4 h-4 text-indigo-600"></i>
+          </div>
+          <div class="text-2xl font-bold text-slate-900" id="statCareersCount">14</div>
+          <p class="text-xs text-slate-500 mt-1">Exploration matrix</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover-card">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-semibold uppercase">Reading</span>
+            <i data-lucide="library" class="w-4 h-4 text-amber-600"></i>
+          </div>
+          <div class="text-2xl font-bold text-slate-900" id="statBooksRead">0 / 12</div>
+          <p class="text-xs text-slate-500 mt-1">Curated books</p>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover-card">
+          <div class="flex items-center justify-between text-slate-500 mb-2">
+            <span class="text-xs font-semibold uppercase">UNIBEN Status</span>
+            <i data-lucide="building-2" class="w-4 h-4 text-purple-600"></i>
+          </div>
+          <div class="text-2xl font-bold text-purple-600">100L Ready</div>
+          <p class="text-xs text-slate-500 mt-1">Ugbowo Campus</p>
+        </div>
+      </div>
+
+      <!-- Weekly Schedule & Daily Timetable -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="clock" class="w-5 h-5 text-brand-600"></i> Recommended Balanced Daily Timetable
+            </h3>
+            <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full font-semibold">Max 18 hrs Study / Week</span>
+          </div>
+
+          <div class="space-y-3 text-sm">
+            <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-3">
+              <div class="font-bold text-emerald-800 min-w-[110px]">8:30 AM – 4:30 PM</div>
+              <div class="text-emerald-950 font-medium">
+                <strong>Tailoring Apprenticeship (Primary Daytime Commitment)</strong>
+                <p class="text-xs text-emerald-800 mt-0.5">Garment construction, measuring, cutting, pressing, customer communication, and shop operations.</p>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-sky-50 border border-sky-200 flex items-start gap-3">
+              <div class="font-bold text-sky-800 min-w-[110px]">5:30 PM – 7:00 PM</div>
+              <div class="text-sky-950 font-medium">
+                <strong>Academic Science & Healthcare Study (60 – 90 mins)</strong>
+                <p class="text-xs text-sky-800 mt-0.5">Biology, Chemistry, Physics, or Math review + Anki active recall flashcards (Pomodoro technique).</p>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-indigo-50 border border-indigo-200 flex items-start gap-3">
+              <div class="font-bold text-indigo-800 min-w-[110px]">7:15 PM – 8:00 PM</div>
+              <div class="text-indigo-950 font-medium">
+                <strong>Digital Skills / AI Literacy / Research Practice (3x weekly)</strong>
+                <p class="text-xs text-indigo-800 mt-0.5">Spreadsheets, Canva lookbooks, Google Docs formatting, and structured PubMed research.</p>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-amber-50 border border-amber-200 flex items-start gap-3">
+              <div class="font-bold text-amber-800 min-w-[110px]">9:00 PM – 9:30 PM</div>
+              <div class="text-amber-950 font-medium">
+                <strong>Reading Program (20 – 30 mins)</strong>
+                <p class="text-xs text-amber-800 mt-0.5">Read monthly book chapter (Literature, Science, Psychology, Finance) & write daily 5-min journal entry.</p>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-rose-50 border border-rose-200 flex items-start gap-3">
+              <div class="font-bold text-rose-800 min-w-[110px]">Weekends</div>
+              <div class="text-rose-950 font-medium">
+                <strong>Community Volunteering & Personal Health / Exercise</strong>
+                <p class="text-xs text-rose-800 mt-0.5">Nigerian Red Cross Edo outreach, Girls' Power Initiative peer sessions, sanitation, and rest.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Upcoming Opportunities Card -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i> Top Scored Alerts (85+)
+            </h3>
+            <div id="overviewTopOpps" class="space-y-3 text-xs">
+              <!-- Populated by JavaScript -->
+            </div>
+          </div>
+
+          <div class="mt-4 pt-4 border-t border-slate-100 text-center">
+            <button class="tab-btn text-xs font-bold text-brand-600 hover:text-brand-700 inline-flex items-center gap-1" data-tab="courses">
+              Explore all 127 verified courses &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 18-MONTH ROADMAP TAB -->
+    <section id="tab-curriculum" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900 mb-2">18-Month Master Pre-University Curriculum</h2>
+        <p class="text-sm text-slate-600 mb-6">
+          Structured across 30 development pillars, balancing academic preparation for UNIBEN with professional tailoring craftsmanship.
+        </p>
+
+        <div id="roadmapAccordion" class="space-y-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. COURSES DATABASE TAB -->
+    <section id="tab-courses" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">Verified Course Database</h2>
+            <p class="text-xs text-slate-500 mt-0.5">
+              Rule: <strong>Max 2 simultaneous structured courses</strong>. Never accumulate certificates for their own sake.
+            </p>
+          </div>
+
+          <!-- Filters -->
+          <div class="flex flex-wrap items-center gap-2">
+            <input type="text" id="courseSearchInput" placeholder="Search courses or topics..." class="text-xs border border-slate-300 rounded-lg px-3 py-2 w-48 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <select id="courseCategoryFilter" class="text-xs border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <option value="ALL">All Categories</option>
+              <option value="Biology">Academic Biology</option>
+              <option value="Chemistry">Academic Chemistry</option>
+              <option value="Physics">Academic Physics</option>
+              <option value="Mathematics">Academic Mathematics</option>
+              <option value="Healthcare">Healthcare Foundations</option>
+              <option value="Learning">Learning How to Learn</option>
+              <option value="Digital">Digital & AI Literacy</option>
+              <option value="Communication">Communication & Speaking</option>
+              <option value="Financial">Financial Literacy & Business</option>
+            </select>
+            <select id="courseStatusFilter" class="text-xs border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500">
+              <option value="ALL">All Statuses</option>
+              <option value="Not started">Not Started</option>
+              <option value="In progress">In Progress</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Course Cards Grid -->
+        <div id="courseCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. VOLUNTEERING TAB -->
+    <section id="tab-volunteering" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200 mb-2">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> 100% Non-Clinical Verified & Teenager Safe
+            </div>
+            <h2 class="text-xl font-bold text-slate-900">Volunteering & Community Service Hub</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Priority: <strong>Benin City / Edo State (Priority A)</strong> &gt; National (B) &gt; Remote (C).</p>
+          </div>
+
+          <button id="btnLogVolunteerModal" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1.5">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> Log Volunteer Hours
+          </button>
+        </div>
+
+        <div id="volunteeringCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. HEALTHCARE CAREERS TAB -->
+    <section id="tab-careers" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900 mb-2">Nigerian Healthcare Career Comparison Matrix</h2>
+        <p class="text-sm text-slate-600 mb-6">
+          Explore and compare 14+ healthcare professions, UNIBEN faculties, UTME subject combinations, clinical postings, challenges, and entrepreneurial paths.
+        </p>
+
+        <div id="careersAccordion" class="space-y-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. TAILORING STUDIO TAB -->
+    <section id="tab-tailoring" class="tab-content hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Interactive Costing Calculator -->
+        <div class="lg:col-span-1 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 text-slate-900 font-bold text-lg">
+            <i data-lucide="calculator" class="w-5 h-5 text-emerald-600"></i>
+            Scientific Garment Costing Calculator
+          </div>
+          <p class="text-xs text-slate-500">Calculate fair client pricing using the scientific formula (Material + Labor + Overhead + Margin).</p>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="font-semibold text-slate-700">Project / Garment Name</label>
+              <input type="text" id="calcProjectName" placeholder="e.g. Lined Peplum Top" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-brand-500">
+            </div>
+
+            <div>
+              <label class="font-semibold text-slate-700">Material Cost (Fabric, stays, zips, lining) [₦]</label>
+              <input type="number" id="calcMaterialCost" value="3000" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-brand-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="font-semibold text-slate-700">Sewing Hours</label>
+                <input type="number" id="calcHours" value="3.5" step="0.5" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-brand-500">
+              </div>
+              <div>
+                <label class="font-semibold text-slate-700">Hourly Rate [₦]</label>
+                <input type="number" id="calcRate" value="1200" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-brand-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="font-semibold text-slate-700">Overhead (Iron electricity/fuel, transport) [₦]</label>
+              <input type="number" id="calcOverhead" value="800" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-brand-500">
+            </div>
+
+            <div>
+              <label class="font-semibold text-slate-700">Profit Margin (%)</label>
+              <input type="number" id="calcMargin" value="30" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1 focus:ring-2 focus:ring-brand-500">
+            </div>
+
+            <div class="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 mt-4 space-y-1">
+              <div class="flex justify-between text-xs"><span>Base Production Cost:</span><strong id="calcBaseCost">₦8,000.00</strong></div>
+              <div class="flex justify-between text-xs"><span>Target Profit Margin:</span><strong id="calcProfit">₦2,400.00</strong></div>
+              <div class="flex justify-between text-sm font-black text-emerald-800 pt-2 border-t border-emerald-300">
+                <span>Fair Client Quotation:</span><span id="calcFinalPrice">₦10,400.00</span>
+              </div>
+            </div>
+
+            <button id="btnSaveTailoringProject" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow transition text-xs">
+              Save to Completed Projects Log
+            </button>
+          </div>
+        </div>
+
+        <!-- Tailoring Projects Log & Lookbook -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="scissors" class="w-5 h-5 text-emerald-600"></i> Completed Tailoring Portfolio & Client Orders
+            </h3>
+            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full" id="tailoringNetProfitBadge">Net Profit: ₦0.00</span>
+          </div>
+
+          <div id="tailoringProjectsList" class="space-y-3">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. UNIBEN READINESS & CGPA TAB -->
+    <section id="tab-uniben" class="tab-content hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 5.0 CGPA Simulator -->
+        <div class="lg:col-span-1 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center gap-2 text-slate-900 font-bold text-base">
+            <i data-lucide="award" class="w-5 h-5 text-purple-600"></i> UNIBEN 5.0 CGPA Calculator
+          </div>
+          <p class="text-xs text-slate-500">Test hypothetical scores across UNIBEN 100-Level pre-med courses.</p>
+
+          <div class="space-y-2 text-xs" id="cgpaInputsContainer">
+            <!-- Populated by JavaScript -->
+          </div>
+
+          <div class="p-4 rounded-xl bg-purple-50 border border-purple-200 text-purple-950 space-y-1">
+            <div class="flex justify-between text-xs"><span>Total Credit Units:</span><strong id="cgpaTotalUnits">19</strong></div>
+            <div class="flex justify-between text-sm font-black text-purple-900">
+              <span>Calculated CGPA:</span><span class="text-lg" id="cgpaValue">5.00</span>
+            </div>
+            <div class="text-xs font-semibold text-purple-800" id="cgpaClass">First Class Honours</div>
+          </div>
+        </div>
+
+        <!-- First 30 Days Clearance Checklist -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="check-square" class="w-5 h-5 text-purple-600"></i> "First 30 Days at UNIBEN" Clearance Checklist
+            </h3>
+            <span class="text-xs text-slate-500" id="checklistProgressText">0 / 10 Completed</span>
+          </div>
+
+          <div id="unibenChecklistContainer" class="space-y-2.5 text-xs">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. READING LIBRARY TAB -->
+    <section id="tab-reading" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900 mb-2">12-Month Pre-University Reading Curriculum</h2>
+        <p class="text-sm text-slate-600 mb-6">
+          African literature, medical history, cognitive psychology, personal finance, and biographies.
+        </p>
+
+        <div id="readingBooksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. SOFT-SKILLS RUBRIC TAB -->
+    <section id="tab-rubric" class="tab-content hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Radar Chart -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col items-center justify-center">
+          <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <i data-lucide="activity" class="w-5 h-5 text-brand-600"></i> 15-Skill Competency Radar
+          </h3>
+          <div class="w-full max-w-md">
+            <canvas id="softSkillsChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Skill Sliders -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-bold text-slate-900">Quarterly Rubric Self-Assessment (1–5)</h3>
+            <select id="rubricQuarterSelect" class="text-xs border border-slate-300 rounded-lg px-2.5 py-1.5">
+              <option value="1">Quarter 1 Evaluation</option>
+              <option value="2">Quarter 2 Evaluation</option>
+              <option value="3">Quarter 3 Evaluation</option>
+              <option value="4">Quarter 4 Evaluation</option>
+            </select>
+          </div>
+
+          <div id="skillSlidersContainer" class="space-y-3 max-h-[420px] overflow-y-auto pr-2 text-xs">
+            <!-- Populated by JavaScript -->
+          </div>
+
+          <button id="btnSaveRubric" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow transition">
+            Save Quarterly Rubric Evaluation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. EMAIL DIGEST PREVIEW TAB -->
+    <section id="tab-emails" class="tab-content hidden space-y-6">
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">Multi-Channel Email Notifications</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Delivered via Resend REST API infrastructure (`RESEND_API_KEY`).</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="btnPreviewDigest" class="px-3.5 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow transition">
+              Weekly Digest Template
+            </button>
+            <button id="btnPreviewAlert" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl shadow transition">
+              Immediate Alert (85+)
+            </button>
+          </div>
+        </div>
+
+        <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-100 p-4">
+          <iframe id="emailPreviewFrame" class="w-full min-h-[500px] bg-white rounded-lg shadow-sm border border-slate-200" srcdoc="<p style='padding:20px;font-family:sans-serif;'>Click a button above to preview email layouts.</p>"></iframe>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LOG VOLUNTEER HOURS MODAL -->
+  <div id="volunteerModal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-900">Log Volunteer Hours</h3>
+        <button id="btnCloseVolModal" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="font-semibold text-slate-700">Organization</label>
+          <select id="volModalOrg" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1"></select>
+        </div>
+        <div>
+          <label class="font-semibold text-slate-700">Hours Completed</label>
+          <input type="number" id="volModalHours" value="4" min="1" max="20" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1">
+        </div>
+        <div>
+          <label class="font-semibold text-slate-700">Activity & Personal Reflection</label>
+          <textarea id="volModalReflection" rows="3" placeholder="What did you do? What skills or empathy did you exercise?" class="w-full border border-slate-300 rounded-lg p-2.5 mt-1"></textarea>
+        </div>
+        <button id="btnSaveVolunteerHours" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow transition">
+          Log Hours & Save Reflection
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COURSE PRACTICAL TASK MODAL -->
+  <div id="courseModal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-900" id="courseModalTitle">Course Practical Assignment</h3>
+        <button id="btnCloseCourseModal" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      </div>
+      <div class="space-y-3 text-xs">
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <span class="text-slate-500 font-semibold">Provider:</span> <strong id="courseModalProvider">Khan Academy</strong> • <span class="text-slate-500 font-semibold">Duration:</span> <strong id="courseModalDuration">6 weeks</strong>
+        </div>
+        <div class="p-4 bg-brand-50 rounded-xl border border-brand-200 text-brand-950">
+          <strong class="text-brand-900 block mb-1">🎯 Required Practical Assignment:</strong>
+          <p id="courseModalAssignment" class="text-xs leading-relaxed"></p>
+        </div>
+        <div>
+          <strong class="text-slate-700 block mb-1">📝 Notes & Relevance:</strong>
+          <p id="courseModalNotes" class="text-slate-600 text-xs leading-relaxed"></p>
+        </div>
+        <div class="flex justify-between items-center pt-2">
+          <a id="courseModalLink" href="#" target="_blank" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs transition">
+            Go to Official Course &rarr;
+          </a>
+          <button id="btnToggleCourseStatus" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition">
+            Mark Completed
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>Pre-University Development, Career & Opportunity System • Edo State, Nigeria</div>
+      <div>Hosted on <strong>GitHub Pages</strong> • Emails powered by <strong>Resend</strong></div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

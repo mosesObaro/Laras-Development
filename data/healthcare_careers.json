@@ -1,0 +1,730 @@
+[
+  {
+    "id": "car-001",
+    "title": "Nursing Science",
+    "degree_name": "Bachelor of Nursing Science (B.N.Sc) / RN / RM",
+    "overview": "Nursing professionals are the frontline cornerstone of patient care, assessing patient needs, administering treatment plans, advocating for patient safety, educating families, and managing clinical recovery across acute, community, and emergency settings.",
+    "responsibilities": [
+      "Conduct comprehensive holistic patient assessments and vital signs monitoring",
+      "Administer prescribed medications, IV therapies, and wound dressings",
+      "Develop and implement individualized Nursing Care Plans (NCP)",
+      "Educate patients and caregivers on chronic disease management and post-discharge recovery",
+      "Collaborate in multidisciplinary clinical teams (physicians, pharmacists, lab scientists)",
+      "Provide compassionate emotional support and end-of-life palliative care"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Department of Nursing Science, Ugbowo Campus",
+    "duration_years": 5,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 O'Level Credits in English Language, Mathematics, Biology, Chemistry, and Physics in not more than TWO sittings (WAEC/NECO/NABTEB).",
+    "post_utme_profile": "Extremely competitive (Typically requires UTME score of 230+ and strong Post-UTME performance).",
+    "clinical_rotations": "Extensive clinical postings starting from 300-Level at University of Benin Teaching Hospital (UBTH), covering Medical-Surgical, Paediatrics, Obstetrics/Midwifery, Community Health, Psychiatric Nursing, and Perioperative care.",
+    "regulatory_body": "Nursing and Midwifery Council of Nigeria (NMCN)",
+    "career_progression": [
+      "Registered Nurse (RN) / Registered Midwife (RM)",
+      "Nursing Officer II (GL 08 in Civil Service)",
+      "Senior Nursing Officer -> Principal Nursing Officer -> Chief Nursing Officer",
+      "Director of Nursing Services (DNS)",
+      "Academic track: M.Sc Nursing -> Ph.D -> Professor of Nursing"
+    ],
+    "specializations": [
+      "Critical Care / Intensive Care Nursing",
+      "Perioperative (Theatre) Nursing",
+      "Midwifery & Maternal Health",
+      "Public Health / Community Nursing",
+      "Paediatric & Neonatal Nursing",
+      "Psychiatric & Mental Health Nursing",
+      "Oncology Nursing",
+      "Ophthalmic Nursing",
+      "Cardiothoracic Nursing",
+      "Nurse Anaesthetist"
+    ],
+    "work_environments": [
+      "Teaching Hospitals (UBTH, UCH, LUTH)",
+      "Federal Medical Centres & State Specialist Hospitals",
+      "Primary Healthcare Centres & Community Clinics",
+      "Private Hospitals & Specialized Surgical Centres",
+      "International Humanitarian Agencies (MSF, Red Cross, WHO, UNICEF)",
+      "Corporate Health Clinics (Oil & Gas, Telecoms, Aviation)",
+      "Academic & Research Institutions"
+    ],
+    "challenges": [
+      "High patient-to-nurse ratios and heavy physical workload",
+      "Emotional strain from severe patient illness and mortality",
+      "Rotating shift patterns (night duties, weekend calls, holidays)",
+      "Resource constraints in certain public healthcare facilities"
+    ],
+    "international_mobility": "Very High (Global shortage of nurses; NMCN qualifications with NCLEX-RN, NMC UK CBT/OSCE, or OET/IELTS open immediate pathways to UK, USA, Canada, Australia, Ireland, and Gulf States).",
+    "entrepreneurial_possibilities": [
+      "Home Health Care & Geriatric Care Agency",
+      "Private Maternity & Child Health Clinic",
+      "Post-operative Recovery & Wound Care Concierge",
+      "First Aid Training & Corporate Ergonomics Consultancy",
+      "Medical Scrub & Protective Apparel Design (crossover with tailoring!)"
+    ]
+  },
+  {
+    "id": "car-002",
+    "title": "Medicine and Surgery",
+    "degree_name": "Bachelor of Medicine, Bachelor of Surgery (MBBS)",
+    "overview": "Medical doctors diagnose illnesses, prescribe and manage comprehensive therapeutic regimens, perform surgical interventions, and oversee the holistic clinical management of human health and disease.",
+    "responsibilities": [
+      "Take medical histories, perform physical examinations, and form differential diagnoses",
+      "Order and interpret diagnostic tests (laboratory panels, imaging, biopsies)",
+      "Prescribe medications, therapies, and perform invasive clinical procedures/surgeries",
+      "Direct resuscitation and intensive emergency care",
+      "Counsel patients on prognoses, risks, and treatment options"
+    ],
+    "uniben_faculty_dept": "School of Medicine, College of Medical Sciences, Ugbowo Campus",
+    "duration_years": 6,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Bio, Chem, Physics in ONE sitting (preferred/standard in top Nigerian universities).",
+    "post_utme_profile": "Highest competitive cut-off in UNIBEN (UTME 260-280+ typically required).",
+    "clinical_rotations": "400-Level to 600-Level clinical postings at UBTH (Internal Medicine, Surgery, Obstetrics & Gynaecology, Paediatrics, Community Medicine, Psychiatry, Ophthalmology, ENT, Anaesthesia).",
+    "regulatory_body": "Medical and Dental Council of Nigeria (MDCN)",
+    "career_progression": [
+      "House Officer (1-year compulsory internship)",
+      "Medical Officer (NYSC & Post-NYSC)",
+      "Residency Training (Registrar -> Senior Registrar -> Fellow)",
+      "Consultant Physician / Surgeon",
+      "Chief Medical Director (CMD) / Professor of Medicine"
+    ],
+    "specializations": [
+      "Internal Medicine (Cardiology, Endocrinology, Nephrology, Gastroenterology)",
+      "Surgery (General, Neurosurgery, Orthopaedics, Cardiothoracic, Plastic)",
+      "Obstetrics and Gynaecology",
+      "Paediatrics & Child Health",
+      "Radiology & Interventional Imaging",
+      "Anaesthesia & Intensive Care",
+      "Pathology (Haematology, Histopathology, Chemical Pathology)",
+      "Public Health & Preventive Medicine"
+    ],
+    "work_environments": [
+      "Tertiary Teaching Hospitals & Medical Institutes",
+      "State Specialist Hospitals & Federal Medical Centres",
+      "Private Specialist Hospitals & Surgical Centres",
+      "International Organizations (WHO, UN, Doctors Without Borders)",
+      "Medical Research Institutes (NIMR, KEMRI)"
+    ],
+    "challenges": [
+      "Rigorous, lengthy training timeline (6 years MBBS + 1 year Housemanship + 1 year NYSC + 4-6 years Residency)",
+      "High responsibility for life-or-death decision making under emergency pressure",
+      "Demanding on-call schedules and burnout risks"
+    ],
+    "international_mobility": "Very High (Requires professional licensing examinations: PLAB/UKMLA for UK, USMLE for USA, MCCQE for Canada, AMC for Australia).",
+    "entrepreneurial_possibilities": [
+      "Private Hospital or Specialized Diagnostic Clinic",
+      "Telemedicine Consultation Platform",
+      "Occupational Health & Industrial Medical Services",
+      "Health Tech & Clinical Software Development"
+    ]
+  },
+  {
+    "id": "car-003",
+    "title": "Pharmacy",
+    "degree_name": "Doctor of Pharmacy (Pharm.D) / B.Pharm",
+    "overview": "Pharmacists are the leading medication experts in healthcare, responsible for drug discovery, formulation, safety evaluation, therapeutic drug monitoring, patient pharmacotherapy counseling, and preventing adverse drug interactions.",
+    "responsibilities": [
+      "Compound, formulate, and dispense prescription and over-the-counter pharmaceuticals",
+      "Perform therapeutic drug monitoring and evaluate drug-drug / drug-nutrient interactions",
+      "Counsel patients on correct medication timing, dosages, storage, and side effects",
+      "Manage hospital pharmaceutical inventory and cold-chain vaccine storage",
+      "Collaborate with physicians to optimize antimicrobial stewardship and chemotherapy regimens"
+    ],
+    "uniben_faculty_dept": "Faculty of Pharmacy, Ugbowo Campus (Pioneered Pharm.D in Nigeria)",
+    "duration_years": 6,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Mathematics, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Very competitive (UTME 240+ typically required).",
+    "clinical_rotations": "Clinical pharmacy rotations at UBTH across inpatient wards, ICU, ambulatory care, oncology pharmacy, and community pharmacy externships.",
+    "regulatory_body": "Pharmacy Council of Nigeria (PCN)",
+    "career_progression": [
+      "Intern Pharmacist (1-year internship)",
+      "Pharmacist (NYSC)",
+      "Grade 08/09 Pharmacist -> Senior Pharmacist -> Principal Pharmacist",
+      "Chief Pharmacist / Director of Pharmaceutical Services (DPS)",
+      "Fellow of West African Postgraduate College of Pharmacists (FPCPharm)"
+    ],
+    "specializations": [
+      "Clinical Pharmacy & Pharmacotherapy",
+      "Industrial Pharmacy & Drug Manufacturing",
+      "Pharmaceutical Chemistry & Drug Design",
+      "Pharmacognosy & Natural Product Medicine",
+      "Pharmaceutics & Pharmaceutical Technology",
+      "Regulatory Affairs (NAFDAC, PCN)",
+      "Hospital & Community Pharmacy Management"
+    ],
+    "work_environments": [
+      "Hospital Pharmacies (Inpatient & Outpatient)",
+      "Community Retail Pharmacies",
+      "Pharmaceutical Manufacturing Plants (Emzor, Fidson, May & Baker)",
+      "Regulatory Agencies (NAFDAC, PCN, Standard Organization of Nigeria)",
+      "Research Laboratories & Academia"
+    ],
+    "challenges": [
+      "Combating counterfeit and substandard medicines in local supply chains",
+      "Complex chemistry and pharmacology coursework",
+      "High commercial and regulatory compliance responsibilities"
+    ],
+    "international_mobility": "High (Requires foreign licensing exams: FPGEE/NAPLEX in USA, GPhC OSPAP in UK, PEBC in Canada).",
+    "entrepreneurial_possibilities": [
+      "Retail Community Pharmacy Chain",
+      "Pharmaceutical Wholesale & Distribution Company",
+      "Herbal Drug Standardization & Nutraceutical Production",
+      "Cosmetic Formulation & Dermatological Product Brand"
+    ]
+  },
+  {
+    "id": "car-004",
+    "title": "Medical Laboratory Science",
+    "degree_name": "Bachelor of Medical Laboratory Science (B.MLS)",
+    "overview": "Medical Laboratory Scientists are diagnostic detectives who perform complex chemical, biological, haematological, immunological, microscopic, and bacteriological analyses on human fluids and tissues to diagnose diseases.",
+    "responsibilities": [
+      "Analyze blood, urine, tissue, and cerebrospinal fluid samples using automated analyzers and microscopy",
+      "Perform cross-matching and blood compatibility testing for emergency blood transfusions",
+      "Culture and identify pathogenic bacteria and determine antibiotic susceptibility profiles",
+      "Perform molecular diagnostics (PCR, DNA sequencing, antigen testing)",
+      "Maintain rigorous laboratory Quality Assurance (QA) and biosafety protocols"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Department of Medical Laboratory Science",
+    "duration_years": 5,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Highly competitive (UTME 220-240+).",
+    "clinical_rotations": "Hospital laboratory postings at UBTH across Chemical Pathology, Haematology/Blood Transfusion, Medical Microbiology, and Histopathology.",
+    "regulatory_body": "Medical Laboratory Science Council of Nigeria (MLSCN)",
+    "career_progression": [
+      "Intern Medical Laboratory Scientist",
+      "Medical Laboratory Scientist (NYSC)",
+      "Senior MLS -> Principal MLS -> Chief MLS -> Director of Laboratory Services",
+      "Fellowship (FMLSCN) / Post-graduate specialization"
+    ],
+    "specializations": [
+      "Medical Microbiology & Parasitology",
+      "Chemical Pathology & Clinical Chemistry",
+      "Haematology & Blood Transfusion Science",
+      "Histopathology & Cytopathology",
+      "Molecular Biology & Genomics",
+      "Immunology & Immunopathology"
+    ],
+    "work_environments": [
+      "Hospital Clinical Laboratories (UBTH, Specialist Hospitals)",
+      "Private Diagnostic Centres & Pathology Laboratories",
+      "Blood Transfusion Services & Blood Banks",
+      "Public Health Laboratories (NCDC, WHO reference labs)",
+      "Forensic & Toxicology Laboratories"
+    ],
+    "challenges": [
+      "Exposure to potentially infectious biohazards requiring strict PPE discipline",
+      "Time-sensitive pressure for critical emergency lab values",
+      "Equipment calibration and reagent supply chain constraints"
+    ],
+    "international_mobility": "Very High (HCPC registration in UK, ASCPi in USA, CSMLS in Canada, AIMS in Australia).",
+    "entrepreneurial_possibilities": [
+      "Independent Medical Diagnostic Laboratory",
+      "Specialized Blood Banking & Component Processing Service",
+      "Laboratory Equipment & Reagent Distribution Agency",
+      "Water & Food Safety Testing Laboratory"
+    ]
+  },
+  {
+    "id": "car-005",
+    "title": "Physiotherapy / Physical Therapy",
+    "degree_name": "Bachelor of Physiotherapy (B.PT) / Doctor of Physiotherapy (DPT)",
+    "overview": "Physiotherapists restore movement and functional ability, alleviate pain, and prevent physical disability in patients recovering from stroke, spinal cord injury, sports trauma, orthopaedic surgery, and congenital neuromuscular disorders.",
+    "responsibilities": [
+      "Assess neuromuscular, musculoskeletal, and cardiopulmonary functional limitations",
+      "Design exercise therapy regimens, manual joint mobilizations, and neuromuscular re-education",
+      "Utilize electrotherapy, thermotherapy, and hydrotherapy modalities",
+      "Rehabilitate stroke patients to regain walking, balance, and independence",
+      "Educate patients on workplace ergonomics and postural injury prevention"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Department of Physiotherapy",
+    "duration_years": 5,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Competitive (UTME 220+).",
+    "clinical_rotations": "Clinical postings at UBTH Physiotherapy Department (Orthopaedics, Neurology, Paediatrics, ICU Chest Physiotherapy, Sports Medicine).",
+    "regulatory_body": "Medical Rehabilitation Therapists Board of Nigeria (MRTB)",
+    "career_progression": [
+      "Intern Physiotherapist",
+      "Physiotherapist (NYSC)",
+      "Senior Physiotherapist -> Principal -> Chief Physiotherapist -> Director of Medical Rehabilitation"
+    ],
+    "specializations": [
+      "Neurological Physiotherapy (Stroke & Spinal Rehabilitation)",
+      "Orthopaedic & Musculoskeletal Physiotherapy",
+      "Sports Physiotherapy & Athletic Performance",
+      "Cardiorespiratory & ICU Chest Physiotherapy",
+      "Paediatric Physiotherapy (Cerebral Palsy, Spina Bifida)",
+      "Geriatric Rehabilitation & Fall Prevention",
+      "Women's Health & Pelvic Floor Rehabilitation"
+    ],
+    "work_environments": [
+      "Teaching Hospitals & Rehabilitation Centres",
+      "Sports Teams, Athletic Clubs & National Stadiums",
+      "Private Physiotherapy Clinics",
+      "Geriatric Care Homes & Community Outreach",
+      "Industrial & Corporate Wellness Consulting"
+    ],
+    "challenges": [
+      "Physical stamina required for patient transfers and manual mobilization",
+      "Long rehabilitation timelines requiring patient motivation and patience"
+    ],
+    "international_mobility": "Very High (HCPC in UK, NPTE/FCCPT in USA, CAPR in Canada).",
+    "entrepreneurial_possibilities": [
+      "Private Physical Therapy & Rehabilitation Clinic",
+      "Sports Injury Management & Fitness Facility",
+      "Ergonomic Workplace Assessment Consultancy",
+      "Home-visit Rehabilitation Service for Stroke Patients"
+    ]
+  },
+  {
+    "id": "car-006",
+    "title": "Radiography and Radiation Science",
+    "degree_name": "Bachelor of Radiography (B.Rad) / Medical Imaging",
+    "overview": "Radiographers produce high-quality diagnostic medical images using ionizing radiation, magnetic resonance, and ultrasound, and deliver precision radiotherapy for cancer treatment.",
+    "responsibilities": [
+      "Operate advanced diagnostic equipment: X-ray, CT Scanner, MRI, Fluoroscopy, and Ultrasound",
+      "Position patients precisely to visualize anatomical pathologies while ensuring radiation protection (ALARA)",
+      "Administer radio-opaque contrast media under protocol",
+      "Deliver targeted ionizing radiation in clinical oncology (Radiation Therapy)",
+      "Manage Picture Archiving and Communication Systems (PACS)"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Department of Radiography",
+    "duration_years": 5,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Competitive (UTME 220+).",
+    "clinical_rotations": "Clinical rotations at UBTH Department of Radiology & Radiotherapy.",
+    "regulatory_body": "Radiographers Registration Board of Nigeria (RRBN)",
+    "career_progression": [
+      "Intern Radiographer",
+      "Radiographer (NYSC)",
+      "Senior Radiographer -> Principal -> Chief Radiographer -> Director of Imaging Services"
+    ],
+    "specializations": [
+      "Diagnostic Radiography (X-Ray, CT, MRI)",
+      "Diagnostic Medical Sonography (Ultrasound - Obstetric, Abdominal, Vascular)",
+      "Radiation Therapy & Medical Dosimetry (Oncology)",
+      "Nuclear Medicine & PET Imaging",
+      "Interventional Radiology Imaging Support",
+      "Mammography & Breast Imaging"
+    ],
+    "work_environments": [
+      "Hospital Radiology Departments (UBTH, FMC)",
+      "Cancer Treatment & Radiotherapy Centres",
+      "Private Diagnostic Imaging Centres",
+      "Equipment Manufacturers (GE Healthcare, Siemens Healthineers, Philips - Application Specialist)"
+    ],
+    "challenges": [
+      "Strict compliance with radiation safety protocols",
+      "High cost of imaging machinery maintenance and downtime"
+    ],
+    "international_mobility": "Very High (HCPC in UK, ARRT in USA, CAMRT in Canada).",
+    "entrepreneurial_possibilities": [
+      "Private Medical Ultrasound & 4D Scan Clinic",
+      "Mobile X-Ray & Sonography Diagnostic Service",
+      "Radiological Imaging Teleradiology Hub",
+      "Medical Imaging Equipment Sales & Servicing"
+    ]
+  },
+  {
+    "id": "car-007",
+    "title": "Dentistry and Dental Surgery",
+    "degree_name": "Bachelor of Dental Surgery (BDS)",
+    "overview": "Dental surgeons diagnose, prevent, and treat diseases, disorders, and conditions of the oral cavity, maxillofacial region, teeth, gums, and associated tissues.",
+    "responsibilities": [
+      "Perform oral examinations, caries detection, and dental radiography",
+      "Execute restorative fillings, root canal therapy (endodontics), and tooth extractions",
+      "Perform surgical tooth impaction extractions and repair facial trauma",
+      "Fit prosthetic dentures, crowns, bridges, and orthodontic appliances",
+      "Educate communities on oral hygiene and systemic health connections"
+    ],
+    "uniben_faculty_dept": "School of Dentistry, College of Medical Sciences, Ugbowo Campus",
+    "duration_years": 6,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in ONE sitting.",
+    "post_utme_profile": "Very competitive (UTME 240+).",
+    "clinical_rotations": "Clinical dentistry postings at UBTH Dental Centre (Oral & Maxillofacial Surgery, Conservative Dentistry, Preventive Dentistry, Child Dental Health, Periodontology).",
+    "regulatory_body": "Medical and Dental Council of Nigeria (MDCN)",
+    "career_progression": [
+      "Dental House Officer (1 year)",
+      "Dental Officer (NYSC)",
+      "Residency -> Consultant Dental Surgeon -> Professor of Dentistry"
+    ],
+    "specializations": [
+      "Oral and Maxillofacial Surgery",
+      "Orthodontics & Dentofacial Orthopedics",
+      "Periodontology (Gum Disease)",
+      "Endodontics & Restorative Dentistry",
+      "Paediatric Dentistry (Pedodontics)",
+      "Oral Pathology & Oral Medicine",
+      "Prosthodontics"
+    ],
+    "work_environments": [
+      "Teaching Hospitals & Dental Schools",
+      "Private Dental Clinics & Oral Health Centres",
+      "Armed Forces & Police Medical Services",
+      "Public Health Dental Outreach Programs"
+    ],
+    "challenges": [
+      "Fine manual dexterity and precision required in confined oral space",
+      "High cost of dental instruments and clinic setup"
+    ],
+    "international_mobility": "High (ORE in UK, NDBEB in Canada, INBDE in USA).",
+    "entrepreneurial_possibilities": [
+      "Private Dental Clinic & Cosmetic Dentistry Studio",
+      "Mobile Community Dental Outreach Van",
+      "Dental Laboratory (Crowns, Bridges & Prosthetics)",
+      "Oral Health Consumer Products Distribution"
+    ]
+  },
+  {
+    "id": "car-008",
+    "title": "Public Health",
+    "degree_name": "Bachelor of Science (B.Sc) / Master of Public Health (MPH)",
+    "overview": "Public health professionals focus on protecting and improving the health of entire populations through disease surveillance, policy development, sanitation, epidemic response, and health promotion.",
+    "responsibilities": [
+      "Design and monitor disease surveillance and epidemic response systems",
+      "Analyze epidemiological health data to identify disease outbreaks and trends",
+      "Develop public health policies for maternal health, clean water, and vaccination",
+      "Manage community health interventions and NGO field projects",
+      "Conduct health economics evaluations and programmatic impact assessments"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Department of Public Health (or Post-grad in School of Medicine)",
+    "duration_years": 4,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics or Mathematics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Moderate to High (UTME 200-220+).",
+    "clinical_rotations": "Community field postings in primary health centres, rural epidemiological surveillance sites, and health ministries.",
+    "regulatory_body": "Public Health Professionals Association / West African Institute of Public Health (WAIPH)",
+    "career_progression": [
+      "Public Health Officer",
+      "Epidemiologist / Monitoring & Evaluation (M&E) Specialist",
+      "Project Director in International NGO / Country Health Director",
+      "WHO / UNICEF / Global Fund Technical Advisor"
+    ],
+    "specializations": [
+      "Epidemiology & Biostatistics",
+      "Environmental & Occupational Health",
+      "Health Policy, Management & Economics",
+      "Global Maternal, Newborn & Child Health (MNCH)",
+      "Social & Behavioral Health Promotion",
+      "Disaster & Emergency Health Management"
+    ],
+    "work_environments": [
+      "International Organizations (WHO, UNICEF, UNFPA, CDC)",
+      "National Health Agencies (NCDC, Primary Health Care Development Agency)",
+      "Non-Governmental Organizations (NGOs) & Humanitarian Charities",
+      "Ministries of Health (Federal & State Levels)",
+      "Academic & Global Health Research Institutes"
+    ],
+    "challenges": [
+      "Navigating bureaucratic government systems and funding dependencies",
+      "Addressing deeply entrenched social and economic determinants of poverty"
+    ],
+    "international_mobility": "Extremely High (Global public health programs readily hire across borders; MPH widely recognized).",
+    "entrepreneurial_possibilities": [
+      "Public Health Consultancy & Program Evaluation Firm",
+      "Health Communications & Social Media Advocacy Agency",
+      "Water Sanitation & Hygiene (WASH) Social Enterprise",
+      "Health Data Analytics & Survey Research Firm"
+    ]
+  },
+  {
+    "id": "car-009",
+    "title": "Human Nutrition and Dietetics",
+    "degree_name": "Bachelor of Science (B.Sc) in Nutrition and Dietetics",
+    "overview": "Clinical dietitians and nutritionists assess nutritional status, design medical nutrition therapies for diseases (diabetes, kidney failure, malnutrition), and optimize food systems.",
+    "responsibilities": [
+      "Conduct clinical nutritional assessments (anthropometric, biochemical, dietary)",
+      "Formulate specialized therapeutic diets for hospital inpatients and intensive care (tube feeding/TPN)",
+      "Manage community malnutrition intervention programs for infants and pregnant women",
+      "Counsel individuals on weight management, hypertension, and diabetes control",
+      "Advise institutional food service operations on hygiene and nutrient preservation"
+    ],
+    "uniben_faculty_dept": "Faculty of Agriculture / Basic Medical Sciences",
+    "duration_years": 4,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics or Agricultural Science"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics/Agric in max TWO sittings.",
+    "post_utme_profile": "Moderate (UTME 200+).",
+    "clinical_rotations": "Dietetics internship and hospital ward postings at UBTH Dietary & Clinical Nutrition Department.",
+    "regulatory_body": "Dietitians Association of Nigeria (DAN) / Institute of Dietetics in Nigeria (IDN)",
+    "career_progression": [
+      "Intern Dietitian",
+      "Clinical Dietitian (NYSC)",
+      "Senior Dietitian -> Chief Dietitian -> Head of Clinical Nutrition Services"
+    ],
+    "specializations": [
+      "Clinical Dietetics (Renal, Oncology, Paediatric, Diabetic Nutrition)",
+      "Community Public Health Nutrition",
+      "Sports Nutrition & Athletic Performance",
+      "Food Product Development & Fortification",
+      "Geriatric Nutritional Care"
+    ],
+    "work_environments": [
+      "Teaching Hospitals & Private Specialist Clinics",
+      "Food & Beverage Manufacturing Companies (Nestlé, FrieslandCampina)",
+      "UN Nutrition Programs (UNICEF, WFP, Action Against Hunger)",
+      "Wellness Clinics & Fitness Centres"
+    ],
+    "challenges": [
+      "Patient non-compliance with dietary changes due to cultural and economic constraints",
+      "Misinformation from unqualified social media 'diet gurus'"
+    ],
+    "international_mobility": "High (HCPC UK, CDR USA, Dietitians Canada).",
+    "entrepreneurial_possibilities": [
+      "Private Clinical Nutrition & Weight Loss Consultancy",
+      "Specialty Health Food & Therapeutic Snack Production",
+      "Corporate Wellness & Employee Meal Planning Services",
+      "Baby Food & Weaning Formula Manufacturing using local Nigerian crops"
+    ]
+  },
+  {
+    "id": "car-010",
+    "title": "Human Anatomy",
+    "degree_name": "Bachelor of Science (B.Sc) in Human Anatomy",
+    "overview": "Anatomists study the gross, microscopic, and developmental structure of the human body, conducting research in cell biology, embryology, neuroanatomy, and forensic anthropology, while training future healthcare professionals.",
+    "responsibilities": [
+      "Conduct cadaveric dissection and anatomical tissue preparation",
+      "Perform histological tissue processing, staining, and light/electron microscopy",
+      "Teach gross anatomy, histology, and embryology to medical, nursing, and dental students",
+      "Conduct biomedical research on organ preservation, teratology, and neurobiology",
+      "Support forensic identification in medico-legal investigations"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Department of Anatomy, Ugbowo Campus",
+    "duration_years": 4,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Moderate (UTME 200+).",
+    "clinical_rotations": "Gross anatomy dissection laboratories, histology and tissue processing units, mortuary and forensic facilities.",
+    "regulatory_body": "Anatomical Society of Nigeria (ASN)",
+    "career_progression": [
+      "Graduate Assistant -> Lecturer II -> Senior Lecturer -> Professor of Anatomy",
+      "Biomedical Research Scientist",
+      "Medical Science Liaison in Biotech",
+      "Pathology Assistant / Mortuary Scientist"
+    ],
+    "specializations": [
+      "Gross & Applied Clinical Anatomy",
+      "Neuroanatomy & Brain Sciences",
+      "Developmental Anatomy & Teratology (Birth Defects)",
+      "Histochemistry & Microscopic Anatomy",
+      "Forensic Anthropology & Biological Profiling",
+      "Reproductive Biology & Assisted Reproduction (IVF Embryology)"
+    ],
+    "work_environments": [
+      "Universities & Medical Schools (Academic faculty)",
+      "Biomedical Research Institutes",
+      "Fertility & In-Vitro Fertilization (IVF) Clinics (as Clinical Embryologists)",
+      "Forensic Laboratories & Law Enforcement Medical Units",
+      "Medical Device & Anatomical Model Manufacturing"
+    ],
+    "challenges": [
+      "Limited non-academic hospital positions compared to licensed clinical nursing/medicine",
+      "Requires post-graduate studies (M.Sc/Ph.D) or IVF clinical certifications for maximum career earning"
+    ],
+    "international_mobility": "High in Academic and IVF Clinical Embryology sectors.",
+    "entrepreneurial_possibilities": [
+      "Clinical Embryology & IVF Consulting",
+      "3D Anatomical Modeling & Medical Educational Animation Studio",
+      "Histopathology Slide Preparation & Staining Laboratory",
+      "Scientific Research Reagent & Specimen Supply"
+    ]
+  },
+  {
+    "id": "car-011",
+    "title": "Human Physiology",
+    "degree_name": "Bachelor of Science (B.Sc) in Human Physiology",
+    "overview": "Physiologists investigate the cellular, organ, and systemic mechanisms of the human body, deciphering how electrical, biochemical, and physical functions sustain life and how diseases disrupt homeostasis.",
+    "responsibilities": [
+      "Perform physiological testing: ECG, EEG, EMG, spirometry, and exercise stress tests",
+      "Investigate cellular signaling mechanisms and hormonal regulation pathways",
+      "Teach human physiology to nursing, pharmacy, and medical students",
+      "Conduct cardiovascular, neurophysiological, and metabolic animal/human research",
+      "Analyze physiological data for athletic performance and aerospace medicine"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Department of Physiology, Ugbowo Campus",
+    "duration_years": 4,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Moderate (UTME 200+).",
+    "clinical_rotations": "Neurophysiology labs, cardiovascular diagnostic units, respiratory spirometry clinics.",
+    "regulatory_body": "Physiological Society of Nigeria (PSN)",
+    "career_progression": [
+      "Lecturer / Academic Researcher",
+      "Clinical Neurophysiologist / Cardiac Electrophysiology Technician",
+      "Pharmaceutical Clinical Trial Associate",
+      "Sports Physiologist / Performance Scientist"
+    ],
+    "specializations": [
+      "Cardiovascular & Respiratory Physiology",
+      "Neurophysiology & Cognitive Sciences",
+      "Endocrinology & Reproductive Physiology",
+      "Renal & Body Fluid Homeostasis",
+      "Exercise & Environmental Physiology"
+    ],
+    "work_environments": [
+      "Medical Schools & University Departments",
+      "Hospital Diagnostic Electrophysiology Suites (ECG, EEG, Sleep Labs)",
+      "Pharmaceutical Clinical Research Organizations (CROs)",
+      "High-Performance Sports Institutes & Fitness Testing Facilities"
+    ],
+    "challenges": [
+      "Requires specialized technical certifications for hospital diagnostic unit practice",
+      "Primary career path in Nigeria often leans heavily on university lecturing and research"
+    ],
+    "international_mobility": "High in Biomedical Research, Neurophysiology Tech, and Clinical Trials.",
+    "entrepreneurial_possibilities": [
+      "Cardiopulmonary Diagnostic Testing & Holter Monitor Service",
+      "Sports Performance & VO2 Max Metabolic Testing Centre",
+      "Sleep Disorder Screening & Sleep Hygiene Consultancy"
+    ]
+  },
+  {
+    "id": "car-012",
+    "title": "Medical Biochemistry",
+    "degree_name": "Bachelor of Science (B.Sc) in Medical / Clinical Biochemistry",
+    "overview": "Medical biochemists explore the molecular machinery of life, enzyme kinetics, metabolic pathways, and genetic mechanisms underlying human diseases, designing targeted therapeutic inhibitors and biomarkers.",
+    "responsibilities": [
+      "Analyze enzymatic assays, protein structures, and lipid biomarkers",
+      "Perform molecular assays: ELISA, Western Blotting, Chromatography, and Spectrophotometry",
+      "Investigate drug metabolism, liver toxicology, and biochemical pathology",
+      "Develop diagnostic test kits for infectious and chronic metabolic diseases",
+      "Teach biochemistry principles to undergraduate healthcare cohorts"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Faculty of Life Sciences",
+    "duration_years": 4,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Moderate (UTME 200+).",
+    "clinical_rotations": "Clinical biochemistry hospital laboratories, research biotechnology centres.",
+    "regulatory_body": "Nigerian Society of Biochemistry and Molecular Biology (NSBMB)",
+    "career_progression": [
+      "Research Scientist -> Senior Biochemist -> Principal Investigator",
+      "Quality Control Manager in Pharma/Food Industry",
+      "Clinical Chemistry Specialist / Academic Professor"
+    ],
+    "specializations": [
+      "Clinical Enzymology & Metabolic Diseases",
+      "Molecular Toxicology & Drug Metabolism",
+      "Nutritional Biochemistry",
+      "Cancer Biochemistry & Oncogenomics",
+      "Structural Biology & Bioinformatics"
+    ],
+    "work_environments": [
+      "Biotechnology & Pharmaceutical Research Companies",
+      "Clinical Chemistry Laboratories in Hospitals",
+      "Food, Beverage & Brewing Industries (Quality Control)",
+      "Academic Institutions & Medical Research Centres"
+    ],
+    "challenges": [
+      "Abstract molecular concepts requiring strong chemistry aptitude",
+      "Equipment-intensive research requiring well-funded laboratories"
+    ],
+    "international_mobility": "Very High for Ph.D. scholarships, biotech careers, and pharma research globally.",
+    "entrepreneurial_possibilities": [
+      "Diagnostic Reagent & Test Kit Formulation",
+      "Specialty Clinical Enzyme Assay Laboratory",
+      "Natural Product Extraction & Phytochemical Standardization Firm"
+    ]
+  },
+  {
+    "id": "car-013",
+    "title": "Health Information Management",
+    "degree_name": "Bachelor of Science (B.Sc / B.HIM) / HND in Health Information Management",
+    "overview": "Health Information Managers bridge healthcare, computer science, and administrative management, governing patient health records, electronic medical records (EMR), clinical coding (ICD-10/11), data confidentiality, and hospital analytics.",
+    "responsibilities": [
+      "Manage Electronic Health Record (EHR/EMR) systems and paper medical archives",
+      "Perform clinical coding of diseases and surgical procedures using ICD-10/11 for billing and statistics",
+      "Ensure patient medical record privacy, data security, and compliance with health data laws (NDPR)",
+      "Generate hospital epidemiological and utilization analytics for executive decisions",
+      "Train clinical staff (doctors, nurses) on EMR documentation accuracy"
+    ],
+    "uniben_faculty_dept": "School of Basic Medical Sciences / Institute of Health Technology, UBTH",
+    "duration_years": 4,
+    "utme_subjects": ["English Language", "Biology", "Chemistry", "Mathematics or Physics"],
+    "olevel_requirements": "5 Credits in English, Math, Biology, Chemistry, Physics in max TWO sittings.",
+    "post_utme_profile": "Accessible to Moderate (UTME 180-210+).",
+    "clinical_rotations": "Health Records departments at UBTH, central medical archives, coding and billing units.",
+    "regulatory_body": "Health Records Officers Registration Board of Nigeria (HRORBN)",
+    "career_progression": [
+      "Health Information Officer",
+      "Health Data Analyst / Clinical Coding Specialist",
+      "Health Informatics Manager -> Director of Health Information Systems"
+    ],
+    "specializations": [
+      "Health Informatics & EMR Implementation",
+      "Clinical Classification & Disease Coding (ICD/CPT)",
+      "Health Data Analytics & Epidemiology Records",
+      "Healthcare Privacy, Compliance & Cyber-Governance"
+    ],
+    "work_environments": [
+      "Teaching Hospitals & Private Hospital Networks",
+      "Health Maintenance Organizations (HMOs) & Health Insurance Agencies",
+      "Health Tech Companies & Software Vendors",
+      "Government Ministries of Health & NCDC"
+    ],
+    "challenges": [
+      "Managing resistance from clinical staff during electronic record transitions",
+      "Safeguarding patient data against cybersecurity breaches"
+    ],
+    "international_mobility": "High (AHIMA in USA, CHIMA in Canada, IHRIM in UK - High demand for health informatics).",
+    "entrepreneurial_possibilities": [
+      "EMR Software Consulting & Training for Private Hospitals",
+      "Medical Transcription & Remote Clinical Coding Agency",
+      "Hospital Record Digitization & Secure Archiving Service",
+      "Health Data Analytics Consultancy for HMOs"
+    ]
+  },
+  {
+    "id": "car-014",
+    "title": "Biomedical Engineering",
+    "degree_name": "Bachelor of Engineering (B.Eng) in Biomedical Engineering",
+    "overview": "Biomedical Engineers combine engineering principles with biological sciences to design, build, calibrate, and maintain life-saving medical devices, prosthetics, artificial organs, and diagnostic imaging equipment.",
+    "responsibilities": [
+      "Design and develop medical equipment (dialysis machines, patient monitors, ventilators, incubators)",
+      "Perform preventative maintenance, safety checks, and calibrations on hospital medical machinery",
+      "Develop biocompatible prosthetic limbs, joint implants, and assistive technology",
+      "Manage hospital clinical engineering departments and evaluate new medical tech purchases",
+      "Collaborate with surgeons and clinicians to optimize biomedical instrumentation in operating theatres"
+    ],
+    "uniben_faculty_dept": "Faculty of Engineering / College of Medical Sciences",
+    "duration_years": 5,
+    "utme_subjects": ["English Language", "Mathematics", "Physics", "Chemistry"],
+    "olevel_requirements": "5 Credits in English, Mathematics, Physics, Chemistry, Biology in max TWO sittings.",
+    "post_utme_profile": "Competitive (UTME 220+).",
+    "clinical_rotations": "Clinical engineering attachments at UBTH biomedical workshops, hospital ICU, dialysis and radiology units.",
+    "regulatory_body": "Council for the Regulation of Engineering in Nigeria (COREN) / Association of Biomedical Engineers of Nigeria (ABEN)",
+    "career_progression": [
+      "Biomedical Engineer",
+      "Senior Clinical Engineer -> Chief Biomedical Engineer",
+      "Regional Field Service Manager for multinational medical device firms",
+      "Medical Device R&D Director"
+    ],
+    "specializations": [
+      "Clinical Engineering & Hospital Equipment Management",
+      "Biomechanics, Orthotics & Prosthetics",
+      "Biomedical Instrumentation & Biosensors",
+      "Biomaterials & Tissue Engineering",
+      "Medical Imaging Systems Engineering"
+    ],
+    "work_environments": [
+      "Hospitals (Clinical Engineering Departments)",
+      "Medical Device Manufacturers (GE, Philips, Mindray, Draeger)",
+      "Prosthetic and Orthotic Rehabilitation Facilities",
+      "Biomedical Research Institutes & University Engineering Departments"
+    ],
+    "challenges": [
+      "High mathematical and engineering physics rigor",
+      "Scarcity of local spare parts requiring innovative fabrication solutions"
+    ],
+    "international_mobility": "Very High (Global demand across healthcare technology and biotech sectors).",
+    "entrepreneurial_possibilities": [
+      "Hospital Medical Equipment Maintenance & Calibration Firm",
+      "Custom 3D-Printed Prosthetics & Orthotic Support Studio",
+      "Medical Device Importation, Sales & Technical Support Company",
+      "Solar-Powered Hospital Essential Equipment Manufacturing (Incubators, Phototherapy)"
+    ]
+  }
+]

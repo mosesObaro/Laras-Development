@@ -1,0 +1,137 @@
+[
+  {
+    "id": "sk-001",
+    "name": "Verbal & Written Communication",
+    "pillar_index": 5,
+    "description": "Mastery of clear, empathetic, and professional communication across spoken conversations, formal emails, and patient interactions.",
+    "practical_assignment": "Draft 3 professional emails (Requesting academic clarification from a lecturer, submitting a tailoring quote to a client, inquiring about volunteering).",
+    "rubric_level_5": "Communicates with effortless poise, precision, active listening, and adapts tone seamlessly to lecturers, patients, and clients.",
+    "rubric_level_1": "Struggles with sentence clarity, avoids eye contact, lacks formal email structure."
+  },
+  {
+    "id": "sk-002",
+    "name": "Public Speaking & Presentation Delivery",
+    "pillar_index": 6,
+    "description": "Structuring persuasive speeches, overcoming stage fright, using slides effectively, and delivering compelling spoken presentations.",
+    "practical_assignment": "Deliver a 10-15 minute presentation on 'How the Human Cardiovascular System Maintains Homeostasis' to family or peers.",
+    "rubric_level_5": "Delivers engaging, well-structured 15-minute presentations with clear voice projection, storytelling, and confident Q&A handling.",
+    "rubric_level_1": "Experiences paralyzing anxiety, reads verbatim from notes without engaging the audience."
+  },
+  {
+    "id": "sk-003",
+    "name": "Critical Thinking & Evidence Evaluation",
+    "pillar_index": 7,
+    "description": "Evaluating claims using the 7-question critical framework, distinguishing correlation from causation, and detecting cognitive biases.",
+    "practical_assignment": "Critique two viral Nigerian social media health claims using peer-reviewed medical sources.",
+    "rubric_level_5": "Systematically questions claims, inspects evidence sources, identifies hidden assumptions, and forms objective conclusions.",
+    "rubric_level_1": "Accepts unverified claims or forwarded messages without questioning validity."
+  },
+  {
+    "id": "sk-004",
+    "name": "Structured Problem Solving & Decision Making",
+    "pillar_index": 8,
+    "description": "Root-cause analysis (5 Whys), risk evaluation, prioritization matrices, and systematic troubleshooting under pressure.",
+    "practical_assignment": "Solve a real-world tailoring bottleneck (fabric shrinkage or delayed delivery) using a root-cause diagram and contingency plan.",
+    "rubric_level_5": "Deconstructs complex challenges into root causes, generates multiple evaluated alternatives, and executes robust solutions.",
+    "rubric_level_1": "Reacts emotionally to problems, treats superficial symptoms rather than root causes."
+  },
+  {
+    "id": "sk-005",
+    "name": "Emotional Intelligence & Self-Regulation",
+    "pillar_index": 9,
+    "description": "Recognizing emotional triggers, managing stress, demonstrating profound empathy, and handling constructive criticism gracefully.",
+    "practical_assignment": "Maintain a daily 15-minute reflection journal documenting emotional triggers, stressors, and regulation strategies.",
+    "rubric_level_5": "Demonstrates high self-awareness, stays calm under pressure, handles criticism with gratitude, and shows genuine empathy.",
+    "rubric_level_1": "Becomes easily defensive, struggles with emotional volatility, lacks empathy for others' viewpoints."
+  },
+  {
+    "id": "sk-006",
+    "name": "Confidence & Healthy Self-Awareness",
+    "pillar_index": 10,
+    "description": "Grounding self-worth in competence and character, understanding personal strengths/weaknesses, and maintaining a growth mindset.",
+    "practical_assignment": "Conduct a personal SWOT analysis (Strengths, Weaknesses, Opportunities, Threats) for university preparation.",
+    "rubric_level_5": "Exudes quiet competence and self-assurance without arrogance; embraces mistakes as learning opportunities.",
+    "rubric_level_1": "Crippled by self-doubt and impostor syndrome, avoids challenging tasks due to fear of failure."
+  },
+  {
+    "id": "sk-007",
+    "name": "Ethical Leadership & Accountability",
+    "pillar_index": 11,
+    "description": "Servant leadership, taking full ownership of outcomes, delegating responsibility, and inspiring peers toward collective goals.",
+    "practical_assignment": "Coordinate a community service activity or family project from planning to execution.",
+    "rubric_level_5": "Takes total accountability for team success and failure, motivates others, and leads with integrity.",
+    "rubric_level_1": "Passes blame to others, shies away from responsibility, struggles to motivate peers."
+  },
+  {
+    "id": "sk-008",
+    "name": "Teamwork & Interprofessional Collaboration",
+    "pillar_index": 12,
+    "description": "Working harmoniously with diverse personalities, resolving team disagreements, and prioritizing team outcomes.",
+    "practical_assignment": "Participate in a collaborative volunteer project or study group, facilitating consensus on divided opinions.",
+    "rubric_level_5": "Thrives in diverse teams, mediates conflicts constructively, and elevates teammates' contributions.",
+    "rubric_level_1": "Prefers solitary work to avoid confrontation, struggles to compromise or listen to opposing ideas."
+  },
+  {
+    "id": "sk-009",
+    "name": "Time Management & Habit Formation",
+    "pillar_index": 13,
+    "description": "Time blocking, Pomodoro deep work, Eisenhower matrix prioritization, and eliminating procrastination.",
+    "practical_assignment": "Maintain a disciplined weekly timetable balancing 8 hours of tailoring, 90 mins of academic study, and 30 mins of reading.",
+    "rubric_level_5": "Consistently adheres to time blocks, meets deadlines ahead of schedule, and maintains balanced life routines.",
+    "rubric_level_1": "Chronically misses deadlines, suffers from severe procrastination, has no structured daily routine."
+  },
+  {
+    "id": "sk-010",
+    "name": "Financial Discipline & Budgeting",
+    "pillar_index": 16,
+    "description": "Prudent budgeting, differentiating needs from wants, disciplined savings, and acute awareness of scams and gambling risks.",
+    "practical_assignment": "Create a monthly budget tracking personal income, expenses, emergency fund savings, and tailoring revenues.",
+    "rubric_level_5": "Maintains strict budgeting records, consistently saves, understands compound growth, and spots financial scams instantly.",
+    "rubric_level_1": "Spends impulsively without tracking expenses, has zero savings, susceptible to get-rich-quick claims."
+  },
+  {
+    "id": "sk-011",
+    "name": "Customer Service & Service Recovery",
+    "pillar_index": 19,
+    "description": "Building long-term customer trust, active listening, managing dissatisfied clients, and ensuring superior service delivery.",
+    "practical_assignment": "Audit customer interaction in the tailoring shop; document 3 instances of proactive customer delight.",
+    "rubric_level_5": "Anticipates client needs, resolves grievances with high warmth and professionalism, turning complaints into loyalty.",
+    "rubric_level_1": "Dismissive of customer concerns, argues with clients, fails to communicate delays."
+  },
+  {
+    "id": "sk-012",
+    "name": "Principled Negotiation",
+    "pillar_index": 26,
+    "description": "Win-win negotiation, establishing BATNA, articulating value without desperation, and maintaining ethical boundaries.",
+    "practical_assignment": "Negotiate fair fabric wholesale pricing and customer tailoring charges based on calculated labor hours.",
+    "rubric_level_5": "Negotiates confidently from a position of mutual value, achieves win-win outcomes, and maintains cordial relations.",
+    "rubric_level_1": "Underprices skills out of fear of losing clients or adopts an aggressive, confrontational stance."
+  },
+  {
+    "id": "sk-013",
+    "name": "Professionalism & Workplace Etiquette",
+    "pillar_index": 20,
+    "description": "Uncompromising punctuality, reliability, confidentiality, boundary setting, and professional attire/demeanor.",
+    "practical_assignment": "Arrive 10 minutes early to all commitments for 30 consecutive days; document observations.",
+    "rubric_level_5": "Exemplifies punctuality, discretion, integrity, and flawless workplace etiquette at all times.",
+    "rubric_level_1": "Frequently late, unreliable with commitments, blurs personal and professional boundaries."
+  },
+  {
+    "id": "sk-014",
+    "name": "Resilience & Adaptability",
+    "pillar_index": 28,
+    "description": "Bouncing back from setbacks, academic hurdles, and unforeseen disruptions with psychological flexibility and optimism.",
+    "practical_assignment": "Write a reflective essay detailing a significant past failure or disappointment and 3 actionable lessons extracted.",
+    "rubric_level_5": "Remains calm and focused during crises, views setbacks as diagnostic data, and pivots constructively.",
+    "rubric_level_1": "Gives up at the first sign of difficulty, falls into despair over negative feedback."
+  },
+  {
+    "id": "sk-015",
+    "name": "Self-Advocacy & Seeking Help",
+    "pillar_index": 33,
+    "description": "Asking insightful questions, articulating needs respectfully, setting boundaries, and seeking mentorship proactively.",
+    "practical_assignment": "Schedule and conduct a 15-minute informational interview with a senior nurse, doctor, or university student.",
+    "rubric_level_5": "Advocates for needs clearly and respectfully, proactively seeks mentorship, and asks thoughtful questions.",
+    "rubric_level_1": "Suffers in silence when confused, fears asking questions, avoids reaching out to mentors."
+  }
+]
