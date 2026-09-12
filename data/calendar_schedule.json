@@ -1,0 +1,578 @@
+[
+  {
+    "global_week": 1,
+    "month": 1,
+    "week_in_month": 1,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Biology & Study Systems",
+    "topic": "Cell Structure, Transport & Active Recall Habits",
+    "weekly_objectives": [
+      "Understand prokaryotic vs eukaryotic cell architecture and organelle functions",
+      "Explain passive diffusion, osmosis, facilitated diffusion, and active transport mechanisms",
+      "Set up Anki flashcards for daily spaced repetition practice",
+      "Establish a structured daily 60-90 minute study routine around tailoring work"
+    ],
+    "daily_focus": "Master cell membrane transport mechanisms (diffusion, osmosis, active transport) and create 15 active recall flashcards.",
+    "core_keywords": ["cell", "biology", "membrane", "transport", "osmosis", "diffusion", "organelles", "study habits", "anki"],
+    "recommended_assignment": "Sketch and label animal cell organelles; create 15 Anki flashcards on cellular transport.",
+    "long_term_connection": "Foundational requirement for UNIBEN BIO111 (General Biology I) and 200L Cell Physiology."
+  },
+  {
+    "global_week": 2,
+    "month": 1,
+    "week_in_month": 2,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "General Chemistry",
+    "topic": "Atomic Structure, Electron Configuration & Periodic Trends",
+    "weekly_objectives": [
+      "Describe atomic models, subatomic particles, isotopes, and atomic masses",
+      "Write electronic configurations using spdf notation for elements 1-30",
+      "Analyze periodic trends (electronegativity, ionization energy, atomic radius)",
+      "Set up digital study archives in Google Drive with clean naming conventions"
+    ],
+    "daily_focus": "Write electron configurations for elements 1 to 30 and explain ionization energy trends across Period 3.",
+    "core_keywords": ["chemistry", "atomic structure", "electrons", "orbitals", "periodic table", "electronegativity", "spdf"],
+    "recommended_assignment": "Complete periodic trend summary sheet and write electron configurations for 10 transition elements.",
+    "long_term_connection": "Directly tested in UNIBEN CHM111 (General Chemistry I) and Medical Biochemistry."
+  },
+  {
+    "global_week": 3,
+    "month": 1,
+    "week_in_month": 3,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Healthcare Foundations & Apprenticeship",
+    "topic": "Vital Signs Overview & Dexterity Calibration",
+    "weekly_objectives": [
+      "Define standard normal ranges for blood pressure, pulse, respiratory rate, and temperature",
+      "Understand physiological factors that alter normal vital signs",
+      "Link tailoring manual dexterity (precision seam allowances) with clinical hand coordination",
+      "Establish a daily measurement and garment time-audit log"
+    ],
+    "daily_focus": "Memorize normal vital sign ranges for adults and create a pocket reference card.",
+    "core_keywords": ["vital signs", "blood pressure", "pulse", "temperature", "healthcare", "nursing", "dexterity", "tailoring"],
+    "recommended_assignment": "Create a laminated Normal Vital Signs Pocket Card; log 3 tailoring garments with exact time breakdowns.",
+    "long_term_connection": "Core clinical skill required in 200L Nursing Foundations and Hospital Postings at UBTH."
+  },
+  {
+    "global_week": 4,
+    "month": 1,
+    "week_in_month": 4,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Financial Literacy & Personal Planning",
+    "topic": "Costing Formulas, Budgeting & Monthly Review",
+    "weekly_objectives": [
+      "Calculate unit costing for bespoke garments using the scientific pricing formula",
+      "Set up a personal monthly cash flow ledger and 10% savings reserve",
+      "Review Month 1 study consistency and Anki retention rate",
+      "Complete Month 1 reflection journal"
+    ],
+    "daily_focus": "Apply the Unit Costing Formula (Material + Labor + Overhead + Margin) to calculate prices for 2 custom garments.",
+    "core_keywords": ["costing", "pricing", "budgeting", "financial literacy", "savings", "tailoring", "reflection"],
+    "recommended_assignment": "Calculate full unit costs for 2 bespoke garments; review Month 1 flashcard retention statistics.",
+    "long_term_connection": "Develops financial discipline and small business management for sustainable healthcare entrepreneurship."
+  },
+  {
+    "global_week": 5,
+    "month": 2,
+    "week_in_month": 1,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "General Chemistry",
+    "topic": "Chemical Bonding, Molecular Geometry & Intermolecular Forces",
+    "weekly_objectives": [
+      "Distinguish between ionic, covalent, and coordinate bonds",
+      "Predict molecular geometry using VSEPR theory",
+      "Explain hydrogen bonding and dipole-dipole interactions in biological systems (water, DNA)",
+      "Balance 10 complex redox reactions using the ion-electron half-reaction method"
+    ],
+    "daily_focus": "Practice balancing 5 redox equations using the half-reaction method in acidic and basic solutions.",
+    "core_keywords": ["bonding", "covalent", "ionic", "vsepr", "molecular geometry", "redox", "oxidation", "reduction", "chemistry"],
+    "recommended_assignment": "Balance 10 redox equations and draw Lewis structures for 6 biological molecules.",
+    "long_term_connection": "Prerequisite for UNIBEN CHM111 and pharmaceutical chemistry."
+  },
+  {
+    "global_week": 6,
+    "month": 2,
+    "week_in_month": 2,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Biology & Genetics Foundations",
+    "topic": "Cell Division (Mitosis, Meiosis) & Mendelian Genetics",
+    "weekly_objectives": [
+      "Compare mitotic and meiotic cell division stages and biological significance",
+      "Solve monohybrid and dihybrid genetic crosses using Punnett squares",
+      "Understand ABO blood group inheritance and Rh factor incompatibility",
+      "Analyze Sickle Cell Trait inheritance patterns (HbAA, HbAS, HbSS)"
+    ],
+    "daily_focus": "Solve 5 genetic inheritance problems involving sickle cell genotypes and ABO blood group compatibility.",
+    "core_keywords": ["genetics", "mitosis", "meiosis", "punnett square", "sickle cell", "blood group", "alleles", "dna", "biology"],
+    "recommended_assignment": "Construct Punnett squares for sickle cell trait inheritance and write a 1-page clinical explainer on genotype counseling.",
+    "long_term_connection": "Directly tested in UNIBEN BIO111, Medical Genetics, and clinical antenatal counseling."
+  },
+  {
+    "global_week": 7,
+    "month": 2,
+    "week_in_month": 3,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Academic Writing & Research Literacy",
+    "topic": "Scientific Evidence, Literature Search & Google Scholar Queries",
+    "weekly_objectives": [
+      "Formulate precise research search queries using Boolean operators (AND, OR, NOT)",
+      "Differentiate between primary peer-reviewed literature, review papers, and opinion pieces",
+      "Extract key hypotheses, sample sizes, and conclusions from a health paper",
+      "Draft precision pattern templates for women's tailored skirts and blouses"
+    ],
+    "daily_focus": "Execute 3 advanced Google Scholar search queries on malaria interventions in Nigeria and summarize one abstract.",
+    "core_keywords": ["research", "literature search", "google scholar", "scientific writing", "evidence", "pattern drafting"],
+    "recommended_assignment": "Write a 500-word structured abstract breakdown on an open-access Nigerian health study.",
+    "long_term_connection": "Builds academic reading and evidence evaluation required for undergraduate research and university seminars."
+  },
+  {
+    "global_week": 8,
+    "month": 2,
+    "week_in_month": 4,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Physics in Medicine",
+    "topic": "Mechanics, Force Vectors & Ergonomics in Clinical Practice",
+    "weekly_objectives": [
+      "Apply Newton's laws of motion to body biomechanics and patient lifting",
+      "Resolve force vectors in joint articulation and tension in tailoring stitches",
+      "Analyze pressure formulas ($P = F/A$) in hypodermic needles and decubitus ulcers",
+      "Complete Month 2 academic self-audit and tailored garment review"
+    ],
+    "daily_focus": "Calculate fluid and mechanical pressure in clinical tools and practice safe ergonomic lifting techniques.",
+    "core_keywords": ["physics", "mechanics", "pressure", "force", "vectors", "biomechanics", "ergonomics", "phy111"],
+    "recommended_assignment": "Solve 5 clinical mechanics calculation problems; review Quarter 1 soft-skills baseline.",
+    "long_term_connection": "Directly tested in UNIBEN PHY111 (Mechanics & Properties of Matter)."
+  },
+  {
+    "global_week": 9,
+    "month": 3,
+    "week_in_month": 1,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Anatomy & Physiology",
+    "topic": "Cardiovascular System & Hemodynamics",
+    "weekly_objectives": [
+      "Trace systemic and pulmonary blood flow pathways through heart chambers, valves, and vessels",
+      "Explain cardiac conduction cycle (SA node, AV node, bundle branches, Purkinje fibers)",
+      "Understand factors regulating blood pressure and vascular resistance",
+      "Connect manual stitch precision to surgical precision and fine motor control"
+    ],
+    "daily_focus": "Sketch the 4-chamber heart anatomy and trace the pathway of deoxygenated and oxygenated blood.",
+    "core_keywords": ["cardiovascular", "heart", "blood pressure", "circulation", "anatomy", "physiology", "valves", "hemodynamics"],
+    "recommended_assignment": "Draw an annotated blood flow diagram through the 4 heart chambers without looking at reference notes.",
+    "long_term_connection": "High-yield topic for UNIBEN BIO111, 200L Systemic Physiology, and Nursing cardiology modules."
+  },
+  {
+    "global_week": 10,
+    "month": 3,
+    "week_in_month": 2,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Anatomy & Physiology",
+    "topic": "Respiratory System & Gas Exchange Mechanisms",
+    "weekly_objectives": [
+      "Describe upper and lower respiratory tract anatomy from nasal cavity to alveoli",
+      "Explain mechanics of ventilation (diaphragm and intercostal muscle action)",
+      "Understand partial pressure gradients and oxygen-carbon dioxide alveolar exchange",
+      "Review clinical manifestations of asthma and respiratory distress"
+    ],
+    "daily_focus": "Explain how diaphragm movement changes thoracic pressure during inhalation and exhalation.",
+    "core_keywords": ["respiratory", "lungs", "alveoli", "ventilation", "gas exchange", "oxygen", "anatomy", "physiology"],
+    "recommended_assignment": "Create an alveolar gas exchange diagram illustrating partial pressure differentials ($pO_2$, $pCO_2$).",
+    "long_term_connection": "Essential for UNIBEN 200L Human Physiology and clinical respiratory assessment."
+  },
+  {
+    "global_week": 11,
+    "month": 3,
+    "week_in_month": 3,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Infection Prevention & Clinical Safety",
+    "topic": "Microbiology Basics & WHO Hand Hygiene Standards",
+    "weekly_objectives": [
+      "Differentiate between bacterial, viral, fungal, and parasitic pathogens",
+      "Master the WHO 6-Step Hand Hygiene technique and understand chain of infection",
+      "Understand personal protective equipment (PPE) and sterile vs clean techniques",
+      "Enforce strict non-clinical safety boundaries for pre-university students"
+    ],
+    "daily_focus": "Demonstrate the WHO 6-step handwashing technique and identify the 5 Moments for Hand Hygiene.",
+    "core_keywords": ["infection control", "hygiene", "microbiology", "bacteria", "viruses", "who", "safety", "handwashing"],
+    "recommended_assignment": "Record a demonstration of the WHO 6-step hand hygiene technique and summarize the 5 Moments of Hand Hygiene.",
+    "long_term_connection": "Mandatory clinical competence across all healthcare degree programs at UNIBEN/UBTH."
+  },
+  {
+    "global_week": 12,
+    "month": 3,
+    "week_in_month": 4,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Public Speaking & Patient Empathy",
+    "topic": "Health Communication & Quarter 1 Review",
+    "weekly_objectives": [
+      "Structure a clear 5-minute health education talk for a non-scientific audience",
+      "Practice active listening by asking 2 clarifying questions before responding",
+      "Evaluate Quarter 1 soft-skills rubric progress",
+      "Synthesize tailoring manual dexterity learnings with clinical discipline"
+    ],
+    "daily_focus": "Deliver a 5-minute talk on 'Understanding Normal Blood Pressure' to a family member or peer.",
+    "core_keywords": ["communication", "public speaking", "empathy", "patient care", "soft skills", "rubric", "quarter review"],
+    "recommended_assignment": "Complete Quarter 1 Soft-Skills Rubric self-evaluation and present 5-minute health talk.",
+    "long_term_connection": "Critical for bedside clinical nursing, patient counseling, and medical viva examinations."
+  },
+  {
+    "global_week": 13,
+    "month": 4,
+    "week_in_month": 1,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Healthcare Mathematics",
+    "topic": "Metric Conversions, Concentrations & Drug Dosage Ratios",
+    "weekly_objectives": [
+      "Convert between metric units ($mg$, $g$, $mcg$, $L$, $mL$)",
+      "Calculate percentage concentrations and mass-volume ratios ($w/v$)",
+      "Calculate tablet dosages and liquid volume administration formulas",
+      "Build formula sheets for healthcare unit conversions"
+    ],
+    "daily_focus": "Solve 8 clinical dosage calculation problems involving unit conversion and liquid concentrations.",
+    "core_keywords": ["healthcare math", "dosage", "calculations", "metric conversions", "pharmacy", "nursing", "algebra"],
+    "recommended_assignment": "Complete 10 dosage calculation word problems with zero conversion errors.",
+    "long_term_connection": "Prerequisite for UNIBEN Pharmacology, Nursing Medication Administration, and Pharmacy calculations."
+  },
+  {
+    "global_week": 14,
+    "month": 4,
+    "week_in_month": 2,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Digital Literacy & Spreadsheets",
+    "topic": "Excel / Google Sheets for Financial & Academic Tracking",
+    "weekly_objectives": [
+      "Master spreadsheet formulas (`SUM`, `AVERAGE`, `IF`, `VLOOKUP`)",
+      "Build a live tailoring revenue, material cost, and profit tracker",
+      "Create chart visualizations for study hours vs topic retention",
+      "Structure data tables with validation rules"
+    ],
+    "daily_focus": "Build an Excel model that calculates material cost, labor hours, profit, and customer price automatically.",
+    "core_keywords": ["excel", "spreadsheets", "data", "google sheets", "finance", "tailoring", "costing", "analytics"],
+    "recommended_assignment": "Build a working Google Sheets costing tool and log 5 tailoring orders with profit computations.",
+    "long_term_connection": "Develops data management skills required for health informatics, clinical audits, and business management."
+  },
+  {
+    "global_week": 15,
+    "month": 4,
+    "week_in_month": 3,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Physics in Medicine",
+    "topic": "Fluid Dynamics, Viscosity & Blood Flow Resistance",
+    "weekly_objectives": [
+      "Explain Poiseuille's law of laminar flow in blood vessels",
+      "Analyze the relationship between vessel radius, viscosity, and flow resistance ($R \\propto 1/r^4$)",
+      "Understand hydrostatic pressure differences across standing vs supine positions",
+      "Relate fluid mechanics to IV drip flow gravity systems"
+    ],
+    "daily_focus": "Explain how a 50% reduction in vessel radius increases vascular resistance by 16 times using Poiseuille's equation.",
+    "core_keywords": ["fluid dynamics", "physics", "poiseuille", "viscosity", "blood flow", "resistance", "hydrostatics", "phy111"],
+    "recommended_assignment": "Solve 5 fluid resistance calculation problems relating to vascular constriction and IV infusion.",
+    "long_term_connection": "Directly tested in UNIBEN PHY111 and advanced cardiovascular physiology."
+  },
+  {
+    "global_week": 16,
+    "month": 4,
+    "week_in_month": 4,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Financial Management & Lookbook Design",
+    "topic": "Digital Branding & Financial Discipline",
+    "weekly_objectives": [
+      "Design a 4-page digital fashion lookbook in Canva showcasing completed tailored pieces",
+      "Review monthly operational profit and allocate into savings, materials, and living reserves",
+      "Audit Month 4 study progress and update Anki cards",
+      "Complete Month 4 reflection journal"
+    ],
+    "daily_focus": "Publish a 4-page digital lookbook showcasing bespoke tailoring garments and review monthly savings.",
+    "core_keywords": ["branding", "canva", "digital literacy", "lookbook", "tailoring", "finance", "savings", "reflection"],
+    "recommended_assignment": "Complete 4-page digital lookbook and reconcile personal financial ledger.",
+    "long_term_connection": "Builds digital marketing and design capability for healthcare and tailoring enterprises."
+  },
+  {
+    "global_week": 17,
+    "month": 5,
+    "week_in_month": 1,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Genetics & Molecular Biology",
+    "topic": "DNA Replication, RNA Transcription & Protein Translation",
+    "weekly_objectives": [
+      "Explain the central dogma of molecular biology ($DNA \\rightarrow RNA \\rightarrow \\text{Protein}$)",
+      "Describe DNA double helix structure, base pairing rules, and replication enzymes",
+      "Transcribe DNA sequences into mRNA codons and translate into amino acid peptides",
+      "Understand point mutations, frame shifts, and sickle cell single nucleotide polymorphism ($GAG \\rightarrow GTG$)"
+    ],
+    "daily_focus": "Translate a given 30-nucleotide mRNA sequence into an amino acid sequence using the genetic codon table.",
+    "core_keywords": ["dna", "rna", "transcription", "translation", "codons", "mutations", "protein synthesis", "molecular biology", "bio111"],
+    "recommended_assignment": "Transcribe and translate 5 gene sequences and annotate the exact point mutation in sickle cell hemoglobin ($HbS$).",
+    "long_term_connection": "High-yield core topic for UNIBEN BIO111 and 200L Medical Biochemistry."
+  },
+  {
+    "global_week": 18,
+    "month": 5,
+    "week_in_month": 2,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Professional Communication",
+    "topic": "Email Etiquette, STAR Interview Method & Networking",
+    "weekly_objectives": [
+      "Write formal email inquiries to university departments, mentors, and scholarship boards",
+      "Structure behavioural interview answers using the STAR method (Situation, Task, Action, Result)",
+      "Conduct structured customer intake consultations with clear client expectations",
+      "Build a professional contact ledger"
+    ],
+    "daily_focus": "Draft 2 professional inquiry emails and practice answering 3 interview questions using the STAR framework.",
+    "core_keywords": ["communication", "email etiquette", "star method", "interviews", "professionalism", "networking"],
+    "recommended_assignment": "Draft 3 reusable formal email templates (academic inquiry, client order confirmation, mentorship request).",
+    "long_term_connection": "Essential for scholarship interviews, university committee interactions, and career networking."
+  },
+  {
+    "global_week": 19,
+    "month": 5,
+    "week_in_month": 3,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Anatomy & Physiology",
+    "topic": "Digestive System & Clinical Nutrition",
+    "weekly_objectives": [
+      "Trace the gastrointestinal tract and major accessory organs (liver, pancreas, gallbladder)",
+      "Explain enzymatic breakdown of carbohydrates, proteins, and lipids",
+      "Understand macronutrient and micronutrient balance in local Nigerian diets",
+      "Review clinical implications of malnutrition, peptic ulcers, and liver function"
+    ],
+    "daily_focus": "Map the digestive enzymes secreted by the stomach, pancreas, and small intestine along with their substrates.",
+    "core_keywords": ["digestive system", "nutrition", "enzymes", "gastrointestinal", "liver", "biochemistry", "physiology"],
+    "recommended_assignment": "Draw an enzyme secretion flow chart from mouth to ileum and formulate a balanced adolescent meal plan.",
+    "long_term_connection": "Directly tested in UNIBEN BIO111, 200L Physiology, and Clinical Dietetics."
+  },
+  {
+    "global_week": 20,
+    "month": 5,
+    "week_in_month": 4,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Community Health & Tailoring Integration",
+    "topic": "Public Health Promotion & Customer Consultations",
+    "weekly_objectives": [
+      "Understand social determinants of health in Nigerian urban communities",
+      "Conduct 5 customer intake consultations with measurement records and deadlines",
+      "Evaluate Month 5 study milestones and flashcard retention",
+      "Complete Month 5 reflection journal"
+    ],
+    "daily_focus": "Conduct a customer intake consultation using a structured measurement chart and delivery agreement.",
+    "core_keywords": ["public health", "customer service", "consultations", "tailoring", "social determinants", "reflection"],
+    "recommended_assignment": "Log 5 completed customer consultation forms; complete Month 5 reflection audit.",
+    "long_term_connection": "Connects micro-business operational standards with clinical bedside manner and client intake."
+  },
+  {
+    "global_week": 21,
+    "month": 6,
+    "week_in_month": 1,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Organic Chemistry Foundations",
+    "topic": "Functional Groups, Nomenclature & Isomerism",
+    "weekly_objectives": [
+      "Identify key organic functional groups (alcohols, aldehydes, ketones, carboxylic acids, amines, esters)",
+      "Name organic compounds using IUPAC systematic nomenclature rules",
+      "Differentiate structural isomerism, geometric (cis/trans) isomerism, and optical enantiomers",
+      "Relate functional group chemistry to pharmaceutical drug structures"
+    ],
+    "daily_focus": "Name and draw structural formulas for 10 organic molecules containing different functional groups.",
+    "core_keywords": ["organic chemistry", "functional groups", "iupac", "nomenclature", "isomers", "chm111", "chm102"],
+    "recommended_assignment": "Draw functional groups and IUPAC names for 15 pharmaceutical compounds (e.g. Paracetamol, Aspirin).",
+    "long_term_connection": "Prerequisite for UNIBEN CHM111, 100L Organic Chemistry (CHM102), and Medicinal Chemistry."
+  },
+  {
+    "global_week": 22,
+    "month": 6,
+    "week_in_month": 2,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Organic Chemistry Foundations",
+    "topic": "Biomolecules — Carbohydrates, Lipids & Amino Acids",
+    "weekly_objectives": [
+      "Describe monosaccharide, disaccharide, and polysaccharide structures and glycosidic bonds",
+      "Understand fatty acid saturation, triglycerides, and phospholipid bilayer formation",
+      "Classify amino acid side chains and explain peptide bond synthesis",
+      "Analyze protein primary, secondary, tertiary, and quaternary structural folding"
+    ],
+    "daily_focus": "Draw the condensation reaction forming a peptide bond between two amino acids.",
+    "core_keywords": ["biomolecules", "proteins", "carbohydrates", "lipids", "amino acids", "peptide bond", "biochemistry"],
+    "recommended_assignment": "Diagram protein folding hierarchy (primary to quaternary structure) and solve 5 biomolecule quiz problems.",
+    "long_term_connection": "Core foundation for UNIBEN 200L Medical Biochemistry and Molecular Physiology."
+  },
+  {
+    "global_week": 23,
+    "month": 6,
+    "week_in_month": 3,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Community Volunteering & Service",
+    "topic": "Mid-Year Service Project — Sewing for Charity",
+    "weekly_objectives": [
+      "Execute mid-year community service initiative (mending school uniforms / reusable supplies)",
+      "Log at least 8 hours of community service with a verified Edo State NGO",
+      "Document community impact and personal lessons learned",
+      "Review hygiene and infection control during community outreaches"
+    ],
+    "daily_focus": "Mend 5 school uniforms or stitch reusable cloth items for donation to community youth.",
+    "core_keywords": ["volunteering", "service", "charity", "tailoring", "community health", "edo state", "benin city"],
+    "recommended_assignment": "Complete 10 charity garments and log official community service verification in the dashboard.",
+    "long_term_connection": "Embodies the service-leadership philosophy essential for healthcare practitioners and scholarship applications."
+  },
+  {
+    "global_week": 24,
+    "month": 6,
+    "week_in_month": 4,
+    "phase": "Phase 1: Foundation & Habit Systems",
+    "subject": "Entrepreneurship & Phase 1 Synthesis",
+    "topic": "Business Model Canvas & Quarter 2 Evaluation",
+    "weekly_objectives": [
+      "Develop a 1-Page Business Model Canvas for a custom tailoring brand in Benin City",
+      "Calculate 6-month net profit, savings reserve, and customer retention metrics",
+      "Conduct Quarter 2 Soft-Skills Rubric assessment across all 15 competencies",
+      "Complete comprehensive Phase 1 Foundation Milestone Review"
+    ],
+    "daily_focus": "Complete the 1-Page Business Model Canvas and review the 6-month academic and tailoring progress.",
+    "core_keywords": ["business model", "entrepreneurship", "quarter review", "rubric", "phase 1", "milestone", "reflection"],
+    "recommended_assignment": "Complete 1-Page Business Model Canvas and Quarter 2 soft-skills radar chart update.",
+    "long_term_connection": "Establishes entrepreneurial self-reliance and strategic planning for university life."
+  },
+  {
+    "global_week": 27,
+    "month": 7,
+    "week_in_month": 1,
+    "phase": "Phase 2: Deepening & Scientific Research",
+    "subject": "Research Methodology",
+    "topic": "Formulating Research Questions & Study Designs",
+    "weekly_objectives": [
+      "Formulate measurable, clinically relevant research questions using the PICO framework (Population, Intervention, Comparison, Outcome)",
+      "Distinguish between observational (cohort, case-control, cross-sectional) and experimental study designs",
+      "Understand independent, dependent, and confounding variables in biomedical investigations",
+      "Apply fabric waste reduction techniques and zero-waste pattern drafting in tailoring"
+    ],
+    "daily_focus": "Draft 2 healthcare research questions using the PICO format focusing on community health in Edo State.",
+    "core_keywords": ["research", "methodology", "pico", "study design", "epidemiology", "scientific inquiry", "public health"],
+    "recommended_assignment": "Write a 1-page research question proposal applying the PICO framework to a local Edo State health issue.",
+    "long_term_connection": "Prepares for undergraduate research projects, scientific seminars, and UNIBEN GST research components."
+  },
+  {
+    "global_week": 31,
+    "month": 8,
+    "week_in_month": 1,
+    "phase": "Phase 2: Deepening & Scientific Research",
+    "subject": "Immunology & Public Health",
+    "topic": "Innate vs Adaptive Immunity & Vaccine Mechanisms",
+    "weekly_objectives": [
+      "Differentiate physical barriers, cellular innate defenses, and adaptive immune responses",
+      "Explain B-lymphocyte antibody production and T-lymphocyte cell-mediated responses",
+      "Understand active vs passive immunity and herd immunity in public health immunization",
+      "Construct a prototype pair of medical scrubs using durable cotton tailoring fabric"
+    ],
+    "daily_focus": "Diagram the primary vs secondary antibody response curve showing IgM and IgG antibody titers.",
+    "core_keywords": ["immunology", "immunity", "vaccines", "antibodies", "pathology", "public health", "scrubs"],
+    "recommended_assignment": "Draw antibody structure and secondary immune response curve; draft pattern for medical scrub top.",
+    "long_term_connection": "Directly tested in UNIBEN 200L Immunology, Medical Microbiology, and Nursing immunization rotations."
+  },
+  {
+    "global_week": 35,
+    "month": 9,
+    "week_in_month": 1,
+    "phase": "Phase 2: Deepening & Scientific Research",
+    "subject": "Physics & Hemodynamics",
+    "topic": "Wave Motion, Acoustics & Medical Ultrasound",
+    "weekly_objectives": [
+      "Understand wave parameters ($v = f \\lambda$), transverse vs longitudinal waves, and reflection/refraction",
+      "Explain the Doppler effect and its application in clinical vascular ultrasound and echocardiography",
+      "Analyze acoustic impedance differences between tissue, bone, and gel coupling",
+      "Train a junior apprentice on precision seam finishing and garment pressing"
+    ],
+    "daily_focus": "Explain how Doppler ultrasound measures blood flow velocity and detects vascular stenosis.",
+    "core_keywords": ["physics", "waves", "ultrasound", "doppler effect", "acoustics", "radiography", "phy112"],
+    "recommended_assignment": "Solve 5 wave speed and Doppler frequency shift calculation problems; log peer tutoring session.",
+    "long_term_connection": "Directly tested in UNIBEN PHY112 and core subject for Radiography, Sonography, and Cardiology."
+  },
+  {
+    "global_week": 39,
+    "month": 10,
+    "week_in_month": 1,
+    "phase": "Phase 2: Deepening & Scientific Research",
+    "subject": "University Simulation Semester",
+    "topic": "UNIBEN 100L Mock Examinations — Biology & Chemistry",
+    "weekly_objectives": [
+      "Sit timed 60-minute mock examination covering UNIBEN BIO111 syllabus topics",
+      "Sit timed 60-minute mock examination covering UNIBEN CHM111 syllabus topics",
+      "Perform thorough error analysis identifying conceptual knowledge gaps",
+      "Maintain active tailoring commission schedule under strict study deadlines"
+    ],
+    "daily_focus": "Take timed 50-question UNIBEN BIO111 mock exam and perform root-cause review of all missed questions.",
+    "core_keywords": ["mock exam", "uniben", "bio111", "chm111", "simulation", "time management", "cbt"],
+    "recommended_assignment": "Complete BIO111 & CHM111 mock exams; write an Error Correction Action Plan for any score under 75%.",
+    "long_term_connection": "Builds high-pressure exam stamina and guarantees academic readiness for First Class 5.0 CGPA."
+  },
+  {
+    "global_week": 43,
+    "month": 11,
+    "week_in_month": 1,
+    "phase": "Phase 2: Deepening & Scientific Research",
+    "subject": "Career Portfolio & Post-UTME Drills",
+    "topic": "CV Engineering, Scholarship Portfolio & CBT Drills",
+    "weekly_objectives": [
+      "Compile a professional 2-page academic and skills CV highlighting tailoring dexterity and volunteering",
+      "Assemble a comprehensive scholarship application packet (transcripts, essays, recommendation contacts)",
+      "Practice 100 high-yield UNIBEN Post-UTME CBT screening questions (Speed & Accuracy)",
+      "Digitize photography lookbook of all tailored garments created over the past year"
+    ],
+    "daily_focus": "Complete 50 timed CBT practice questions in Physics and Chemistry and update professional CV.",
+    "core_keywords": ["cv", "portfolio", "post-utme", "scholarships", "cbt", "interview prep", "admissions"],
+    "recommended_assignment": "Finalize 2-page student CV; achieve $\\ge 80\\%$ in timed 100-question Post-UTME mock drill.",
+    "long_term_connection": "Secures top Post-UTME screening scores and competitive scholarship awards (e.g. Seplat, MTN, NNPC)."
+  },
+  {
+    "global_week": 47,
+    "month": 12,
+    "week_in_month": 1,
+    "phase": "Phase 2: Deepening & Scientific Research",
+    "subject": "UNIBEN Readiness & Survival Handbook",
+    "topic": "University Transition, Campus Clearance & 5.0 CGPA Strategy",
+    "weekly_objectives": [
+      "Study official UNIBEN Ugbowo campus geography, faculty buildings, and medical library",
+      "Master the First 30 Days Action Checklist (Kofa portal, physical clearance, medicals, course forms)",
+      "Finalize personal 'University Survival & Success Handbook'",
+      "Conduct 12-Month Master Development Review and Year 1 Soft-Skills Evaluation"
+    ],
+    "daily_focus": "Review the UNIBEN First 30 Days Action Checklist and calculate target course GPAs for a 5.0 first semester.",
+    "core_keywords": ["uniben", "transition", "clearance", "cgpa", "survival guide", "ugbowo", "handbook", "year 1 review"],
+    "recommended_assignment": "Complete personal University Survival Handbook; review 12-month development metrics in dashboard.",
+    "long_term_connection": "Eliminates freshman orientation disorientation and ensures smooth academic and administrative transition."
+  },
+  {
+    "global_week": 53,
+    "month": 14,
+    "week_in_month": 1,
+    "phase": "Phase 3: University Transition & Advanced Mastery",
+    "subject": "Advanced Medical Terminology",
+    "topic": "Greek & Latin Roots, Prefixes, Suffixes & Clinical Case Syntax",
+    "weekly_objectives": [
+      "Master 50 high-yield clinical root words (cardi-, nephr-, hepat-, neur-, pneum-, oste-)",
+      "Deconstruct complex diagnostic terminology (e.g. glomerulonephritis, cholecystectomy, thrombocytopenia)",
+      "Translate physician clinical notes and discharge summaries into patient-friendly language",
+      "Build medical terminology flashcard decks"
+    ],
+    "daily_focus": "Deconstruct 20 complex medical terms into prefix, root, and suffix with precise clinical definitions.",
+    "core_keywords": ["medical terminology", "latin roots", "prefixes", "suffixes", "clinical", "nursing", "medicine"],
+    "recommended_assignment": "Translate a 1-page sample clinical case report into plain English.",
+    "long_term_connection": "Dramatically accelerates comprehension in 100L/200L Anatomy, Physiology, Pathology, and Pharmacology."
+  },
+  {
+    "global_week": 65,
+    "month": 17,
+    "week_in_month": 1,
+    "phase": "Phase 3: University Transition & Advanced Mastery",
+    "subject": "Administrative Clearance & Campus Launch",
+    "topic": "Final Document File Jackets, JAMB CAPS & Hostel Preparation",
+    "weekly_objectives": [
+      "Organize 4 duplicate physical clearance file jackets with verified credentials",
+      "Verify JAMB CAPS admission acceptance status and print official admission letter",
+      "Prepare personal domestic budgeting for independent living in Benin City",
+      "Finalize transition from tailoring apprenticeship to part-time university enterprise"
+    ],
+    "daily_focus": "Audit physical clearance document file jackets and verify JAMB CAPS admission acceptance.",
+    "core_keywords": ["clearance", "jamb caps", "uniben", "hostel", "budgeting", "admissions", "matriculation"],
+    "recommended_assignment": "Verify all physical clearance documents; prepare 100-Level study timetable.",
+    "long_term_connection": "Guarantees error-free matriculation and seamless start to university academic life."
+  }
+]

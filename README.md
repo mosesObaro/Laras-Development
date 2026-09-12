@@ -173,8 +173,9 @@ The unified CLI provides command-line control:
 | :--- | :--- | :--- |
 | `seed` | Populates SQLite database from JSON seed files | `python3 -m preuni_system.cli seed` |
 | `scan` | Scans RSS/Atom feeds, deduplicates, and scores | `python3 -m preuni_system.cli scan` |
+| `daily-alert` | Generates calendar-driven daily learning & opportunity guide | `python3 -m preuni_system.cli daily-alert --preview` |
 | `digest` | Generates and previews/sends the weekly digest | `python3 -m preuni_system.cli digest --preview` |
-| `alert` | Generates and previews/sends top high-priority alert | `python3 -m preuni_system.cli alert --preview` |
+| `alert` | Generates and previews/sends top immediate high-priority alert | `python3 -m preuni_system.cli alert --preview` |
 | `stats` | Displays student progress and summary metrics | `python3 -m preuni_system.cli stats` |
 | `serve` | Launches local dashboard web server | `python3 -m preuni_system.cli serve --port 8000` |
 
@@ -217,12 +218,27 @@ $$\text{Total Score} = (R \times 0.25) + (C \times 0.20) + (E \times 0.20) + (V 
 * **Time Commitment ($T$, 5%)**: Fits within the daily 60–90 min study limit.
 * **Networking & Mentorship ($N$, 5%)**: Direct interaction with credible health mentors.
 
-### B. Decision Thresholds:
+### B. Personalized Daily Alert & Learning Calendar Matching:
+$$\text{Relevance Score} = (T \times 0.35) + (M \times 0.20) + (F \times 0.20) + (L \times 0.10) + (Q \times 0.10) + (N \times 0.05)$$
+
+* **Topic Match ($T$, 35%)**: Direct alignment with the current week's subject, topic, and weekly learning objectives.
+* **Module / Phase Match ($M$, 20%)**: Alignment with the current 6-month phase and monthly roadmap milestones.
+* **Field & University Fit ($F$, 20%)**: Relevance to UNIBEN Healthcare / Medical Sciences, Sciences, and Tailoring.
+* **Long-Term Roadmap Fit ($L$, 10%)**: Alignment with future curriculum modules (Anatomy, Pharmacology, Post-UTME, Research).
+* **Quality & Credibility ($Q$, 10%)**: Accredited university or global health provider score.
+* **Recency & Freshness ($N$, 5%)**: Recently discovered or scheduled opportunities.
+
+#### Two-Section Daily Alert Structure:
+1. **Section 1 — Learn Now**: High topic-relevance resources ($T \ge 60$) that directly answer *"What should I focus on learning today/this week?"* with practical exercises.
+2. **Section 2 — Good Long-Term Match**: High-quality courses/opportunities matched to future phases and UNIBEN degrees that answer *"What newly available opportunity is a strategic match for my long-term path?"* without disrupting current weekly focus.
+3. **Deduplication & Anti-Spam Tracking**: Automatically records alerted normalized URLs in SQLite `alert_history` to prevent duplicate emails.
+
+### C. Decision Thresholds:
 * **$\mathbf{\ge 85}$ (STRONGLY RECOMMENDED)**: Triggers immediate email alert if deadline is approaching.
-* **$\mathbf{70 - 84}$ (CONSIDER)**: Curated in the weekly digest.
+* **$\mathbf{70 - 84}$ (CONSIDER)**: Curated in the daily alert & weekly digest.
 * **$\mathbf{< 70}$ (SUPPRESSED)**: Omitted from email communications.
 
-### C. Non-Clinical Safety Mandate:
+### D. Non-Clinical Safety Mandate:
 * Any opportunity involving invasive clinical procedures (injections, blood drawing, prescribing, surgery) performed by an unqualified teenager is **automatically rejected**.
 * Strict verification of physical addresses in Benin City (e.g., Nigerian Red Cross Edo Branch on Ikpokpan Rd, Girls' Power Initiative on Upper Ekewan Rd).
 

@@ -15,7 +15,9 @@ from preuni_system.db import Database
 from preuni_system.monitor import OpportunityMonitor
 from preuni_system.emailer import EmailService
 from preuni_system.scorer import OpportunityScorer
-from preuni_system.utils import format_naira, generate_hash_id
+from preuni_system.calendar import LearningCalendarEngine
+from preuni_system.recommender import PersonalizedLearningRecommender
+from preuni_system.utils import format_naira, generate_hash_id, normalize_url
 
 
 def cmd_seed(args):
@@ -125,6 +127,119 @@ def cmd_alert(args):
     print("==================================================")
 
 
+def cmd_daily_alert(args):
+    """Generate and preview/send personalized daily learning-opportunity alert driven by calendar."""
+    calendar = LearningCalendarEngine()
+    db = Database()
+    recommender = PersonalizedLearningRecommender()
+    emailer = EmailService()
+
+    # 1. Determine Learning Focus from calendar
+    focus = calendar.get_learning_focus(
+        target_date=args.date,
+        month=args.month,
+        week=args.week
+    )
+
+    # 2. Gather candidates and history
+    candidates = db.get_all_candidate_learning_resources()
+    upcoming_keywords = calendar.get_upcoming_keywords(focus.global_week, lookahead_weeks=8)
+    already_alerted_urls = {row["url_normalized"] for row in db.get_alert_history()}
+    completed_urls = db.get_completed_course_urls()
+
+    # 3. Rank & Categorize Recommendations
+    recs = recommender.rank_and_select_recommendations(
+        candidates=candidates,
+        learning_focus=focus,
+        upcoming_keywords=upcoming_keywords,
+        already_alerted_urls=already_alerted_urls,
+        completed_urls=completed_urls,
+        max_learn_now=Config.MAX_LEARN_NOW_RECOMMENDATIONS,
+        max_long_term=Config.MAX_LONG_TERM_RECOMMENDATIONS,
+        min_relevance_score=Config.MIN_DAILY_ALERT_RELEVANCE_SCORE,
+        force=args.force
+    )
+
+    learn_now = recs["learn_now"]
+    long_term = recs["long_term"]
+
+    # 4. Build and Dispatch Email
+    subject, html_body, text_body = emailer.build_daily_alert(focus, learn_now, long_term)
+    is_dry_run = args.preview or not args.send
+    file_tag = f"daily_alert_m{focus.month}_w{focus.week_in_month}_{focus.date_str.replace('-', '')}"
+
+    res = emailer.dispatch_email(
+        subject=subject,
+        html_body=html_body,
+        text_body=text_body,
+        dry_run=is_dry_run,
+        file_tag=file_tag
+    )
+
+    # 5. Persist Alert History if sent/dispatched (and not forced preview)
+    if args.send and not args.preview:
+        for item in learn_now:
+            db.record_alert_history(
+                opportunity_id=item.opportunity_id,
+                url=item.url,
+                title=item.title,
+                alert_type="learn_now",
+                week_number=focus.global_week,
+                relevance_score=item.relevance_score,
+                date_alerted=focus.date_str
+            )
+        for item in long_term:
+            db.record_alert_history(
+                opportunity_id=item.opportunity_id,
+                url=item.url,
+                title=item.title,
+                alert_type="long_term",
+                week_number=focus.global_week,
+                relevance_score=item.relevance_score,
+                date_alerted=focus.date_str
+            )
+
+    # 6. Terminal Summary Output
+    print("==================================================")
+    print(f"📚 DAILY LEARNING & OPPORTUNITY ALERT")
+    print(f"   Date: {focus.date_str} • Month {focus.month}, Week {focus.week_in_month} (Week {focus.global_week}/78)")
+    print(f"   Phase: {focus.phase}")
+    print("==================================================")
+    print(f"  • Subject: {focus.subject}")
+    print(f"  • Topic: {focus.topic}")
+    print(f"  • Today's Focus: {focus.daily_focus}")
+    print("--------------------------------------------------")
+    print(f"  🆕 LEARN NOW RECOMMENDATIONS ({len(learn_now)}):")
+    if learn_now:
+        for op in learn_now:
+            print(f"    - [{op.relevance_score}/100] {op.title} ({op.provider})")
+            print(f"      Why: {op.why_it_matches}")
+            print(f"      Link: {op.url}")
+    else:
+        print("    - (No new external courses required today. Core focus on active recall.)")
+
+    print("--------------------------------------------------")
+    print(f"  🎯 LONG-TERM MATCH ({len(long_term)}):")
+    if long_term:
+        for op in long_term:
+            print(f"    - [{op.relevance_score}/100] {op.title} ({op.provider})")
+            print(f"      Why: {op.why_it_matches}")
+            print(f"      Where: {op.where_it_fits}")
+            print(f"      Link: {op.url}")
+    else:
+        print(f"    - ({focus.long_term_connection})")
+
+    print("--------------------------------------------------")
+    print(f"  • Mode: {res.get('mode', 'Sent via Resend' if Config.RESEND_API_KEY else 'Sent via SMTP')}")
+    if res.get("preview_html"):
+        print(f"  • Preview HTML: {res['preview_html']}")
+    if res.get("preview_txt"):
+        print(f"  • Preview Plaintext: {res['preview_txt']}")
+    if res.get("resend_id"):
+        print(f"  • Resend Message ID: {res['resend_id']}")
+    print("==================================================")
+
+
 def cmd_stats(args):
     """Display student progress and database stats."""
     db = Database()
@@ -185,6 +300,15 @@ def main():
     digest_p.add_argument("--preview", action="store_true", help="Generate local preview files without sending")
     digest_p.add_argument("--send", action="store_true", help="Send email via Resend API / SMTP")
 
+    # daily-alert
+    daily_p = subparsers.add_parser("daily-alert", help="Generate calendar-driven personalized daily learning-opportunity alert")
+    daily_p.add_argument("--date", type=str, help="Target date (YYYY-MM-DD) to calculate calendar focus")
+    daily_p.add_argument("--month", type=int, help="Override curriculum month (1-18)")
+    daily_p.add_argument("--week", type=int, help="Override curriculum week (1-4)")
+    daily_p.add_argument("--force", action="store_true", help="Force recommendations even if already alerted")
+    daily_p.add_argument("--preview", action="store_true", help="Generate local preview files without sending")
+    daily_p.add_argument("--send", action="store_true", help="Send email via Resend API / SMTP")
+
     # alert
     alert_p = subparsers.add_parser("alert", help="Generate immediate high-priority alert")
     alert_p.add_argument("--id", type=str, help="Opportunity ID")
@@ -208,6 +332,7 @@ def main():
         "seed": cmd_seed,
         "scan": cmd_scan,
         "digest": cmd_digest,
+        "daily-alert": cmd_daily_alert,
         "alert": cmd_alert,
         "stats": cmd_stats,
         "serve": cmd_serve,

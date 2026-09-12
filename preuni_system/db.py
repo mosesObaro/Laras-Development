@@ -4,8 +4,9 @@ Database manager for SQLite persistence, seed loading, queries, and state manage
 
 import json
 import sqlite3
+from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Any, Tuple
+from typing import Dict, List, Optional, Any, Tuple, Set
 from preuni_system.config import DATABASE_PATH, DATA_DIR
 from preuni_system.models import (
     Course,
@@ -14,7 +15,9 @@ from preuni_system.models import (
     Opportunity,
     ReadingItem,
     SoftSkillAssessment,
+    AlertHistoryItem,
 )
+from preuni_system.utils import normalize_url, generate_hash_id
 
 
 class Database:
@@ -196,6 +199,22 @@ class Database:
                 photos_json TEXT,
                 notes TEXT,
                 status TEXT DEFAULT 'In Progress'
+            )
+            """)
+
+            # Alert History & Deduplication Table
+            cursor.execute("""
+            CREATE TABLE IF NOT EXISTS alert_history (
+                id TEXT PRIMARY KEY,
+                opportunity_id TEXT,
+                url_normalized TEXT NOT NULL,
+                title TEXT,
+                date_alerted TEXT NOT NULL,
+                alert_type TEXT NOT NULL,
+                week_number INTEGER NOT NULL,
+                relevance_score INTEGER DEFAULT 80,
+                consumed INTEGER DEFAULT 0,
+                created_at TEXT
             )
             """)
 
@@ -486,3 +505,125 @@ class Database:
                 "tailoring_projects_completed": tailoring_count or 0,
                 "tailoring_net_profit_ngn": tailoring_profit or 0.0,
             }
+
+    def record_alert_history(
+        self,
+        opportunity_id: str,
+        url: str,
+        title: str,
+        alert_type: str,
+        week_number: int,
+        relevance_score: int = 80,
+        date_alerted: Optional[str] = None
+    ) -> str:
+        """Record an opportunity in alert history to prevent duplicate future alerts."""
+        norm_url = normalize_url(url)
+        alert_id = generate_hash_id("alt", norm_url, alert_type, str(week_number))
+        alert_date = date_alerted or datetime.now().isoformat().split("T")[0]
+
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+            INSERT OR REPLACE INTO alert_history (
+                id, opportunity_id, url_normalized, title, date_alerted,
+                alert_type, week_number, relevance_score, consumed, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                alert_id, opportunity_id, norm_url, title, alert_date,
+                alert_type, week_number, relevance_score, 0, datetime.now().isoformat()
+            ))
+            conn.commit()
+            return alert_id
+
+    def is_opportunity_alerted(self, url: str, opportunity_id: Optional[str] = None) -> bool:
+        """Check if an opportunity (by normalized URL or ID) has already been alerted to the user."""
+        norm_url = normalize_url(url)
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            if opportunity_id:
+                cursor.execute("""
+                SELECT 1 FROM alert_history
+                WHERE url_normalized = ? OR opportunity_id = ?
+                LIMIT 1
+                """, (norm_url, opportunity_id))
+            else:
+                cursor.execute("""
+                SELECT 1 FROM alert_history
+                WHERE url_normalized = ?
+                LIMIT 1
+                """, (norm_url,))
+            return cursor.fetchone() is not None
+
+    def get_alert_history(self, limit: int = 50) -> List[Dict[str, Any]]:
+        """Retrieve recent alert history records."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+            SELECT * FROM alert_history
+            ORDER BY date_alerted DESC, created_at DESC
+            LIMIT ?
+            """, (limit,))
+            return [dict(row) for row in cursor.fetchall()]
+
+    def get_completed_course_urls(self) -> Set[str]:
+        """Get set of normalized URLs for all completed courses to prevent re-recommending."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT url FROM courses WHERE status = 'Completed'")
+            return {normalize_url(row["url"]) for row in cursor.fetchall()}
+
+    def get_all_candidate_learning_resources(self) -> List[Dict[str, Any]]:
+        """
+        Aggregate all potential learning opportunities across courses, active opportunities,
+        and reading items for personalized recommendation ranking.
+        """
+        resources = []
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+
+            # 1. Courses
+            cursor.execute("SELECT * FROM courses")
+            for row in cursor.fetchall():
+                d = dict(row)
+                scores = json.loads(d.get("scores_json") or "{}")
+                resources.append({
+                    "id": d["id"],
+                    "title": d["name"],
+                    "provider": d["provider"],
+                    "url": d["url"],
+                    "category": d["category"],
+                    "resource_type": "Course",
+                    "description": d.get("notes") or d.get("practical_assignment") or "",
+                    "practical_task": d.get("practical_assignment", ""),
+                    "difficulty": d.get("difficulty", "Beginner"),
+                    "duration": d.get("duration", "4 weeks"),
+                    "cost": d.get("cost", "Free"),
+                    "recommended_month": d.get("recommended_month", 1),
+                    "status": d.get("status", "Not started"),
+                    "total_score": d.get("total_score", 85),
+                    "created_at": d.get("created_at", "")
+                })
+
+            # 2. Opportunities (Active)
+            cursor.execute("SELECT * FROM opportunities WHERE is_active = 1")
+            for row in cursor.fetchall():
+                d = dict(row)
+                resources.append({
+                    "id": d["id"],
+                    "title": d["title"],
+                    "provider": d["organizer"],
+                    "url": d["url"],
+                    "category": d["category"],
+                    "resource_type": d["category"],
+                    "description": d.get("description", ""),
+                    "practical_task": d.get("eligibility", ""),
+                    "difficulty": "All Levels",
+                    "duration": d.get("date", "Ongoing"),
+                    "cost": d.get("cost", "Free"),
+                    "recommended_month": 1,
+                    "status": "Available",
+                    "total_score": d.get("total_score", 80),
+                    "created_at": d.get("created_at", "")
+                })
+
+        return resources

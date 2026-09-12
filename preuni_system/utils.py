@@ -156,3 +156,52 @@ def is_suspicious_url(url: str) -> bool:
         if re.search(pattern, url, re.IGNORECASE):
             return True
     return False
+
+
+def normalize_url(url: str) -> str:
+    """
+    Normalize URL by removing tracking query parameters (utm_*, fbclid, ref, etc.)
+    and trailing slashes to ensure accurate deduplication.
+    """
+    if not url:
+        return ""
+    clean_url = url.strip()
+    # Remove protocol prefix for comparison if needed, or strip query params
+    # Split query parameters
+    if "?" in clean_url:
+        base, query = clean_url.split("?", 1)
+        params = query.split("&")
+        filtered_params = [
+            p for p in params
+            if not any(p.lower().startswith(prefix) for prefix in ("utm_", "fbclid", "gclid", "ref", "source", "_hsenc", "mc_eid"))
+        ]
+        if filtered_params:
+            clean_url = f"{base}?{'&'.join(filtered_params)}"
+        else:
+            clean_url = base
+
+    # Strip fragments
+    if "#" in clean_url:
+        clean_url = clean_url.split("#", 1)[0]
+
+    # Strip trailing slash
+    clean_url = clean_url.rstrip("/")
+    return clean_url.lower()
+
+
+def compute_keyword_overlap(text: str, keywords: List[str]) -> float:
+    """
+    Compute matching overlap percentage (0.0 to 1.0) of keywords in given text.
+    """
+    if not text or not keywords:
+        return 0.0
+    text_lower = text.lower()
+    matches = 0
+    for kw in keywords:
+        kw_clean = kw.lower().strip()
+        if not kw_clean:
+            continue
+        # Check whole word or substring
+        if kw_clean in text_lower:
+            matches += 1
+    return round(matches / max(1, len(keywords)), 2)

@@ -155,3 +155,75 @@ class SoftSkillAssessment:
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
+
+
+@dataclass
+class WeeklyCalendarItem:
+    global_week: int
+    month: int
+    week_in_month: int
+    phase: str
+    subject: str
+    topic: str
+    weekly_objectives: List[str] = field(default_factory=list)
+    daily_focus: str = ""
+    core_keywords: List[str] = field(default_factory=list)
+    recommended_assignment: str = ""
+    long_term_connection: str = ""
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
+class DailyLearningFocus:
+    date_str: str
+    global_week: int
+    month: int
+    week_in_month: int
+    phase: str
+    subject: str
+    topic: str
+    daily_focus: str
+    weekly_objectives: List[str] = field(default_factory=list)
+    recommended_assignment: str = ""
+    long_term_connection: str = ""
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
+class OpportunityAlertMatch:
+    opportunity_id: str
+    title: str
+    provider: str
+    url: str
+    category: str
+    match_type: str  # "learn_now" or "long_term"
+    relevance_score: int
+    why_it_matches: str
+    where_it_fits: str = ""
+    difficulty_level: str = "Beginner / Pre-University"
+    estimated_time: str = "45-60 mins"
+    cost: str = "Free"
+    practical_task: str = ""
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
+
+
+@dataclass
+class AlertHistoryItem:
+    id: str
+    opportunity_id: str
+    url_normalized: str
+    date_alerted: str
+    alert_type: str  # "learn_now", "long_term", "daily_reminder"
+    week_number: int
+    relevance_score: int
+    consumed: bool = False
+    created_at: str = field(default_factory=lambda: datetime.now().isoformat())
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)

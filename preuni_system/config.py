@@ -90,6 +90,24 @@ class Config:
         "networking": 0.05,
     }
 
+    # Calendar & Daily Alert Configuration
+    START_DATE: str = os.getenv("START_DATE", "2026-09-01")
+    DAILY_ALERT_ENABLED: bool = os.getenv("DAILY_ALERT_ENABLED", "true").lower() in ("true", "1", "yes")
+    MAX_LEARN_NOW_RECOMMENDATIONS: int = int(os.getenv("MAX_LEARN_NOW_RECOMMENDATIONS", "2"))
+    MAX_LONG_TERM_RECOMMENDATIONS: int = int(os.getenv("MAX_LONG_TERM_RECOMMENDATIONS", "1"))
+    MIN_DAILY_ALERT_RELEVANCE_SCORE: int = int(os.getenv("MIN_DAILY_ALERT_RELEVANCE_SCORE", "70"))
+    LOOKBACK_DAYS_FOR_NEW_OPPS: int = int(os.getenv("LOOKBACK_DAYS_FOR_NEW_OPPS", "14"))
+
+    # Daily Alert Relevance Weights (Sum to 1.00)
+    DAILY_RELEVANCE_WEIGHTS: Dict[str, float] = {
+        "topic_match": 0.35,
+        "module_match": 0.20,
+        "field_match": 0.20,
+        "long_term_fit": 0.10,
+        "quality": 0.10,
+        "recency": 0.05,
+    }
+
     # Thresholds
     ALERT_SCORE_THRESHOLD: int = int(os.getenv("ALERT_SCORE_THRESHOLD", "85"))
     CONSIDER_SCORE_THRESHOLD: int = int(os.getenv("CONSIDER_SCORE_THRESHOLD", "70"))
@@ -117,7 +135,9 @@ class Config:
             "primary_career": cls.PRIMARY_CAREER_INTEREST,
             "apprenticeship": cls.CURRENT_APPRENTICESHIP,
             "target_date": cls.TARGET_UNIVERSITY_DATE,
+            "start_date": cls.START_DATE,
             "timezone": cls.TIMEZONE,
             "alert_threshold": cls.ALERT_SCORE_THRESHOLD,
+            "daily_alert_enabled": cls.DAILY_ALERT_ENABLED,
             "resend_enabled": bool(cls.RESEND_API_KEY),
         }

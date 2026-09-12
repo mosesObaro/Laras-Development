@@ -574,6 +574,9 @@ function updateSkillSlider(key, val) {
 
 // 12. Email Previews
 function initEmailPreview() {
+  document.getElementById("btnPreviewDailyAlert")?.addEventListener("click", () => {
+    fetchEmailTemplate("daily_alert");
+  });
   document.getElementById("btnPreviewDigest")?.addEventListener("click", () => {
     fetchEmailTemplate("weekly_digest");
   });
@@ -586,7 +589,38 @@ function fetchEmailTemplate(type) {
   const iframe = document.getElementById("emailPreviewFrame");
   if (!iframe) return;
 
-  if (type === "weekly_digest") {
+  if (type === "daily_alert") {
+    iframe.srcdoc = `
+      <div style="font-family: sans-serif; padding: 24px; color: #1e293b; background: #f8fafc;">
+        <div style="background: linear-gradient(135deg, #0f172a, #1e293b); color: white; padding: 20px; border-radius: 8px;">
+          <span style="background: #0284c7; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 11px;">PERSONALIZED DAILY LEARNING GUIDE</span>
+          <h2 style="margin:8px 0 2px;">General Chemistry: Atomic Structure & Redox</h2>
+          <p style="margin:0; font-size: 13px; color: #94a3b8;">Month 1 • Week 2 • Lara (UNIBEN Healthcare Preparation Track)</p>
+        </div>
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px; margin-top: 16px;">
+          <strong style="color: #1d4ed8; font-size: 12px; text-transform: uppercase;">Today's Recommended Focus:</strong>
+          <p style="margin: 4px 0 0; color: #1e3a8a; font-weight: bold; font-size: 14px;">Write electron configurations for elements 1 to 30 and balance 5 redox reactions.</p>
+        </div>
+        <h3 style="color: #16a34a; margin-top: 20px;">🆕 Learn Now (Matched to Current Topic)</h3>
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px;">
+          <div style="display:flex; justify-content:space-between;">
+            <strong>High School Chemistry: Atomic Structure & Bonding</strong>
+            <span style="background: #dcfce7; color: #15803d; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 11px;">Score: 92/100</span>
+          </div>
+          <p style="font-size: 12px; color: #64748b; margin: 4px 0;">Provider: Khan Academy • Est. Time: 45 mins • Cost: Free</p>
+          <p style="font-size: 12px; color: #15803d;"><strong>Why it matches:</strong> Directly covers electron orbitals, spdf notation, and periodic trends.</p>
+        </div>
+        <h3 style="color: #0284c7; margin-top: 16px;">🎯 Good Long-Term Match</h3>
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
+          <div style="display:flex; justify-content:space-between;">
+            <strong>Organic Chemistry: Functional Groups & Reactions</strong>
+            <span style="background: #e0f2fe; color: #0284c7; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 11px;">Score: 95/100</span>
+          </div>
+          <p style="font-size: 12px; color: #64748b; margin: 4px 0;">Where it fits: Month 6 Biomolecules & UNIBEN 100L General Chemistry (CHM102)</p>
+        </div>
+      </div>
+    `;
+  } else if (type === "weekly_digest") {
     iframe.srcdoc = `
       <div style="font-family: sans-serif; padding: 24px; color: #1e293b;">
         <div style="background: #0f172a; color: white; padding: 20px; border-radius: 8px;">

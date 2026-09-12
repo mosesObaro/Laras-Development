@@ -12,6 +12,7 @@ from email.mime.text import MIMEText
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 from preuni_system.config import Config, EMAIL_OUTPUT_DIR, TEMPLATES_DIR
+from preuni_system.models import DailyLearningFocus, OpportunityAlertMatch
 
 
 class EmailService:
@@ -379,6 +380,207 @@ Pre-University Development & Opportunity System
   <div class="footer">
     Pre-University Development, Career & Opportunity System<br>
     Benin City, Edo State, Nigeria • Sent via Resend
+  </div>
+</div>
+</body>
+</html>
+"""
+        return subject, html_body, text_body
+
+    def build_daily_alert(
+        self,
+        focus: DailyLearningFocus,
+        learn_now_opps: List[OpportunityAlertMatch],
+        long_term_opps: List[OpportunityAlertMatch],
+        custom_note: str = ""
+    ) -> Tuple[str, str, str]:
+        """
+        Generates (Subject, HTML, Plaintext) for the calendar-driven Daily Learning & Opportunity Alert.
+        Answers:
+        1. What should I focus on learning now?
+        2. What newly available course/resource/opportunity is a good match for my long-term learning path?
+        """
+        subject = f"[DAILY LEARNING GUIDE] {focus.subject} • Month {focus.month}, Week {focus.week_in_month}"
+
+        # --- PLAINTEXT VERSION ---
+        text_body = f"""=======================================================
+📚 TODAY'S PRE-UNIVERSITY LEARNING GUIDE
+Date: {focus.date_str} • Month {focus.month}, Week {focus.week_in_month} (Global Week {focus.global_week}/78)
+Phase: {focus.phase}
+=======================================================
+STUDENT: {self.config.STUDENT_NAME} ({self.config.CITY}, {self.config.STATE})
+TARGET:  {self.config.UNIVERSITY} ({self.config.TARGET_FIELD})
+APPRENTICESHIP: {self.config.CURRENT_APPRENTICESHIP}
+
+-------------------------------------------------------
+1. 🎯 WHAT TO FOCUS ON LEARNING NOW:
+-------------------------------------------------------
+• Subject: {focus.subject}
+• Topic:   {focus.topic}
+• TODAY'S RECOMMENDED FOCUS:
+  👉 {focus.daily_focus}
+
+• WEEKLY OBJECTIVES:
+"""
+        for obj in focus.weekly_objectives:
+            text_body += f"  - {obj}\n"
+
+        if focus.recommended_assignment:
+            text_body += f"\n• CORE TASK: {focus.recommended_assignment}\n"
+
+        # Learn Now Section
+        text_body += """
+-------------------------------------------------------
+2. 🆕 LEARN NOW (Resources directly matching this week):
+-------------------------------------------------------
+"""
+        if learn_now_opps:
+            for i, op in enumerate(learn_now_opps, start=1):
+                text_body += f"""{i}. {op.title}
+   Provider: {op.provider} | Level: {op.difficulty_level} | Est. Time: {op.estimated_time} | Cost: {op.cost}
+   Score: {op.relevance_score}/100
+   Why it matches: {op.why_it_matches}
+   Direct Link: {op.url}
+
+"""
+        else:
+            text_body += "   ✨ You are right on track! No urgent supplementary resources required today.\n   Focus on your core active recall flashcards and daily study assignment.\n\n"
+
+        # Long-Term Match Section
+        text_body += """-------------------------------------------------------
+3. 🎯 GOOD LONG-TERM MATCH (Strategic future alignment):
+-------------------------------------------------------
+"""
+        if long_term_opps:
+            for i, op in enumerate(long_term_opps, start=1):
+                text_body += f"""{i}. {op.title}
+   Provider: {op.provider} | Level: {op.difficulty_level} | Duration: {op.estimated_time}
+   Score: {op.relevance_score}/100
+   Why it matters: {op.why_it_matches}
+   Where it fits:  {op.where_it_fits}
+   Direct Link:    {op.url}
+
+"""
+        else:
+            text_body += f"   🌟 Roadmap alignment: {focus.long_term_connection}\n\n"
+
+        text_body += f"""-------------------------------------------------------
+💡 SUGGESTED DAILY ACTION:
+Spend 60–90 minutes mastering today's focus on '{focus.topic}'
+before exploring supplementary courses. Maintain your Anki recall streak!
+=======================================================
+Pre-University Development, Career & Opportunity System
+Benin City, Edo State, Nigeria • Delivered via Resend
+"""
+
+        # --- HTML VERSION ---
+        html_learn_now = ""
+        if learn_now_opps:
+            for op in learn_now_opps:
+                html_learn_now += f"""
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px; margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                    <span style="font-weight: 800; color: #166534; font-size: 15px;">{op.title}</span>
+                    <span style="background: #dcfce7; color: #15803d; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 9999px; white-space: nowrap;">Score: {op.relevance_score}/100</span>
+                  </div>
+                  <p style="font-size: 12px; color: #15803d; margin: 4px 0 8px;">Provider: <strong>{op.provider}</strong> • Level: <strong>{op.difficulty_level}</strong> • Est. Time: <strong>{op.estimated_time}</strong> • Cost: <strong>{op.cost}</strong></p>
+                  <div style="background: #ffffff; border-radius: 6px; padding: 10px; border-left: 3px solid #22c55e; margin-bottom: 10px; font-size: 13px; color: #1e293b;">
+                    <strong>Why it matches today's focus:</strong> {op.why_it_matches}
+                  </div>
+                  <a href="{op.url}" style="display: inline-block; background: #16a34a; color: #ffffff !important; text-decoration: none; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 6px;" target="_blank">Access Course &rarr;</a>
+                </div>
+                """
+        else:
+            html_learn_now = """
+            <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 16px; text-align: center; color: #64748b; font-size: 13px;">
+              ✨ <strong>Right on track!</strong> No new external resources needed today. Focus on your active recall flashcards and textbook exercises.
+            </div>
+            """
+
+        html_long_term = ""
+        if long_term_opps:
+            for op in long_term_opps:
+                html_long_term += f"""
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; margin-bottom: 12px;">
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;">
+                    <span style="font-weight: 800; color: #0369a1; font-size: 15px;">{op.title}</span>
+                    <span style="background: #e0f2fe; color: #0284c7; font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 9999px; white-space: nowrap;">Score: {op.relevance_score}/100</span>
+                  </div>
+                  <p style="font-size: 12px; color: #0284c7; margin: 4px 0 8px;">Provider: <strong>{op.provider}</strong> • Level: <strong>{op.difficulty_level}</strong> • Est. Duration: <strong>{op.estimated_time}</strong></p>
+                  <div style="background: #ffffff; border-radius: 6px; padding: 10px; border-left: 3px solid #0284c7; margin-bottom: 6px; font-size: 13px; color: #1e293b;">
+                    <strong>Why it matters:</strong> {op.why_it_matches}
+                  </div>
+                  <p style="font-size: 12px; color: #64748b; margin: 0 0 10px;"><strong>Where it fits:</strong> {op.where_it_fits}</p>
+                  <a href="{op.url}" style="display: inline-block; background: #0284c7; color: #ffffff !important; text-decoration: none; font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 6px;" target="_blank">Explore Long-Term Course &rarr;</a>
+                </div>
+                """
+        else:
+            html_long_term = f"""
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 14px; font-size: 13px; color: #475569;">
+              🌟 <strong>Roadmap Connection:</strong> {focus.long_term_connection}
+            </div>
+            """
+
+        html_objectives = "".join(f"<li style='margin-bottom: 4px;'>{obj}</li>" for obj in focus.weekly_objectives)
+
+        html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{subject}</title>
+<style>
+  body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; color: #1e293b; margin: 0; padding: 20px; }}
+  .container {{ max-width: 640px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }}
+  .header {{ background: linear-gradient(135deg, #0f172a, #1e293b); color: #ffffff; padding: 24px; }}
+  .badge {{ display: inline-block; background: #0284c7; color: #ffffff; font-weight: 800; font-size: 11px; padding: 4px 10px; border-radius: 9999px; text-transform: uppercase; margin-bottom: 8px; }}
+  .section {{ padding: 20px 24px; border-bottom: 1px solid #f1f5f9; }}
+  .section-title {{ font-size: 15px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }}
+  .focus-box {{ background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; margin-bottom: 12px; }}
+  .footer {{ background: #f8fafc; padding: 18px 24px; font-size: 12px; color: #64748b; text-align: center; border-top: 1px solid #e2e8f0; }}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <span class="badge">Personalized Daily Learning Guide</span>
+    <h1 style="margin: 6px 0 4px; font-size: 21px; line-height: 1.3;">{focus.subject}: {focus.topic}</h1>
+    <p style="margin: 0; font-size: 13px; color: #94a3b8;">Month {focus.month}, Week {focus.week_in_month} (Week {focus.global_week}/78) • {self.config.STUDENT_NAME} • {self.config.UNIVERSITY}</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🎯 What to Focus on Learning Today</div>
+    <div class="focus-box">
+      <div style="font-size: 12px; font-weight: 700; color: #1d4ed8; text-transform: uppercase; margin-bottom: 4px;">Today's Recommended Focus:</div>
+      <div style="font-size: 14px; font-weight: 700; color: #1e3a8a; line-height: 1.4;">{focus.daily_focus}</div>
+    </div>
+    <div style="font-size: 13px; color: #334155; line-height: 1.5;">
+      <strong>Weekly Learning Objectives:</strong>
+      <ul style="margin: 6px 0 0; padding-left: 20px;">
+        {html_objectives}
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🆕 Learn Now (Matched to Current Topic)</div>
+    {html_learn_now}
+  </div>
+
+  <div class="section">
+    <div class="section-title">🎯 Good Long-Term Match (Future Roadmap Alignment)</div>
+    {html_long_term}
+  </div>
+
+  <div class="section" style="background: #fffbeb;">
+    <div style="font-size: 13px; color: #92400e; line-height: 1.5;">
+      <strong>💡 Suggested Action:</strong> Spend 60–90 minutes on today's focus on <em>{focus.topic}</em> before exploring long-term materials. Keep up your Anki flashcard streak!
+    </div>
+  </div>
+
+  <div class="footer">
+    Pre-University Development, Career & Opportunity System<br>
+    Benin City, Edo State, Nigeria • Sent via Resend API
   </div>
 </div>
 </body>

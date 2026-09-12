@@ -1,0 +1,37 @@
+name: Daily Personalized Learning & Opportunity Alert
+
+on:
+  schedule:
+    # Run every day at 06:00 UTC (07:00 West Africa Time / WAT)
+    - cron: '0 6 * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+jobs:
+  send-daily-alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Seed Database & Ingest Live Opportunity Feeds
+        run: |
+          python3 -m preuni_system.cli seed
+          python3 -m preuni_system.cli scan
+
+      - name: Generate & Dispatch Daily Learning Alert via Resend
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL || 'Pre-University System <onboarding@resend.dev>' }}
+          STUDENT_EMAIL: ${{ secrets.STUDENT_EMAIL || 'lara@example.com' }}
+          PARENT_EMAIL: ${{ secrets.PARENT_EMAIL || 'parent@example.com' }}
+          STUDENT_NAME: ${{ vars.STUDENT_NAME || 'Lara' }}
+          START_DATE: ${{ vars.START_DATE || '2026-09-01' }}
+          DAILY_ALERT_ENABLED: ${{ vars.DAILY_ALERT_ENABLED || 'true' }}
+        run: |
+          python3 -m preuni_system.cli daily-alert --send
