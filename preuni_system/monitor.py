@@ -5,11 +5,35 @@ Coordinates scanning, deduplication, deadline expiration, and alert triggers.
 
 import json
 from datetime import datetime, date
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 from preuni_system.config import Config
 from preuni_system.crawler import OpportunityCrawler
 from preuni_system.db import Database
-from preuni_system.utils import is_expired, is_level_eligible, normalize_url, parse_date
+from preuni_system.utils import is_expired, is_level_eligible, is_level_relevant, normalize_url, parse_date
+
+
+def split_digest_opportunities(db: Database, today: Optional[date] = None) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], List[Dict[str, Any]]]:
+    """
+    Opportunities for the weekly digest: (open to the student now, open later during university
+    ordered by earliest study level, those with a known upcoming deadline ordered by date).
+    """
+    today = today or date.today()
+    opps = [
+        o for o in db.get_top_opportunities(limit=100, min_score=Config.CONSIDER_SCORE_THRESHOLD)
+        if not is_expired(o.get("deadline"), today)
+    ]
+    open_now = [o for o in opps if is_level_eligible(o.get("min_level"), o.get("max_level"))]
+    plan_ahead = sorted(
+        (o for o in opps
+         if not is_level_eligible(o.get("min_level"), o.get("max_level"))
+         and is_level_relevant(o.get("min_level"), o.get("max_level"))),
+        key=lambda o: (Config.STUDY_LEVELS.index(o["min_level"]), -(o.get("total_score") or 0))
+    )
+    deadlines = sorted(
+        (o for o in opps if parse_date(o.get("deadline")) and is_level_relevant(o.get("min_level"), o.get("max_level"))),
+        key=lambda o: parse_date(o["deadline"])
+    )
+    return open_now, plan_ahead, deadlines
 
 
 def select_immediate_alert(db: Database, today: Optional[date] = None) -> Optional[Dict[str, Any]]:

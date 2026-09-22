@@ -13,6 +13,21 @@ from preuni_system.models import DailyLearningFocus, OpportunityAlertMatch
 from preuni_system.utils import normalize_url, compute_keyword_overlap
 
 
+def recommend_for_focus(db, calendar, focus: DailyLearningFocus, already_alerted_urls: Set[str], force: bool = False) -> Dict[str, Any]:
+    """Rank the database's candidates for a week's focus (shared by the CLI and the dashboard previews)."""
+    return PersonalizedLearningRecommender().rank_and_select_recommendations(
+        candidates=db.get_all_candidate_learning_resources(relevant_only=True),
+        learning_focus=focus,
+        upcoming_keywords=calendar.get_upcoming_keywords(focus.global_week, lookahead_weeks=8),
+        already_alerted_urls=already_alerted_urls,
+        completed_urls=db.get_completed_course_urls(),
+        max_learn_now=Config.MAX_LEARN_NOW_RECOMMENDATIONS,
+        max_long_term=Config.MAX_LONG_TERM_RECOMMENDATIONS,
+        min_relevance_score=Config.MIN_DAILY_ALERT_RELEVANCE_SCORE,
+        force=force
+    )
+
+
 class PersonalizedLearningRecommender:
     """Evaluates candidates against current learning calendar and long-term milestones."""
 

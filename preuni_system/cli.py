@@ -9,18 +9,15 @@ import sys
 import http.server
 import socketserver
 import os
-from datetime import date
 from pathlib import Path
 from preuni_system.config import Config, DASHBOARD_DIR, EMAIL_OUTPUT_DIR
 from preuni_system.db import Database
-from preuni_system.monitor import OpportunityMonitor, select_immediate_alert
+from preuni_system.monitor import OpportunityMonitor, select_immediate_alert, split_digest_opportunities
 from preuni_system.emailer import EmailService
 from preuni_system.scorer import OpportunityScorer
 from preuni_system.calendar import LearningCalendarEngine
-from preuni_system.recommender import PersonalizedLearningRecommender
-from preuni_system.utils import (
-    format_naira, generate_hash_id, normalize_url, is_expired, is_level_eligible, is_level_relevant, parse_date
-)
+from preuni_system.recommender import recommend_for_focus
+from preuni_system.utils import format_naira, generate_hash_id, normalize_url
 
 
 def _was_sent(res: dict) -> bool:
@@ -82,23 +79,8 @@ def cmd_digest(args):
     emailer = EmailService()
     focus = LearningCalendarEngine().get_learning_focus(month=args.month, week=args.week)
     month, week = focus.month, focus.week_in_month
-    today = date.today()
 
-    opps = [
-        o for o in db.get_top_opportunities(limit=100, min_score=Config.CONSIDER_SCORE_THRESHOLD)
-        if not is_expired(o.get("deadline"), today)
-    ]
-    open_now = [o for o in opps if is_level_eligible(o.get("min_level"), o.get("max_level"))]
-    plan_ahead = sorted(
-        (o for o in opps
-         if not is_level_eligible(o.get("min_level"), o.get("max_level"))
-         and is_level_relevant(o.get("min_level"), o.get("max_level"))),
-        key=lambda o: (Config.STUDY_LEVELS.index(o["min_level"]), -(o.get("total_score") or 0))
-    )
-    deadlines = sorted(
-        (o for o in opps if parse_date(o.get("deadline")) and is_level_relevant(o.get("min_level"), o.get("max_level"))),
-        key=lambda o: parse_date(o["deadline"])
-    )
+    open_now, plan_ahead, deadlines = split_digest_opportunities(db)
     courses = db.get_courses(month=month)
     reading_items = db.get_reading_items(month=month)
     reading = reading_items[0] if reading_items else None
@@ -169,7 +151,6 @@ def cmd_daily_alert(args):
 
     calendar = LearningCalendarEngine()
     db = Database()
-    recommender = PersonalizedLearningRecommender()
     emailer = EmailService()
 
     # 1. Determine Learning Focus from calendar
@@ -179,27 +160,9 @@ def cmd_daily_alert(args):
         week=args.week
     )
 
-    # 2. Gather candidates and history (skip opportunities the student can never apply to)
-    candidates = [
-        c for c in db.get_all_candidate_learning_resources()
-        if c.get("resource_type") == "Course" or is_level_relevant(c.get("min_level"), c.get("max_level"))
-    ]
-    upcoming_keywords = calendar.get_upcoming_keywords(focus.global_week, lookahead_weeks=8)
+    # 2-3. Rank & categorize this week's candidates, skipping anything already alerted
     already_alerted_urls, _ = db.get_alerted_keys()
-    completed_urls = db.get_completed_course_urls()
-
-    # 3. Rank & Categorize Recommendations
-    recs = recommender.rank_and_select_recommendations(
-        candidates=candidates,
-        learning_focus=focus,
-        upcoming_keywords=upcoming_keywords,
-        already_alerted_urls=already_alerted_urls,
-        completed_urls=completed_urls,
-        max_learn_now=Config.MAX_LEARN_NOW_RECOMMENDATIONS,
-        max_long_term=Config.MAX_LONG_TERM_RECOMMENDATIONS,
-        min_relevance_score=Config.MIN_DAILY_ALERT_RELEVANCE_SCORE,
-        force=args.force
-    )
+    recs = recommend_for_focus(db, calendar, focus, already_alerted_urls, force=args.force)
 
     learn_now = recs["learn_now"]
     long_term = recs["long_term"]

@@ -17,7 +17,7 @@ from preuni_system.models import (
     SoftSkillAssessment,
     AlertHistoryItem,
 )
-from preuni_system.utils import normalize_url, generate_hash_id
+from preuni_system.utils import normalize_url, generate_hash_id, is_level_relevant
 
 
 class Database:
@@ -379,7 +379,32 @@ class Database:
                         stats["reading"] += 1
                     conn.commit()
 
+        # 6. Shared progress (optional): course and book statuses exported from the dashboard
+        progress_file = DATA_DIR / "progress.json"
+        if progress_file.is_file():
+            with open(progress_file, "r", encoding="utf-8") as f:
+                progress = json.load(f)
+            stats["progress"] = self.apply_progress(progress)
+
         return stats
+
+    def apply_progress(self, progress: Dict[str, Any]) -> int:
+        """Set course and reading statuses from a dashboard progress export; returns rows updated."""
+        valid = {
+            "courses": ("courses", {"Not started", "In progress", "Completed"}),
+            "reading": ("reading_list", {"Not read", "Reading", "Completed"}),
+        }
+        updated = 0
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            for key, (table, statuses) in valid.items():
+                for item_id, entry in (progress.get(key) or {}).items():
+                    status = (entry or {}).get("status")
+                    if status in statuses:
+                        cursor.execute(f"UPDATE {table} SET status = ? WHERE id = ?", (status, item_id))
+                        updated += cursor.rowcount
+            conn.commit()
+        return updated
 
     def get_courses(self, category: Optional[str] = None, month: Optional[int] = None) -> List[Dict[str, Any]]:
         """Retrieve courses with optional category or month filter."""
@@ -606,10 +631,11 @@ class Database:
             cursor.execute("SELECT url FROM courses WHERE status = 'Completed'")
             return {normalize_url(row["url"]) for row in cursor.fetchall()}
 
-    def get_all_candidate_learning_resources(self) -> List[Dict[str, Any]]:
+    def get_all_candidate_learning_resources(self, relevant_only: bool = False) -> List[Dict[str, Any]]:
         """
-        Aggregate all potential learning opportunities across courses, active opportunities,
-        and reading items for personalized recommendation ranking.
+        Aggregate all potential learning opportunities across courses and active opportunities
+        for personalized recommendation ranking. With relevant_only, opportunities the student
+        can never apply to (outgrown, postgraduate-only or unknown level) are left out.
         """
         resources = []
         with self.get_connection() as conn:
@@ -662,4 +688,9 @@ class Database:
                     "max_level": d.get("max_level")
                 })
 
+        if relevant_only:
+            resources = [
+                r for r in resources
+                if r["resource_type"] == "Course" or is_level_relevant(r.get("min_level"), r.get("max_level"))
+            ]
         return resources

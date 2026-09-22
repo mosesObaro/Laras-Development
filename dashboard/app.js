@@ -3,6 +3,10 @@
  * Offline-first, reactive state with localStorage persistence.
  */
 
+// Saved progress: only statuses and the student's own entries (see progress.js)
+const STORAGE_KEY = "PREUNI_STATE_V2";
+const LEGACY_STORAGE_KEY = "PREUNI_STATE_V1";
+
 // Global State
 let appState = {
   courses: [],
@@ -12,25 +16,12 @@ let appState = {
   reading: [],
   uniben: null,
   soft_skills: [],
-  tailoring_projects: [
-    {
-      id: "tailor-001",
-      project_name: "Bespoke Peplum Blouse & Pencil Skirt",
-      garment_type: "Skirt & Blouse",
-      date_completed: "2026-08-20",
-      material_cost: 3200,
-      labor_cost: 4200,
-      selling_price: 11000,
-      profit: 3600,
-      customer_name: "Mrs. Osas",
-      skills_practiced: "Invisible zipper insertion, princess darts, neckline facing"
-    }
-  ],
+  course_progress: {},
+  reading_progress: {},
+  tailoring_projects: [],
   volunteer_logs: [],
-  checklist_completed: [1, 2],
-  rubric_scores: {
-    1: { communication: 3, public_speaking: 2, critical_thinking: 3, problem_solving: 3, emotional_intelligence: 3, confidence: 3, leadership: 3, teamwork: 4, time_management: 3, financial_discipline: 3, customer_service: 3, negotiation: 2, professionalism: 4, resilience: 3, learning_ability: 4 }
-  },
+  checklist_completed: [],
+  rubric_scores: {},
   active_modal_course_id: null
 };
 
@@ -53,41 +44,72 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // 1. Data Loader & State Sync
-function loadData() {
-  const localSaved = localStorage.getItem("PREUNI_STATE_V1");
-  const baseData = window.PREUNI_DATA || {};
-
-  appState.courses = baseData.courses || [];
-  appState.volunteering = baseData.volunteering || [];
-  appState.careers = baseData.healthcare_careers || [];
-  appState.scholarships = baseData.scholarships_competitions || [];
-  appState.reading = baseData.reading_list || [];
-  appState.uniben = baseData.uniben_data || null;
-  appState.soft_skills = baseData.soft_skills || [];
-
-  if (localSaved) {
-    try {
-      const parsed = JSON.parse(localSaved);
-      if (parsed.courses) appState.courses = parsed.courses;
-      if (parsed.tailoring_projects) appState.tailoring_projects = parsed.tailoring_projects;
-      if (parsed.volunteer_logs) appState.volunteer_logs = parsed.volunteer_logs;
-      if (parsed.checklist_completed) appState.checklist_completed = parsed.checklist_completed;
-      if (parsed.rubric_scores) appState.rubric_scores = parsed.rubric_scores;
-    } catch (e) {
-      console.error("Error loading localStorage state:", e);
-    }
+function readSavedState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) {
+    console.error("Error loading saved progress:", e);
+    return null;
   }
 }
 
-function saveState() {
-  localStorage.setItem("PREUNI_STATE_V1", JSON.stringify({
-    courses: appState.courses,
+function currentProgressState() {
+  return {
+    version: 2,
+    course_progress: appState.course_progress,
+    reading_progress: appState.reading_progress,
     tailoring_projects: appState.tailoring_projects,
     volunteer_logs: appState.volunteer_logs,
     checklist_completed: appState.checklist_completed,
     rubric_scores: appState.rubric_scores
-  }));
+  };
+}
+
+function persistState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentProgressState()));
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
+  } catch (e) {
+    console.error("Could not save progress:", e);
+  }
+}
+
+function loadData() {
+  const baseData = window.PREUNI_DATA || {};
+  const shared = baseData.progress || {};  // data/progress.json, if it has been committed
+  const saved = readSavedState();
+  const local = PreuniProgress.normalizeState(saved);
+
+  appState.course_progress = PreuniProgress.mergeProgress(shared.courses, local.course_progress);
+  appState.reading_progress = PreuniProgress.mergeProgress(shared.reading, local.reading_progress);
+  appState.tailoring_projects = local.tailoring_projects;
+  appState.volunteer_logs = local.volunteer_logs;
+  appState.checklist_completed = local.checklist_completed;
+  appState.rubric_scores = local.rubric_scores;
+
+  // Details always come from the latest bundled data; only statuses come from saved progress
+  appState.courses = PreuniProgress.applyProgress(baseData.courses, appState.course_progress, "Not started");
+  appState.reading = PreuniProgress.applyProgress(baseData.reading_list, appState.reading_progress, "Not read");
+  appState.volunteering = baseData.volunteering || [];
+  appState.careers = baseData.healthcare_careers || [];
+  appState.scholarships = baseData.scholarships_competitions || [];
+  appState.uniben = baseData.uniben_data || null;
+  appState.soft_skills = baseData.soft_skills || [];
+
+  // Rewrite progress saved by an older version in the new format
+  if (saved && saved.version !== 2) persistState();
+}
+
+function saveState() {
+  persistState();
   updateSummaryMetrics();
+}
+
+function setItemStatus(item, progressMap, status) {
+  item.status = status;
+  progressMap[item.id] = { status, updated: new Date().toISOString() };
+  saveState();
 }
 
 // 2. Navigation Tabs
@@ -116,17 +138,26 @@ function renderOverview() {
   const container = document.getElementById("overviewTopOpps");
   if (!container) return;
 
-  const topOpps = (appState.scholarships || []).slice(0, 4);
-  container.innerHTML = topOpps.map(op => `
+  // Same rules as the emails: open to the student now first, then ones for later study years
+  const level = (window.PREUNI_CONFIG || {}).student_level || "pre-university";
+  const byScore = (a, b) => (b.total_score || 0) - (a.total_score || 0);
+  const active = (appState.scholarships || []).filter(op => op.is_active !== false);
+  const openNow = active.filter(op => PreuniProgress.isLevelEligible(op.min_level, op.max_level, level)).sort(byScore);
+  const later = active
+    .filter(op => !PreuniProgress.isLevelEligible(op.min_level, op.max_level, level) && PreuniProgress.isLevelRelevant(op.min_level, op.max_level, level))
+    .sort(byScore);
+  const topOpps = [...openNow.map(op => ({ op, isOpen: true })), ...later.map(op => ({ op, isOpen: false }))].slice(0, 4);
+
+  container.innerHTML = topOpps.map(({ op, isOpen }) => `
     <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col gap-1">
-      <div class="flex items-center justify-between">
+      <div class="flex items-center justify-between gap-2">
         <span class="font-bold text-slate-900 line-clamp-1">${op.title}</span>
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">${op.total_score || 85}/100</span>
+        <span class="shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold ${isOpen ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'}">${isOpen ? 'Open now' : `From ${op.min_level}`}</span>
       </div>
       <p class="text-slate-500 text-[11px] line-clamp-2">${op.description}</p>
       <div class="flex items-center justify-between text-[11px] mt-1 pt-1 border-t border-slate-200/60">
-        <span class="text-rose-600 font-semibold">Deadline: ${op.deadline || 'Ongoing'}</span>
-        <a href="${op.url}" target="_blank" class="text-brand-600 font-bold hover:underline">Apply &rarr;</a>
+        <span class="text-rose-600 font-semibold">Deadline: ${op.deadline || 'Not yet announced'}</span>
+        <a href="${op.url}" target="_blank" class="text-brand-600 font-bold hover:underline">${isOpen ? 'Apply' : 'Details'} &rarr;</a>
       </div>
     </div>
   `).join("");
@@ -161,12 +192,12 @@ function renderCurriculum() {
   const months = [
     { m: 1, title: "Foundation, Habit Stacking & Digital Setup", academic: "Biology review (Cell Transport) & Anki flashcard system", tailoring: "Establish daily measurement and time ledger", reading: "Atomic Habits by James Clear" },
     { m: 2, title: "Learning How to Learn & General Chemistry", academic: "General Chemistry (Atomic Structure & Redox)", tailoring: "Precision pattern drafting for skirts & blouses", reading: "A Mind for Numbers by Barbara Oakley" },
-    { m: 3, title: "Human Anatomy, Vital Signs & Dexterity", academic: "Cardiovascular & Vital Signs (Penn on Coursera)", tailoring: "Intricate hand-stitching linking craft to clinical finesse", reading: "Gifted Hands by Ben Carson" },
+    { m: 3, title: "Human Anatomy, Vital Signs & Dexterity", academic: "Cardiovascular system & vital signs (OpenStax Fundamentals of Nursing)", tailoring: "Intricate hand-stitching linking craft to clinical finesse", reading: "Gifted Hands by Ben Carson" },
     { m: 4, title: "Digital & Financial Costing Systems", academic: "Healthcare Math, dosage calculations & Excel budgets", tailoring: "Scientific unit costing formula on 3 bespoke garments", reading: "Things Fall Apart by Chinua Achebe" },
     { m: 5, title: "Communication, Public Speaking & Bedside Empathy", academic: "Medical Genetics & Patient Communication", tailoring: "5 structured customer intake consultations", reading: "The Richest Man in Babylon" },
     { m: 6, title: "Money, Entrepreneurship & Sewing for Charity", academic: "Organic Chemistry functional groups & biomolecules", tailoring: "Mend 10 school uniforms for community donation drive", reading: "The E-Myth Revisited by Michael Gerber" },
-    { m: 7, title: "Research Methodology & Bioethics", academic: "Writing in the Sciences (Stanford) & PubMed deconstruction", tailoring: "Zero-waste fabric pattern layouts", reading: "The Immortal Life of Henrietta Lacks" },
-    { m: 8, title: "Healthcare Career Matrix & Public Health", academic: "Immunology & Antimicrobial Resistance (WHO)", tailoring: "Construct professional medical scrub set prototype", reading: "Mountains Beyond Mountains (Dr. Paul Farmer)" },
+    { m: 7, title: "Research Methodology & Bioethics", academic: "Scientific report writing (OpenLearn) & PubMed deconstruction", tailoring: "Zero-waste fabric pattern layouts", reading: "The Immortal Life of Henrietta Lacks" },
+    { m: 8, title: "Healthcare Career Matrix & Public Health", academic: "Immunology & antimicrobial resistance (OpenLearn)", tailoring: "Construct professional medical scrub set prototype", reading: "Mountains Beyond Mountains (Dr. Paul Farmer)" },
     { m: 9, title: "Emotional Intelligence, Leadership & Resilience", academic: "University Physics (Fluid pressure & hemodynamics)", tailoring: "Train junior apprentice on precision seams", reading: "Grit by Angela Duckworth" },
     { m: 10, title: "UNIBEN Simulation Semester", academic: "Timed mock exams for 100L BIO111, CHM111, PHY111", tailoring: "Manage full client queue under study deadlines", reading: "How to Win Friends and Influence People" },
     { m: 11, title: "Career Portfolio & Professional Launchpad", academic: "UNIBEN Post-UTME screening drills (CBT)", tailoring: "Compile complete digital fashion lookbook", reading: "Half of a Yellow Sun by Chimamanda Adichie" },
@@ -250,8 +281,7 @@ function renderCourses() {
 function updateCourseStatus(courseId, newStatus) {
   const course = appState.courses.find(c => c.id === courseId);
   if (course) {
-    course.status = newStatus;
-    saveState();
+    setItemStatus(course, appState.course_progress, newStatus);
     renderCourses();
   }
 }
@@ -271,8 +301,7 @@ function openCourseModal(courseId) {
   const btnToggle = document.getElementById("btnToggleCourseStatus");
   btnToggle.textContent = course.status === "Completed" ? "Mark In Progress" : "Mark Completed";
   btnToggle.onclick = () => {
-    course.status = course.status === "Completed" ? "In progress" : "Completed";
-    saveState();
+    setItemStatus(course, appState.course_progress, course.status === "Completed" ? "In progress" : "Completed");
     renderCourses();
     closeModal("courseModal");
   };
@@ -459,11 +488,14 @@ function recalculateCGPA() {
   document.getElementById("cgpaTotalUnits").textContent = totalUnits;
   document.getElementById("cgpaValue").textContent = cgpa;
 
-  let classification = "Pass";
-  if (cgpa >= 4.50) classification = "First Class Honours";
-  else if (cgpa >= 3.50) classification = "Second Class Honours (Upper Division)";
-  else if (cgpa >= 2.40) classification = "Second Class Honours (Lower Division)";
-  else if (cgpa >= 1.50) classification = "Third Class Honours";
+  // Same scale as calculate_uniben_cgpa in preuni_system/utils.py
+  const value = parseFloat(cgpa);
+  let classification = "Probation / Fail";
+  if (value >= 4.50) classification = "First Class Honours";
+  else if (value >= 3.50) classification = "Second Class Honours (Upper Division)";
+  else if (value >= 2.40) classification = "Second Class Honours (Lower Division)";
+  else if (value >= 1.50) classification = "Third Class Honours";
+  else if (value >= 1.00) classification = "Pass";
   document.getElementById("cgpaClass").textContent = classification;
 }
 
@@ -497,8 +529,25 @@ function renderReading() {
       <div class="p-3 rounded-lg bg-amber-50/60 border border-amber-200/60 text-amber-950 text-xs">
         <strong>📝 Exercise:</strong> ${b.practical_exercise}
       </div>
+
+      <div class="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-xs">
+        <span class="text-slate-500 font-medium">Reading status</span>
+        <select class="text-[11px] font-semibold rounded-lg px-2 py-1 border ${b.status === 'Completed' ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : (b.status === 'Reading' ? 'bg-sky-100 text-sky-800 border-sky-200' : 'bg-slate-100 text-slate-600 border-slate-200')} focus:outline-none" onchange="updateReadingStatus('${b.id}', this.value)">
+          <option value="Not read" ${b.status === 'Not read' ? 'selected' : ''}>Not Read</option>
+          <option value="Reading" ${b.status === 'Reading' ? 'selected' : ''}>Reading</option>
+          <option value="Completed" ${b.status === 'Completed' ? 'selected' : ''}>Completed</option>
+        </select>
+      </div>
     </div>
   `).join("");
+}
+
+function updateReadingStatus(readingId, newStatus) {
+  const book = appState.reading.find(b => b.id === readingId);
+  if (book) {
+    setItemStatus(book, appState.reading_progress, newStatus);
+    renderReading();
+  }
 }
 
 // 11. Soft-Skills Radar Chart & Sliders
@@ -510,13 +559,17 @@ const skillNames = [
   "Negotiation", "Professionalism", "Resilience", "Learning Ability"
 ];
 
+function selectedQuarter() {
+  return document.getElementById("rubricQuarterSelect")?.value || "1";
+}
+
+function skillKey(name) {
+  return name.toLowerCase().replace(/ /g, "_");
+}
+
 function initRubricChart() {
   const ctx = document.getElementById("softSkillsChart");
-  const slidersContainer = document.getElementById("skillSlidersContainer");
-  if (!ctx || !slidersContainer) return;
-
-  const currentScores = appState.rubric_scores[1] || {};
-  const dataValues = skillNames.map(k => currentScores[k.toLowerCase().replace(/ /g, "_")] || 3);
+  if (!ctx) return;
 
   radarChartInstance = new Chart(ctx, {
     type: 'radar',
@@ -524,7 +577,7 @@ function initRubricChart() {
       labels: skillNames,
       datasets: [{
         label: 'Competency Score (1–5)',
-        data: dataValues,
+        data: [],
         backgroundColor: 'rgba(2, 132, 199, 0.2)',
         borderColor: '#0284c7',
         pointBackgroundColor: '#0284c7',
@@ -541,10 +594,23 @@ function initRubricChart() {
       }
     }
   });
+  renderRubric();
+}
+
+// Show the selected quarter's scores (skills not yet scored show as 3)
+function renderRubric() {
+  const slidersContainer = document.getElementById("skillSlidersContainer");
+  const scores = appState.rubric_scores[selectedQuarter()] || {};
+
+  if (radarChartInstance) {
+    radarChartInstance.data.datasets[0].data = skillNames.map(name => scores[skillKey(name)] || 3);
+    radarChartInstance.update();
+  }
+  if (!slidersContainer) return;
 
   slidersContainer.innerHTML = skillNames.map(name => {
-    const key = name.toLowerCase().replace(/ /g, "_");
-    const val = currentScores[key] || 3;
+    const key = skillKey(name);
+    const val = scores[key] || 3;
     return `
       <div class="space-y-1">
         <div class="flex justify-between font-semibold text-slate-700">
@@ -561,18 +627,23 @@ function updateSkillSlider(key, val) {
   const lbl = document.getElementById(`val-${key}`);
   if (lbl) lbl.textContent = `${val}/5`;
 
-  const q = document.getElementById("rubricQuarterSelect")?.value || 1;
+  const q = selectedQuarter();
   if (!appState.rubric_scores[q]) appState.rubric_scores[q] = {};
   appState.rubric_scores[q][key] = parseInt(val);
 
   if (radarChartInstance) {
-    const dataValues = skillNames.map(k => appState.rubric_scores[q][k.toLowerCase().replace(/ /g, "_")] || 3);
-    radarChartInstance.data.datasets[0].data = dataValues;
+    radarChartInstance.data.datasets[0].data = skillNames.map(name => appState.rubric_scores[q][skillKey(name)] || 3);
     radarChartInstance.update();
   }
 }
 
-// 12. Email Previews
+// 12. Email Previews: this week's real emails, rendered by `make bundle` (preuni_system/bundle_dashboard.py)
+const EMAIL_PREVIEW_LABELS = {
+  daily_alert: "daily learning guide",
+  weekly_digest: "weekly digest",
+  immediate_alert: "immediate alert"
+};
+
 function initEmailPreview() {
   document.getElementById("btnPreviewDailyAlert")?.addEventListener("click", () => {
     fetchEmailTemplate("daily_alert");
@@ -583,72 +654,24 @@ function initEmailPreview() {
   document.getElementById("btnPreviewAlert")?.addEventListener("click", () => {
     fetchEmailTemplate("immediate_alert");
   });
+
+  const generated = (window.PREUNI_CONFIG || {}).previews_generated;
+  const note = document.getElementById("emailPreviewNote");
+  if (note && generated) {
+    note.textContent = `This week's emails as of ${generated}, rendered with the same templates the scheduled jobs use.`;
+  }
 }
 
-function fetchEmailTemplate(type) {
+async function fetchEmailTemplate(type) {
   const iframe = document.getElementById("emailPreviewFrame");
   if (!iframe) return;
 
-  if (type === "daily_alert") {
-    iframe.srcdoc = `
-      <div style="font-family: sans-serif; padding: 24px; color: #1e293b; background: #f8fafc;">
-        <div style="background: linear-gradient(135deg, #0f172a, #1e293b); color: white; padding: 20px; border-radius: 8px;">
-          <span style="background: #0284c7; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 11px;">PERSONALIZED DAILY LEARNING GUIDE</span>
-          <h2 style="margin:8px 0 2px;">General Chemistry: Atomic Structure & Redox</h2>
-          <p style="margin:0; font-size: 13px; color: #94a3b8;">Month 1 • Week 2 • Lara (UNIBEN Healthcare Preparation Track)</p>
-        </div>
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 14px; margin-top: 16px;">
-          <strong style="color: #1d4ed8; font-size: 12px; text-transform: uppercase;">Today's Recommended Focus:</strong>
-          <p style="margin: 4px 0 0; color: #1e3a8a; font-weight: bold; font-size: 14px;">Write electron configurations for elements 1 to 30 and balance 5 redox reactions.</p>
-        </div>
-        <h3 style="color: #16a34a; margin-top: 20px;">🆕 Learn Now (Matched to Current Topic)</h3>
-        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 12px;">
-          <div style="display:flex; justify-content:space-between;">
-            <strong>High School Chemistry: Atomic Structure & Bonding</strong>
-            <span style="background: #dcfce7; color: #15803d; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 11px;">Score: 92/100</span>
-          </div>
-          <p style="font-size: 12px; color: #64748b; margin: 4px 0;">Provider: Khan Academy • Est. Time: 45 mins • Cost: Free</p>
-          <p style="font-size: 12px; color: #15803d;"><strong>Why it matches:</strong> Directly covers electron orbitals, spdf notation, and periodic trends.</p>
-        </div>
-        <h3 style="color: #0284c7; margin-top: 16px;">🎯 Good Long-Term Match</h3>
-        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px;">
-          <div style="display:flex; justify-content:space-between;">
-            <strong>Organic Chemistry: Functional Groups & Reactions</strong>
-            <span style="background: #e0f2fe; color: #0284c7; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 11px;">Score: 95/100</span>
-          </div>
-          <p style="font-size: 12px; color: #64748b; margin: 4px 0;">Where it fits: Month 6 Biomolecules & UNIBEN 100L General Chemistry (CHM102)</p>
-        </div>
-      </div>
-    `;
-  } else if (type === "weekly_digest") {
-    iframe.srcdoc = `
-      <div style="font-family: sans-serif; padding: 24px; color: #1e293b;">
-        <div style="background: #0f172a; color: white; padding: 20px; border-radius: 8px;">
-          <h2 style="margin:0;">THIS WEEK'S PRE-UNIVERSITY DEVELOPMENT DIGEST</h2>
-          <p style="margin:4px 0 0; font-size: 13px; color: #94a3b8;">Month 1 • Week 1 • Lara (UNIBEN Healthcare Preparation Track)</p>
-        </div>
-        <h3 style="color: #0284c7; margin-top: 20px;">🌟 Top Opportunities of the Week</h3>
-        <p>1. Seplat Energy PEARLs JV Scholarship (₦300,000 / yr) • Score: 99/100</p>
-        <p>2. Nigerian Red Cross Society Youth Health Volunteers (Edo Branch) • Score: 99/100</p>
-        <h3 style="color: #0284c7;">🎯 This Week's Skill & Challenge</h3>
-        <p><strong>Skill:</strong> Active Listening & Professional Email Communication</p>
-        <p><strong>Challenge:</strong> Diagram blood flow pathway through the 4 heart chambers.</p>
-        <h3 style="color: #0284c7;">✂️ Tailoring Goal</h3>
-        <p>Calculate full costing (Fabric + Labor + Overhead + Margin) for your current peplum top.</p>
-      </div>
-    `;
-  } else {
-    iframe.srcdoc = `
-      <div style="font-family: sans-serif; padding: 24px; color: #1e293b;">
-        <div style="background: #0284c7; color: white; padding: 20px; border-radius: 8px;">
-          <span style="background: #22c55e; padding: 3px 8px; border-radius: 4px; font-weight: bold; font-size: 12px;">SCORE: 99/100</span>
-          <h2 style="margin:8px 0 0;">[PRE-UNIVERSITY ALERT] Seplat Energy PEARLs JV Scholarship</h2>
-        </div>
-        <p style="margin-top: 16px;">A verified top-tier scholarship opportunity for Edo State residents entering UNIBEN has opened.</p>
-        <p><strong>Deadline:</strong> August 31, 2027 • <strong>Cost:</strong> Free to apply</p>
-        <a href="https://www.seplatenergy.com" target="_blank" style="display:inline-block; background:#0284c7; color:white; padding:10px 16px; border-radius:6px; text-decoration:none; font-weight:bold; margin-top:10px;">Access Official Application &rarr;</a>
-      </div>
-    `;
+  try {
+    const res = await fetch(`emails/${type}.html`, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    iframe.srcdoc = await res.text();
+  } catch (e) {
+    iframe.srcdoc = `<p style="padding:20px;font-family:sans-serif;">No ${EMAIL_PREVIEW_LABELS[type]} preview is available yet. Previews are created when the dashboard is rebuilt (<code>make bundle</code>, or automatically when it deploys).</p>`;
   }
 }
 
@@ -720,20 +743,56 @@ function initModalsAndEvents() {
     alert("✅ Quarterly Soft-Skills Rubric saved successfully!");
   });
 
+  document.getElementById("rubricQuarterSelect")?.addEventListener("change", renderRubric);
+
+  // Full backup of this browser's progress, including personal notes - keep it private
   document.getElementById("btnExportData")?.addEventListener("click", () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
-    const dlAnchor = document.createElement('a');
-    dlAnchor.setAttribute("href", dataStr);
-    dlAnchor.setAttribute("download", `lara_preuni_system_backup_${new Date().toISOString().split('T')[0]}.json`);
-    dlAnchor.click();
+    const today = new Date().toISOString().split('T')[0];
+    downloadJson({ format: "preuni-backup", saved: new Date().toISOString(), ...currentProgressState() }, `lara_preuni_system_backup_${today}.json`);
+  });
+
+  document.getElementById("btnRestoreData")?.addEventListener("click", () => {
+    document.getElementById("restoreFileInput")?.click();
+  });
+
+  document.getElementById("restoreFileInput")?.addEventListener("change", async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    try {
+      const backup = JSON.parse(await file.text());
+      const merged = PreuniProgress.mergeStates(currentProgressState(), backup);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+      alert("✅ Backup restored. Reloading your progress...");
+      location.reload();
+    } catch (e) {
+      alert(`❌ Could not restore this file: ${e.message}`);
+    }
+    event.target.value = "";
+  });
+
+  // Status-only file that the email system and other devices read from data/progress.json
+  document.getElementById("btnShareProgress")?.addEventListener("click", () => {
+    downloadJson(PreuniProgress.buildSharedProgress(currentProgressState()), "progress.json");
+    alert("progress.json downloaded (course and book statuses only - no personal notes).\n\n" +
+      "Upload it to the data folder of the GitHub repository, replacing data/progress.json. " +
+      "The email alerts will then skip finished courses, and every device shows the same progress once the dashboard redeploys.");
   });
 
   document.getElementById("btnResetData")?.addEventListener("click", () => {
     if (confirm("Reset local progress data to default state?")) {
-      localStorage.removeItem("PREUNI_STATE_V1");
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(LEGACY_STORAGE_KEY);
       location.reload();
     }
   });
+}
+
+function downloadJson(data, filename) {
+  const anchor = document.createElement("a");
+  anchor.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
+  anchor.download = filename;
+  anchor.click();
+  setTimeout(() => URL.revokeObjectURL(anchor.href), 1000);
 }
 
 function closeModal(id) {

@@ -16,7 +16,9 @@ window.PREUNI_CONFIG = {
   primary_career: "Nursing Science",
   apprenticeship: "Tailoring & Fashion Design",
   target_date: "October 2027",
-  timezone: "Africa/Lagos"
+  timezone: "Africa/Lagos",
+  student_level: "pre-university",
+  previews_generated: "2026-09-22"
 };
 
 window.PREUNI_DATA = {

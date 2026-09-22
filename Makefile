@@ -9,7 +9,7 @@ help:
 	@echo "  make alert       - Generate and preview top immediate high-priority alert (85+)"
 	@echo "  make stats       - Display overall student progress metrics"
 	@echo "  make serve       - Launch local interactive web dashboard on http://localhost:8000"
-	@echo "  make bundle      - Bundle data/*.json datasets into dashboard/data.js for GitHub Pages"
+	@echo "  make bundle      - Bundle data/*.json into dashboard/data.js and render this week's email previews"
 	@echo "  make test        - Run automated test suite"
 	@echo "  make clean       - Remove temporary files and cached outputs"
 

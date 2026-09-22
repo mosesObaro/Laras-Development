@@ -90,8 +90,10 @@ lara_development_system/
 ├── dashboard/                         # Standalone Interactive Web Dashboard (GitHub Pages Ready)
 │   ├── index.html                     # Single-Page Application (Navigation, Charts, Modals)
 │   ├── app.js                         # State management, reactive filters, CGPA simulator
+│   ├── progress.js                    # Saved-progress helpers (statuses per item, merging, migration)
 │   ├── styles.css                     # Custom animations, card hover effects, badge themes
-│   └── data.js                        # Bundled datasets for offline/static deployment
+│   ├── data.js                        # Bundled datasets for offline/static deployment
+│   └── emails/                        # This week's rendered emails for the Emails tab
 │
 ├── .github/workflows/                 # GitHub Actions CI/CD Automations
 │   ├── weekly_digest.yml              # Scheduled weekly run (Mondays ~05:00 WAT) via Resend
@@ -284,9 +286,13 @@ $$\text{GPA} = \frac{\sum (\text{Course Credit Units} \times \text{Grade Point})
 * **Missing Resend API Key**:
   If `RESEND_API_KEY` is not set in `.env`, the system gracefully operates in `--preview / dry-run` mode, generating full HTML and plaintext email previews in `output/emails/`.
 * **Updating Bundled Dashboard Data**:
-  Run `python3 -m preuni_system.bundle_dashboard` (or `make bundle`) whenever JSON datasets in `data/` are edited.
+  Run `python3 -m preuni_system.bundle_dashboard` (or `make bundle`) whenever JSON datasets in `data/` are edited. This also renders this week's emails into `dashboard/emails/` for the Emails tab. The deploy workflow does this on every push to `data/` or `dashboard/` and once a day.
+* **Dashboard Progress**:
+  Each browser saves only course and book statuses (plus its own tailoring projects, volunteer logs, checklist and rubric scores), so fixes to course details and links always show up after a deploy.
+  * **Share Progress** downloads `progress.json` with course and book statuses only (no personal notes). Upload it to `data/progress.json` in the repository: the email alerts then skip completed courses, and every device shows the same statuses once the dashboard redeploys. For each item, the most recently updated status wins.
+  * **Backup JSON** downloads everything saved in this browser, including reflections and customer names, so keep it private. **Restore** merges a backup back in without losing anything already saved.
 * **Database Backup**:
-  Use the **"Backup JSON"** button in the dashboard header or copy `preuni_system.sqlite3`.
+  Copy `preuni_system.sqlite3`.
 
 ---
 
