@@ -101,6 +101,8 @@ class Opportunity:
     cost: str = "Free"
     eligibility: str = "Pre-University / Teenagers (16-19)"
     geographic_priority: str = "A"
+    min_level: str = "pre-university"  # Lowest study level that can apply (see Config.STUDY_LEVELS)
+    max_level: Optional[str] = None  # Highest study level that can apply (None = no upper limit)
     scores: Dict[str, Any] = field(default_factory=dict)
     total_score: int = 85
     is_immediate_alert: bool = False

@@ -5,11 +5,32 @@ Coordinates scanning, deduplication, deadline expiration, and alert triggers.
 
 import json
 from datetime import datetime, date
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from preuni_system.config import Config
 from preuni_system.crawler import OpportunityCrawler
 from preuni_system.db import Database
-from preuni_system.utils import is_expired
+from preuni_system.utils import is_expired, is_level_eligible, normalize_url, parse_date
+
+
+def select_immediate_alert(db: Database, today: Optional[date] = None) -> Optional[Dict[str, Any]]:
+    """
+    Pick the best opportunity for an immediate alert: active, not expired, flagged for immediate
+    alerts, scoring at least ALERT_SCORE_THRESHOLD, open to the student's current study level,
+    and never alerted before. Returns None when nothing qualifies.
+    """
+    alerted_urls, alerted_ids = db.get_alerted_keys()
+    candidates = [
+        opp for opp in db.get_active_opportunities()
+        if opp.get("is_immediate_alert")
+        and (opp.get("total_score") or 0) >= Config.ALERT_SCORE_THRESHOLD
+        and not is_expired(opp.get("deadline"), today)
+        and is_level_eligible(opp.get("min_level"), opp.get("max_level"))
+        and opp["id"] not in alerted_ids
+        and normalize_url(opp["url"]) not in alerted_urls
+    ]
+    # Highest score first; among equal scores, the soonest known deadline first
+    candidates.sort(key=lambda opp: (-(opp.get("total_score") or 0), parse_date(opp.get("deadline")) or date.max))
+    return candidates[0] if candidates else None
 
 
 class OpportunityMonitor:
@@ -64,8 +85,9 @@ class OpportunityMonitor:
                 INSERT INTO opportunities (
                     id, title, organizer, category, url, description, location,
                     date, deadline, cost, eligibility, geographic_priority, scores_json,
-                    total_score, is_immediate_alert, is_active, tags_json, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    total_score, is_immediate_alert, is_active, tags_json, created_at,
+                    min_level, max_level
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     opp["id"], opp["title"], opp["organizer"], opp["category"],
                     opp["url"], opp.get("description", ""), opp.get("location", ""),
@@ -74,7 +96,8 @@ class OpportunityMonitor:
                     json.dumps(opp.get("scores", {})), opp.get("total_score", 80),
                     1 if opp.get("is_immediate_alert") else 0,
                     1 if opp.get("is_active", True) else 0,
-                    json.dumps(opp.get("tags", [])), opp.get("created_at", "")
+                    json.dumps(opp.get("tags", [])), opp.get("created_at", ""),
+                    opp.get("min_level", "unknown"), opp.get("max_level")
                 ))
                 stats["new_inserted"] += 1
 

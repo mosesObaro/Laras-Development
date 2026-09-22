@@ -9,15 +9,41 @@ import sys
 import http.server
 import socketserver
 import os
+from datetime import date
 from pathlib import Path
 from preuni_system.config import Config, DASHBOARD_DIR, EMAIL_OUTPUT_DIR
 from preuni_system.db import Database
-from preuni_system.monitor import OpportunityMonitor
+from preuni_system.monitor import OpportunityMonitor, select_immediate_alert
 from preuni_system.emailer import EmailService
 from preuni_system.scorer import OpportunityScorer
 from preuni_system.calendar import LearningCalendarEngine
 from preuni_system.recommender import PersonalizedLearningRecommender
-from preuni_system.utils import format_naira, generate_hash_id, normalize_url
+from preuni_system.utils import (
+    format_naira, generate_hash_id, normalize_url, is_expired, is_level_eligible, is_level_relevant, parse_date
+)
+
+
+def _was_sent(res: dict) -> bool:
+    """True only when an email actually left the system (not a preview or dry run)."""
+    return bool(res.get("success")) and not res.get("mode")
+
+
+def _report_dispatch(res: dict) -> None:
+    """Print how an email was handled; exit non-zero if sending failed so scheduled runs show as failed."""
+    if res.get("mode"):
+        print(f"  • Mode: {res['mode']}")
+    elif res.get("success"):
+        print(f"  • Mode: Sent via {'Resend' if res.get('resend_id') else 'SMTP'}")
+    if res.get("preview_html"):
+        print(f"  • Preview HTML: {res['preview_html']}")
+    if res.get("preview_txt"):
+        print(f"  • Preview Plaintext: {res['preview_txt']}")
+    if res.get("resend_id"):
+        print(f"  • Resend Message ID: {res['resend_id']}")
+    print("==================================================")
+    if not res.get("success"):
+        print(f"❌ EMAIL NOT SENT: {res.get('error', 'unknown error')}")
+        sys.exit(1)
 
 
 def cmd_seed(args):
@@ -51,18 +77,36 @@ def cmd_scan(args):
 
 
 def cmd_digest(args):
-    """Generate and preview/send the weekly digest."""
+    """Generate and preview/send the weekly digest for the current calendar week (or --month/--week)."""
     db = Database()
     emailer = EmailService()
-    month = args.month or 1
-    week = args.week or 1
+    focus = LearningCalendarEngine().get_learning_focus(month=args.month, week=args.week)
+    month, week = focus.month, focus.week_in_month
+    today = date.today()
 
-    opps = db.get_top_opportunities(limit=8, min_score=70)
+    opps = [
+        o for o in db.get_top_opportunities(limit=100, min_score=Config.CONSIDER_SCORE_THRESHOLD)
+        if not is_expired(o.get("deadline"), today)
+    ]
+    open_now = [o for o in opps if is_level_eligible(o.get("min_level"), o.get("max_level"))]
+    plan_ahead = sorted(
+        (o for o in opps
+         if not is_level_eligible(o.get("min_level"), o.get("max_level"))
+         and is_level_relevant(o.get("min_level"), o.get("max_level"))),
+        key=lambda o: (Config.STUDY_LEVELS.index(o["min_level"]), -(o.get("total_score") or 0))
+    )
+    deadlines = sorted(
+        (o for o in opps if parse_date(o.get("deadline")) and is_level_relevant(o.get("min_level"), o.get("max_level"))),
+        key=lambda o: parse_date(o["deadline"])
+    )
     courses = db.get_courses(month=month)
     reading_items = db.get_reading_items(month=month)
     reading = reading_items[0] if reading_items else None
 
-    subject, html_body, text_body = emailer.build_weekly_digest(month, week, opps, courses, reading)
+    subject, html_body, text_body = emailer.build_weekly_digest(
+        month, week, open_now, courses, reading,
+        focus=focus, plan_ahead=plan_ahead[:3], deadlines=deadlines[:3]
+    )
     res = emailer.dispatch_email(
         subject,
         html_body,
@@ -72,38 +116,21 @@ def cmd_digest(args):
     )
 
     print("==================================================")
-    print(f"📬 WEEKLY DIGEST GENERATED: Month {month}, Week {week}")
+    print(f"📬 WEEKLY DIGEST GENERATED: Month {month}, Week {week} (Week {focus.global_week}/78)")
     print("==================================================")
     print(f"  • Subject: {subject}")
-    print(f"  • Mode: {res.get('mode', 'Sent via ' + ('Resend' if Config.RESEND_API_KEY else 'SMTP'))}")
-    if res.get("preview_html"):
-        print(f"  • Preview HTML: {res['preview_html']}")
-    if res.get("preview_txt"):
-        print(f"  • Preview Plaintext: {res['preview_txt']}")
-    if res.get("resend_id"):
-        print(f"  • Resend Message ID: {res['resend_id']}")
-    print("==================================================")
+    print(f"  • Opportunities open now: {len(open_now)} | Plan ahead: {len(plan_ahead)}")
+    _report_dispatch(res)
 
 
 def cmd_alert(args):
-    """Generate immediate high-priority alert for an opportunity."""
+    """Send one immediate alert for the best new opportunity the student can apply to now (never repeats)."""
     db = Database()
     emailer = EmailService()
-    opp_id = args.id
 
-    opp = None
-    with db.get_connection() as conn:
-        cursor = conn.cursor()
-        if opp_id:
-            cursor.execute("SELECT * FROM opportunities WHERE id = ?", (opp_id,))
-        else:
-            cursor.execute("SELECT * FROM opportunities WHERE total_score >= 85 ORDER BY total_score DESC LIMIT 1")
-        row = cursor.fetchone()
-        if row:
-            opp = dict(row)
-
+    opp = db.get_opportunity(args.id) if args.id else select_immediate_alert(db)
     if not opp:
-        print("❌ No qualifying high-priority opportunity found.")
+        print("✅ No new eligible high-priority opportunity to alert. Nothing sent.")
         return
 
     subject, html_body, text_body = emailer.build_immediate_alert(opp)
@@ -115,20 +142,31 @@ def cmd_alert(args):
         file_tag=f"alert_{opp['id']}"
     )
 
+    # Record the alert only once it has really been sent, so it is never sent again
+    if _was_sent(res):
+        db.record_alert_history(
+            opportunity_id=opp["id"],
+            url=opp["url"],
+            title=opp["title"],
+            alert_type="immediate",
+            week_number=LearningCalendarEngine().calculate_week_number(),
+            relevance_score=opp.get("total_score") or 0
+        )
+
     print("==================================================")
     print(f"🚨 IMMEDIATE ALERT PROCESSED: {opp['title']}")
     print("==================================================")
     print(f"  • Score: {opp.get('total_score')}/100")
     print(f"  • Subject: {subject}")
-    if res.get("preview_html"):
-        print(f"  • Preview HTML: {res['preview_html']}")
-    if res.get("resend_id"):
-        print(f"  • Resend ID: {res['resend_id']}")
-    print("==================================================")
+    _report_dispatch(res)
 
 
 def cmd_daily_alert(args):
     """Generate and preview/send personalized daily learning-opportunity alert driven by calendar."""
+    if args.send and not args.preview and not Config.DAILY_ALERT_ENABLED:
+        print("⏸️  Daily alert is disabled (DAILY_ALERT_ENABLED=false). Nothing sent.")
+        return
+
     calendar = LearningCalendarEngine()
     db = Database()
     recommender = PersonalizedLearningRecommender()
@@ -141,10 +179,13 @@ def cmd_daily_alert(args):
         week=args.week
     )
 
-    # 2. Gather candidates and history
-    candidates = db.get_all_candidate_learning_resources()
+    # 2. Gather candidates and history (skip opportunities the student can never apply to)
+    candidates = [
+        c for c in db.get_all_candidate_learning_resources()
+        if c.get("resource_type") == "Course" or is_level_relevant(c.get("min_level"), c.get("max_level"))
+    ]
     upcoming_keywords = calendar.get_upcoming_keywords(focus.global_week, lookahead_weeks=8)
-    already_alerted_urls = {row["url_normalized"] for row in db.get_alert_history()}
+    already_alerted_urls, _ = db.get_alerted_keys()
     completed_urls = db.get_completed_course_urls()
 
     # 3. Rank & Categorize Recommendations
@@ -176,8 +217,8 @@ def cmd_daily_alert(args):
         file_tag=file_tag
     )
 
-    # 5. Persist Alert History if sent/dispatched (and not forced preview)
-    if args.send and not args.preview:
+    # 5. Persist Alert History only once the email has really been sent
+    if _was_sent(res):
         for item in learn_now:
             db.record_alert_history(
                 opportunity_id=item.opportunity_id,
@@ -230,14 +271,7 @@ def cmd_daily_alert(args):
         print(f"    - ({focus.long_term_connection})")
 
     print("--------------------------------------------------")
-    print(f"  • Mode: {res.get('mode', 'Sent via Resend' if Config.RESEND_API_KEY else 'Sent via SMTP')}")
-    if res.get("preview_html"):
-        print(f"  • Preview HTML: {res['preview_html']}")
-    if res.get("preview_txt"):
-        print(f"  • Preview Plaintext: {res['preview_txt']}")
-    if res.get("resend_id"):
-        print(f"  • Resend Message ID: {res['resend_id']}")
-    print("==================================================")
+    _report_dispatch(res)
 
 
 def cmd_stats(args):
@@ -295,8 +329,8 @@ def main():
 
     # digest
     digest_p = subparsers.add_parser("digest", help="Generate and send weekly development digest")
-    digest_p.add_argument("--month", type=int, default=1, help="Curriculum Month (1-18)")
-    digest_p.add_argument("--week", type=int, default=1, help="Curriculum Week (1-4)")
+    digest_p.add_argument("--month", type=int, help="Override curriculum month (1-18); default is the current calendar week")
+    digest_p.add_argument("--week", type=int, help="Override curriculum week (1-4)")
     digest_p.add_argument("--preview", action="store_true", help="Generate local preview files without sending")
     digest_p.add_argument("--send", action="store_true", help="Send email via Resend API / SMTP")
 
@@ -310,7 +344,7 @@ def main():
     daily_p.add_argument("--send", action="store_true", help="Send email via Resend API / SMTP")
 
     # alert
-    alert_p = subparsers.add_parser("alert", help="Generate immediate high-priority alert")
+    alert_p = subparsers.add_parser("alert", help="Send one alert for the best new opportunity open to the student now")
     alert_p.add_argument("--id", type=str, help="Opportunity ID")
     alert_p.add_argument("--preview", action="store_true", help="Generate preview only")
     alert_p.add_argument("--send", action="store_true", help="Send email via Resend API / SMTP")

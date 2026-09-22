@@ -2,13 +2,22 @@ name: Weekly Development Digest
 
 on:
   schedule:
-    # Run every Monday at 06:00 UTC (07:00 West Africa Time / WAT)
-    - cron: '0 6 * * 1'
+    # Mondays 04:07 UTC (05:07 West Africa Time / WAT). Off-the-hour times start sooner;
+    # GitHub can still delay scheduled runs at busy times.
+    - cron: '7 4 * * 1'
   workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
   send-weekly-digest:
     runs-on: ubuntu-latest
+    env:
+      STUDENT_NAME: ${{ vars.STUDENT_NAME || 'Lara' }}
+      STUDENT_LEVEL: ${{ vars.STUDENT_LEVEL || 'pre-university' }}
+      START_DATE: ${{ vars.START_DATE || '2026-09-01' }}
 
     steps:
       - name: Checkout Repository
@@ -24,12 +33,12 @@ jobs:
           python3 -m preuni_system.cli seed
           python3 -m preuni_system.cli scan
 
+      # The digest follows the learning calendar (START_DATE) to pick this week's content
       - name: Send Weekly Digest via Resend
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL || 'Pre-University System <onboarding@resend.dev>' }}
           STUDENT_EMAIL: ${{ secrets.STUDENT_EMAIL || 'lara@example.com' }}
           PARENT_EMAIL: ${{ secrets.PARENT_EMAIL || 'parent@example.com' }}
-          STUDENT_NAME: ${{ vars.STUDENT_NAME || 'Lara' }}
         run: |
           python3 -m preuni_system.cli digest --send

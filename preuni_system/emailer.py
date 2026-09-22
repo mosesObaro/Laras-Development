@@ -232,11 +232,35 @@ Powered by Resend Email Delivery Engine
 """
         return subject, html_body, text_body
 
-    def build_weekly_digest(self, month: int, week: int, opps: List[Dict[str, Any]], courses: List[Dict[str, Any]], reading: Optional[Dict[str, Any]] = None) -> Tuple[str, str, str]:
+    def build_weekly_digest(
+        self,
+        month: int,
+        week: int,
+        opps: List[Dict[str, Any]],
+        courses: List[Dict[str, Any]],
+        reading: Optional[Dict[str, Any]] = None,
+        focus: Optional[DailyLearningFocus] = None,
+        plan_ahead: Optional[List[Dict[str, Any]]] = None,
+        deadlines: Optional[List[Dict[str, Any]]] = None,
+    ) -> Tuple[str, str, str]:
         """
-        Generates (Subject, HTML, Plaintext) for the 10-section Weekly Development Digest.
+        Generates (Subject, HTML, Plaintext) for the 8-section Weekly Development Digest.
+        `opps` are open to the student now, `plan_ahead` open later (e.g. once at university),
+        `focus` is this week's calendar focus and `deadlines` are opportunities with known dates.
         """
         subject = f"[THIS WEEK'S DEVELOPMENT DIGEST] Month {month}, Week {week} — UNIBEN Pre-University Track"
+        plan_ahead = plan_ahead or []
+        deadlines = deadlines or []
+
+        # This week's focus and challenge come from the learning calendar when available
+        if focus:
+            focus_title = focus.topic
+            focus_points = focus.weekly_objectives[:3] or [focus.daily_focus]
+            challenge = focus.recommended_assignment or focus.daily_focus
+        else:
+            focus_title = "Active Listening & Professional Email Communication"
+            focus_points = ["Draft an inquiry email without filler words and ask 2 clarifying questions in every conversation."]
+            challenge = "Annotate the blood flow pathway through the 4 heart chambers and valves."
 
         # Safe defaults
         reading_title = reading.get("title", "Atomic Habits") if reading else "Atomic Habits by James Clear"
@@ -251,10 +275,16 @@ Month {month} • Week {week}
 STUDENT: {self.config.STUDENT_NAME} | TARGET: {self.config.UNIVERSITY} ({self.config.TARGET_FIELD})
 APPRENTICESHIP: {self.config.CURRENT_APPRENTICESHIP}
 
-1. 🌟 TOP OPPORTUNITIES OF THE WEEK:
+1. 🌟 OPPORTUNITIES OPEN TO YOU NOW:
 """
         for i, op in enumerate(opps[:5], start=1):
             text_body += f"   {i}. {op.get('title')} ({op.get('organizer')}) — Score: {op.get('total_score')}/100\n      Deadline: {(op.get('deadline') or 'Not yet announced')} | Link: {op.get('url')}\n"
+        if not opps:
+            text_body += "   • None this week - see Plan Ahead below.\n"
+        if plan_ahead:
+            text_body += "\n   🗓️ PLAN AHEAD (opens once you are at university):\n"
+            for op in plan_ahead:
+                text_body += f"   • {op.get('title')} — {op.get('eligibility', '')}\n     Link: {op.get('url')}\n"
 
         text_body += f"""
 2. 📚 ACTIVE COURSE FOCUS (Max 2 simultaneous):
@@ -263,12 +293,14 @@ APPRENTICESHIP: {self.config.CURRENT_APPRENTICESHIP}
             text_body += f"   • {c.get('name')} ({c.get('provider')}) — {c.get('duration')}\n     Assignment: {c.get('practical_assignment')}\n"
 
         text_body += f"""
-3. 🎯 THIS WEEK'S SKILL TO PRACTICE:
-   • Focus: Active Listening & Professional Email Communication
-   • Action: Draft an inquiry email without filler words and ask 2 clarifying questions in every conversation.
+3. 🎯 THIS WEEK'S FOCUS: {focus_title}
+"""
+        for point in focus_points:
+            text_body += f"   • {point}\n"
 
+        text_body += f"""
 4. ⚡ THIS WEEK'S PRACTICAL CHALLENGE:
-   • Biology/Healthcare: Annotate the blood flow pathway through the 4 heart chambers and valves.
+   • {challenge}
 
 5. ✂️ TAILORING APPRENTICESHIP GOAL:
    • Milestone: Calculate full unit costing (Fabric + Labor + Overhead + Margin) for your current garment project.
@@ -281,8 +313,13 @@ APPRENTICESHIP: {self.config.CURRENT_APPRENTICESHIP}
    • Nigerian Red Cross Society (Edo State Branch) / Girls' Power Initiative (Benin City).
 
 8. 📅 UPCOMING DEADLINES:
-   • Stay updated on UTME / Post-UTME timelines and scholarship windows.
+"""
+        for op in deadlines:
+            text_body += f"   • {op.get('title')} — {op.get('deadline')}\n"
+        if not deadlines:
+            text_body += "   • No confirmed deadlines yet - check the Plan Ahead links for each scheme's next round.\n"
 
+        text_body += """
 =======================================================
 Pre-University Development & Opportunity System
 """
@@ -301,6 +338,20 @@ Pre-University Development & Opportunity System
               <a href="{op.get('url')}" style="color: #0284c7; font-size: 13px; font-weight: 600; text-decoration: none;" target="_blank">View Details & Apply &rarr;</a>
             </div>
             """
+        if not opps:
+            html_opps = """
+            <div class="card"><p style="margin: 0; font-size: 13px; color: #475569;">No opportunities are open to you this week - see Plan Ahead below.</p></div>
+            """
+        if plan_ahead:
+            html_opps += """<h4 style="margin: 14px 0 8px; color: #0f172a; font-size: 14px;">🗓️ Plan Ahead (opens once you're at university)</h4>"""
+            for op in plan_ahead:
+                html_opps += f"""
+            <div class="card">
+              <strong style="font-size: 13px; color: #0f172a;">{op.get('title')}</strong>
+              <p style="font-size: 12px; color: #475569; margin: 4px 0 6px;">{op.get('eligibility', '')}</p>
+              <a href="{op.get('url')}" style="color: #0284c7; font-size: 12px; font-weight: 600; text-decoration: none;" target="_blank">Official page &rarr;</a>
+            </div>
+            """
 
         html_courses = ""
         for c in courses[:2]:
@@ -312,6 +363,11 @@ Pre-University Development & Opportunity System
               <a href="{c.get('url')}" style="color: #16a34a; font-size: 13px; font-weight: 600; text-decoration: none;" target="_blank">Open Course &rarr;</a>
             </div>
             """
+
+        html_focus_points = "".join(f"<li>{point}</li>" for point in focus_points)
+        html_deadlines = "".join(
+            f"<li><strong>{op.get('title')}</strong> — {op.get('deadline')}</li>" for op in deadlines
+        ) or "<li>No confirmed deadlines yet - check the Plan Ahead links for each scheme's next round.</li>"
 
         html_body = f"""<!DOCTYPE html>
 <html lang="en">
@@ -338,7 +394,7 @@ Pre-University Development & Opportunity System
   </div>
 
   <div class="section">
-    <div class="section-title">🌟 Top Opportunities of the Week</div>
+    <div class="section-title">🌟 Opportunities Open to You Now</div>
     {html_opps}
   </div>
 
@@ -348,18 +404,14 @@ Pre-University Development & Opportunity System
   </div>
 
   <div class="section">
-    <div class="section-title">🎯 This Week's Skill & Challenge</div>
+    <div class="section-title">🎯 This Week's Focus & Challenge</div>
     <div class="card">
-      <h4 style="margin: 0 0 6px; color: #0284c7; font-size: 14px;">Communication & Public Speaking</h4>
-      <p style="margin: 0; font-size: 13px; color: #334155; line-height: 1.5;">
-        Practice <strong>Active Listening</strong>: In all conversations today, ask at least 2 clarifying questions before giving your own opinion.
-      </p>
+      <h4 style="margin: 0 0 6px; color: #0284c7; font-size: 14px;">{focus_title}</h4>
+      <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #334155; line-height: 1.5;">{html_focus_points}</ul>
     </div>
     <div class="card" style="background: #fffbeb; border-color: #fde68a;">
       <h4 style="margin: 0 0 6px; color: #b45309; font-size: 14px;">⚡ Weekly Practical Challenge</h4>
-      <p style="margin: 0; font-size: 13px; color: #78350f; line-height: 1.5;">
-        Annotate and sketch the human cardiovascular system and explain systemic circulation to a peer without looking at notes.
-      </p>
+      <p style="margin: 0; font-size: 13px; color: #78350f; line-height: 1.5;">{challenge}</p>
     </div>
   </div>
 
@@ -375,6 +427,11 @@ Pre-University Development & Opportunity System
         <p style="font-size: 12px; color: #475569; margin: 6px 0 0;">{reading_title} ({reading_author})</p>
       </div>
     </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📅 Upcoming Deadlines</div>
+    <ul style="margin: 0; padding-left: 18px; font-size: 13px; color: #334155; line-height: 1.6;">{html_deadlines}</ul>
   </div>
 
   <div class="footer">

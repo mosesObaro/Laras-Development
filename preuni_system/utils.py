@@ -6,6 +6,7 @@ import hashlib
 import re
 from datetime import datetime, date
 from typing import Dict, List, Optional, Tuple, Any
+from preuni_system.config import Config
 
 
 def normalize_text(text: str) -> str:
@@ -187,6 +188,29 @@ def normalize_url(url: str) -> str:
     # Strip trailing slash
     clean_url = clean_url.rstrip("/")
     return clean_url.lower()
+
+
+def _level_bounds(min_level: Optional[str], max_level: Optional[str], student_level: Optional[str]) -> Optional[Tuple[int, int, int]]:
+    """Positions of (min, max, student) on Config.STUDY_LEVELS, or None if any level is unknown."""
+    levels = Config.STUDY_LEVELS
+    student_level = student_level or Config.STUDENT_LEVEL
+    if student_level not in levels or (min_level and min_level not in levels) or (max_level and max_level not in levels):
+        return None
+    lowest = levels.index(min_level) if min_level else 0
+    highest = levels.index(max_level) if max_level else len(levels) - 1
+    return lowest, highest, levels.index(student_level)
+
+
+def is_level_eligible(min_level: Optional[str], max_level: Optional[str] = None, student_level: Optional[str] = None) -> bool:
+    """True if the student can apply now: min_level <= student level <= max_level."""
+    bounds = _level_bounds(min_level, max_level, student_level)
+    return bool(bounds) and bounds[0] <= bounds[2] <= bounds[1]
+
+
+def is_level_relevant(min_level: Optional[str], max_level: Optional[str] = None, student_level: Optional[str] = None) -> bool:
+    """True if the student can apply now or during university (not outgrown, not postgraduate-only)."""
+    bounds = _level_bounds(min_level, max_level, student_level)
+    return bool(bounds) and bounds[1] >= bounds[2] and min_level != "postgraduate"
 
 
 def compute_keyword_overlap(text: str, keywords: List[str]) -> float:

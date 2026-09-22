@@ -9,10 +9,10 @@ import urllib.request
 import urllib.error
 import xml.etree.ElementTree as ET
 from datetime import datetime, date
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 from preuni_system.config import Config
 from preuni_system.scorer import OpportunityScorer
-from preuni_system.utils import generate_hash_id, parse_date, is_suspicious_url
+from preuni_system.utils import generate_hash_id, parse_date, is_suspicious_url, is_level_eligible
 
 
 class OpportunityCrawler:
@@ -30,14 +30,33 @@ class OpportunityCrawler:
             "url": "https://www.opportunitiesforafricans.com/feed/",
             "category": "Opportunities",
             "priority": "B"
-        },
-        {
-            "name": "WHO Health Emergencies & Courses",
-            "url": "https://openwho.org/courses.json",
-            "category": "Healthcare Foundations",
-            "priority": "C"
         }
     ]
+
+    # Phrases used to estimate which study level an opportunity is open to (checked in this order)
+    POSTGRADUATE_TERMS = (
+        "phd", "doctoral", "doctorate", "master's", "masters", "master of", "postgraduate",
+        "post-graduate", "postdoc", "graduate programme", "graduate program", "graduate internship",
+        "graduate trainee", "management trainee", "early-career", "early career", "mid-career",
+        "researchers", "professionals",
+    )
+    SECONDARY_TERMS = ("secondary school students", "senior secondary", "high school students", "secondary students")
+    PRE_UNIVERSITY_TERMS = ("school leavers", "pre-university", "prospective undergraduate", "waec", "utme", "jamb")
+    UNDERGRADUATE_TERMS = ("undergraduate", "university students", "bachelor")
+
+    @classmethod
+    def classify_level(cls, text: str) -> Tuple[str, Optional[str]]:
+        """Estimate (min_level, max_level) from an opportunity's text; 'unknown' when unclear."""
+        text = text.lower()
+        if any(term in text for term in cls.POSTGRADUATE_TERMS):
+            return "postgraduate", None
+        if any(term in text for term in cls.SECONDARY_TERMS):
+            return "secondary", "secondary"
+        if any(term in text for term in cls.PRE_UNIVERSITY_TERMS):
+            return "pre-university", None
+        if any(term in text for term in cls.UNDERGRADUATE_TERMS):
+            return "100L", None
+        return "unknown", None
 
     def __init__(self):
         self.headers = {"User-Agent": "PreUni-Opportunity-Monitor/1.0 (Educational Non-Profit Bot for Nigerian Youth)"}
@@ -139,7 +158,13 @@ class OpportunityCrawler:
             return None
 
         item_id = generate_hash_id("opp", title, url)
-        is_immediate = total_score >= Config.ALERT_SCORE_THRESHOLD and category in ("Scholarship", "Competition")
+        min_level, max_level = self.classify_level(f"{title} {desc}")
+        # Only alert immediately when the text shows the student can apply now
+        is_immediate = (
+            total_score >= Config.ALERT_SCORE_THRESHOLD
+            and category in ("Scholarship", "Competition")
+            and is_level_eligible(min_level, max_level)
+        )
 
         return {
             "id": item_id,
@@ -154,6 +179,8 @@ class OpportunityCrawler:
             "cost": "Free",
             "eligibility": "Pre-University / Young Adults (16-25)",
             "geographic_priority": default_priority,
+            "min_level": min_level,
+            "max_level": max_level,
             "scores": sub_scores,
             "total_score": total_score,
             "is_immediate_alert": is_immediate,

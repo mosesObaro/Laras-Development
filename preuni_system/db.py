@@ -135,9 +135,18 @@ class Database:
                 is_immediate_alert INTEGER DEFAULT 0,
                 is_active INTEGER DEFAULT 1,
                 tags_json TEXT,
-                created_at TEXT
+                created_at TEXT,
+                min_level TEXT DEFAULT 'unknown',
+                max_level TEXT
             )
             """)
+
+            # Migration: study-level columns were added after the first release
+            opp_columns = {row[1] for row in cursor.execute("PRAGMA table_info(opportunities)")}
+            if "min_level" not in opp_columns:
+                cursor.execute("ALTER TABLE opportunities ADD COLUMN min_level TEXT DEFAULT 'unknown'")
+            if "max_level" not in opp_columns:
+                cursor.execute("ALTER TABLE opportunities ADD COLUMN max_level TEXT")
 
             # Reading List Table
             cursor.execute("""
@@ -330,8 +339,9 @@ class Database:
                         INSERT OR REPLACE INTO opportunities (
                             id, title, organizer, category, url, description, location,
                             date, deadline, cost, eligibility, geographic_priority, scores_json,
-                            total_score, is_immediate_alert, is_active, tags_json, created_at
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            total_score, is_immediate_alert, is_active, tags_json, created_at,
+                            min_level, max_level
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """, (
                             item["id"], item["title"], item["organizer"], item["category"],
                             item["url"], item.get("description", ""), item.get("location", ""),
@@ -340,7 +350,8 @@ class Database:
                             json.dumps(scores), item.get("total_score", 85),
                             1 if item.get("is_immediate_alert") else 0,
                             1 if item.get("is_active", True) else 0,
-                            json.dumps(item.get("tags", [])), item.get("created_at", "")
+                            json.dumps(item.get("tags", [])), item.get("created_at", ""),
+                            item.get("min_level", "pre-university"), item.get("max_level")
                         ))
                         stats["scholarships"] += 1
                     conn.commit()
@@ -412,6 +423,21 @@ class Database:
             LIMIT ?
             """, (min_score, limit))
             return [dict(row) for row in cursor.fetchall()]
+
+    def get_active_opportunities(self) -> List[Dict[str, Any]]:
+        """Retrieve all active opportunities, highest score first."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM opportunities WHERE is_active = 1 ORDER BY total_score DESC")
+            return [dict(row) for row in cursor.fetchall()]
+
+    def get_opportunity(self, opp_id: str) -> Optional[Dict[str, Any]]:
+        """Retrieve a single opportunity by ID."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM opportunities WHERE id = ?", (opp_id,))
+            row = cursor.fetchone()
+            return dict(row) if row else None
 
     def get_healthcare_careers(self) -> List[Dict[str, Any]]:
         """Retrieve all healthcare career comparison profiles."""
@@ -565,6 +591,14 @@ class Database:
             """, (limit,))
             return [dict(row) for row in cursor.fetchall()]
 
+    def get_alerted_keys(self) -> Tuple[Set[str], Set[str]]:
+        """Return (normalized URLs, opportunity IDs) of everything ever alerted, for deduplication."""
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT url_normalized, opportunity_id FROM alert_history")
+            rows = cursor.fetchall()
+            return {row["url_normalized"] for row in rows}, {row["opportunity_id"] for row in rows if row["opportunity_id"]}
+
     def get_completed_course_urls(self) -> Set[str]:
         """Get set of normalized URLs for all completed courses to prevent re-recommending."""
         with self.get_connection() as conn:
@@ -623,7 +657,9 @@ class Database:
                     "recommended_month": 1,
                     "status": "Available",
                     "total_score": d.get("total_score", 80),
-                    "created_at": d.get("created_at", "")
+                    "created_at": d.get("created_at", ""),
+                    "min_level": d.get("min_level"),
+                    "max_level": d.get("max_level")
                 })
 
         return resources

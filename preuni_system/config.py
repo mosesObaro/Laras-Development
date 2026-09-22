@@ -60,6 +60,11 @@ class Config:
     TARGET_UNIVERSITY_DATE: str = os.getenv("TARGET_UNIVERSITY_DATE", "October 2027")
     TIMEZONE: str = os.getenv("TIMEZONE", "Africa/Lagos")
 
+    # Study levels from lowest to highest; opportunities declare min_level/max_level on this scale.
+    # STUDENT_LEVEL is where the student is now (change to "100L" after admission).
+    STUDY_LEVELS = ["secondary", "pre-university", "100L", "200L", "300L+", "postgraduate"]
+    STUDENT_LEVEL: str = os.getenv("STUDENT_LEVEL", "pre-university")
+
     # Time Commitments
     MAX_WEEKLY_HOURS: int = int(os.getenv("MAX_WEEKLY_HOURS", "18"))
     MAX_SIMULTANEOUS_COURSES: int = int(os.getenv("MAX_SIMULTANEOUS_COURSES", "2"))
@@ -135,6 +140,7 @@ class Config:
             "primary_career": cls.PRIMARY_CAREER_INTEREST,
             "apprenticeship": cls.CURRENT_APPRENTICESHIP,
             "target_date": cls.TARGET_UNIVERSITY_DATE,
+            "student_level": cls.STUDENT_LEVEL,
             "start_date": cls.START_DATE,
             "timezone": cls.TIMEZONE,
             "alert_threshold": cls.ALERT_SCORE_THRESHOLD,

@@ -94,8 +94,8 @@ lara_development_system/
 │   └── data.js                        # Bundled datasets for offline/static deployment
 │
 ├── .github/workflows/                 # GitHub Actions CI/CD Automations
-│   ├── weekly_digest.yml              # Scheduled weekly run (Mondays 07:00 WAT) via Resend
-│   ├── opportunity_crawler.yml        # Daily crawler & immediate alert scan
+│   ├── weekly_digest.yml              # Scheduled weekly run (Mondays ~05:00 WAT) via Resend
+│   ├── opportunity_crawler.yml        # Daily crawler & one-time immediate alerts
 │   └── deploy_dashboard.yml           # Auto-deploy dashboard to GitHub Pages
 │
 ├── tests/                             # Automated Test Suite (19 unit tests)
@@ -174,8 +174,8 @@ The unified CLI provides command-line control:
 | `seed` | Populates SQLite database from JSON seed files | `python3 -m preuni_system.cli seed` |
 | `scan` | Scans RSS/Atom feeds, deduplicates, and scores | `python3 -m preuni_system.cli scan` |
 | `daily-alert` | Generates calendar-driven daily learning & opportunity guide | `python3 -m preuni_system.cli daily-alert --preview` |
-| `digest` | Generates and previews/sends the weekly digest | `python3 -m preuni_system.cli digest --preview` |
-| `alert` | Generates and previews/sends top immediate high-priority alert | `python3 -m preuni_system.cli alert --preview` |
+| `digest` | Generates and previews/sends the weekly digest for the current calendar week | `python3 -m preuni_system.cli digest --preview` |
+| `alert` | Sends one alert for the best new opportunity the student can apply to now (never repeats) | `python3 -m preuni_system.cli alert --preview` |
 | `stats` | Displays student progress and summary metrics | `python3 -m preuni_system.cli stats` |
 | `serve` | Launches local dashboard web server | `python3 -m preuni_system.cli serve --port 8000` |
 
@@ -196,6 +196,13 @@ Go to your GitHub Repository $\rightarrow$ **Settings** $\rightarrow$ **Secrets 
 * `RESEND_FROM_EMAIL`: `Pre-University System <onboarding@resend.dev>` (or your custom domain).
 * `STUDENT_EMAIL`: Student's email address.
 * `PARENT_EMAIL`: Parent/Guardian's email address.
+
+Optional **repository variables** (same page, **Variables** tab):
+* `STUDENT_LEVEL`: The student's current study level (default `pre-university`; change to `100L` after admission). Opportunities are only alerted when the student can apply now.
+* `DAILY_ALERT_ENABLED`: Set to `false` to pause the daily alert.
+* `START_DATE`: Start of the 18-month calendar (default `2026-09-01`).
+
+The daily-alert and immediate-alert workflows keep their database (including alert history) in the GitHub Actions cache between runs, so nothing is sent twice. Deleting those caches resets the history.
 
 ### Step 3: Enable GitHub Pages
 1. In your GitHub repository, go to **Settings** $\rightarrow$ **Pages**.
@@ -234,7 +241,7 @@ $$\text{Relevance Score} = (T \times 0.35) + (M \times 0.20) + (F \times 0.20) +
 3. **Deduplication & Anti-Spam Tracking**: Automatically records alerted normalized URLs in SQLite `alert_history` to prevent duplicate emails.
 
 ### C. Decision Thresholds:
-* **$\mathbf{\ge 85}$ (STRONGLY RECOMMENDED)**: Triggers immediate email alert if deadline is approaching.
+* **$\mathbf{\ge 85}$ (STRONGLY RECOMMENDED)**: Triggers one immediate email alert when the student can apply now (the opportunity's `min_level`/`max_level` covers `STUDENT_LEVEL`). Each opportunity is alerted only once; scholarships for later study years appear under "Plan ahead" in the weekly digest instead.
 * **$\mathbf{70 - 84}$ (CONSIDER)**: Curated in the daily alert & weekly digest.
 * **$\mathbf{< 70}$ (SUPPRESSED)**: Omitted from email communications.
 
