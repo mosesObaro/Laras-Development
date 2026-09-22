@@ -47,7 +47,7 @@ def cmd_scan(args):
     print("==================================================")
     for alert in results["immediate_alerts"]:
         print(f"🚨 [ALERT {alert['total_score']}/100] {alert['title']} ({alert['category']})")
-        print(f"   Deadline: {alert.get('deadline', 'N/A')} | URL: {alert['url']}")
+        print(f"   Deadline: {alert.get('deadline') or 'N/A'} | URL: {alert['url']}")
 
 
 def cmd_digest(args):

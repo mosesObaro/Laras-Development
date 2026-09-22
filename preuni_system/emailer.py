@@ -127,7 +127,7 @@ class EmailService:
         title = opp.get("title", "High-Priority Opportunity")
         organizer = opp.get("organizer", "Verified Organization")
         category = opp.get("category", "Opportunity")
-        deadline = opp.get("deadline", "Open / Imminent")
+        deadline = opp.get("deadline") or "Not yet announced"
         location = opp.get("location", "Benin City / Nigeria")
         cost = opp.get("cost", "Free")
         eligibility = opp.get("eligibility", "Pre-University / Teenagers")
@@ -254,7 +254,7 @@ APPRENTICESHIP: {self.config.CURRENT_APPRENTICESHIP}
 1. 🌟 TOP OPPORTUNITIES OF THE WEEK:
 """
         for i, op in enumerate(opps[:5], start=1):
-            text_body += f"   {i}. {op.get('title')} ({op.get('organizer')}) — Score: {op.get('total_score')}/100\n      Deadline: {op.get('deadline', 'Ongoing')} | Link: {op.get('url')}\n"
+            text_body += f"   {i}. {op.get('title')} ({op.get('organizer')}) — Score: {op.get('total_score')}/100\n      Deadline: {(op.get('deadline') or 'Not yet announced')} | Link: {op.get('url')}\n"
 
         text_body += f"""
 2. 📚 ACTIVE COURSE FOCUS (Max 2 simultaneous):
@@ -296,7 +296,7 @@ Pre-University Development & Opportunity System
                 <span style="font-weight: 700; color: #0f172a; font-size: 15px;">{op.get('title')}</span>
                 <span style="background: #e0f2fe; color: #0369a1; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 4px;">{op.get('total_score')}/100</span>
               </div>
-              <p style="font-size: 13px; color: #64748b; margin: 4px 0 8px;">{op.get('organizer')} • <span style="color: #dc2626; font-weight: 600;">Deadline: {op.get('deadline', 'Ongoing')}</span></p>
+              <p style="font-size: 13px; color: #64748b; margin: 4px 0 8px;">{op.get('organizer')} • <span style="color: #dc2626; font-weight: 600;">Deadline: {(op.get('deadline') or 'Not yet announced')}</span></p>
               <p style="font-size: 13px; color: #334155; margin: 0 0 8px;">{op.get('description', '')[:160]}...</p>
               <a href="{op.get('url')}" style="color: #0284c7; font-size: 13px; font-weight: 600; text-decoration: none;" target="_blank">View Details & Apply &rarr;</a>
             </div>
